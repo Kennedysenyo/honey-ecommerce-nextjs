@@ -24,7 +24,7 @@ export const ButtonLink = ({ href, label, variant }: Props) => {
       <motion.div initial="idle" whileHover="wiggle">
         <Link
           href={href}
-          className="group flex items-center gap-2 cta-btn-p cta-btn2-text rounded-full border-2 border-gold bg-white text-gold transition-all duration-300 hover:bg-gold hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+          className="group flex items-center gap-2 cta-btn-p cta-btn2-text rounded-full border-2 border-gold bg-white text-gold transition-all duration-300 hover:bg-amber hover:text-cream focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
         >
           <span>Contact Us</span>
 
@@ -39,7 +39,7 @@ export const ButtonLink = ({ href, label, variant }: Props) => {
     <>
       <Link
         href={href}
-        className="flex items-center gap-2 group cta-btn-p cta-btn-text rounded-full bg-gold text-cream shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
+        className="flex items-center gap-2 group cta-btn-p cta-btn-text rounded-full bg-gold text-cream shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-amber hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60"
       >
         {label}
         <ArrowRight className="icon3 group-hover:translate-x-[25%] transition-translate duration-300" />
