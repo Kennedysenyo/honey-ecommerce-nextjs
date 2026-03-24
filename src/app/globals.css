@@ -36,6 +36,10 @@ body {
   @apply size-4 lg:size-6;
 }
 
+.icon3 {
+  @apply size-4 lg:size-5;
+}
+
 .title-font {
   @apply font-heading leading-tight;
 }

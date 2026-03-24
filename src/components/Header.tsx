@@ -83,7 +83,11 @@ export const Header = () => {
           <Link className="title-size-subsection title-font " href="/">
             <div className="flex gap-2 text-center">
               <span className=" text-gold font-semibold">Honey Man</span>
-              <span className={` ${scrolled ? "" : "text-cream"}`}>Ghana</span>
+              <span
+                className={` ${scrolled ? "" : isMobileOpen ? "text-foreground" : "text-cream"}`}
+              >
+                Ghana
+              </span>
             </div>
           </Link>
 
