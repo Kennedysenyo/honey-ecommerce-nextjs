@@ -64,7 +64,7 @@ export const Header = () => {
   const navLinksElements = NAV_LINKS.map((link) => (
     <li key={link.path}>
       <Link
-        className={`${pathname === link.path ? "text-gold" : ""} hover:text-gold`}
+        className={`${pathname === link.path ? "text-gold" : scrolled ? "" : "text-cream text-shadow-sm"} hover:text-gold`}
         href={link.path}
       >
         {link.label}
@@ -75,17 +75,15 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
+        className={`fixed top-0 right-0 left-0 z-50 h-fit transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
       >
         <div
-          className={`px-4 shadow-sm sm:px-6 lg:px-8 py-6 lg:py-8 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
         >
-          <Link className="text-3xl lg:text-4xl leading-tight " href="/">
+          <Link className="title-size-subsection title-font " href="/">
             <div className="flex gap-2 text-center">
-              <span className="font-heading text-gold font-semibold">
-                Honey Man
-              </span>
-              <span className="font-heading ">Ghana</span>
+              <span className=" text-gold font-semibold">Honey Man</span>
+              <span className={` ${scrolled ? "" : "text-cream"}`}>Ghana</span>
             </div>
           </Link>
 
@@ -96,18 +94,28 @@ export const Header = () => {
           </nav>
 
           <div className="flex items-center gap-8">
-            <button>
-              <ShoppingCart className="icon" />
-            </button>
+            {!isMobileOpen && (
+              <button
+                className={`${scrolled ? "hover:bg-cream" : "bg-cream/20"} group md:mr-8 p-2 md:p-3 rounded-full  `}
+              >
+                <ShoppingCart
+                  className={`icon2 ${scrolled ? "" : "text-cream "} group-hover:text-accent-gold `}
+                />
+              </button>
+            )}
 
             <button
               className="md:hidden"
               onClick={() => setIsMobileOpen((prev) => !prev)}
             >
               {isMobileOpen ? (
-                <X className="icon" />
+                <X
+                  className={`icon ${scrolled ? "" : isMobileOpen ? "" : "text-cream"} `}
+                />
               ) : (
-                <Menu className="icon" />
+                <Menu
+                  className={`icon ${scrolled ? "" : isMobileOpen ? "" : "text-cream"} `}
+                />
               )}
             </button>
           </div>
@@ -139,7 +147,7 @@ export const Header = () => {
                     key={link.path}
                   >
                     <Link
-                      className={`${pathname === link.path ? "text-gold bg-cream" : ""}  transition-colors rounded-lg hover:bg-cream py-2 block px-4`}
+                      className={`${pathname === link.path ? "text-gold bg-cream" : ""} text-foreground transition-colors rounded-lg hover:bg-cream py-2 block px-4`}
                       href={link.path}
                       onClick={() => setIsMobileOpen(false)}
                     >

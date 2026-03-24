@@ -29,5 +29,37 @@ body {
 }
 
 .icon {
-  @apply w-6 lg:w-8 h-6 lg:h-8 text-foreground;
+  @apply size-6 lg:size-7;
+}
+
+.icon2 {
+  @apply size-4 lg:size-6;
+}
+
+.title-font {
+  @apply font-heading leading-tight;
+}
+
+.title-size-hero {
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+}
+
+.title-size-section {
+  @apply text-lg sm:text-2xl lg:text-3xl;
+}
+
+.title-size-subsection {
+  @apply text-lg sm:text-2xl;
+}
+
+.cta-btn-p {
+  @apply px-2 py-1 md:px-4 md:py-2 lg:px-6 lg:py-3;
+}
+
+.cta-btn-text {
+  @apply text-sm sm:text-base md:text-lg;
+}
+
+.cta-btn2-text {
+  @apply text-sm sm:text-sm md:text-base;
 }

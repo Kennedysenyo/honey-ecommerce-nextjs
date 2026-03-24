@@ -16,11 +16,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
+      className={`${headingFont.variable} ${bodyFont.variable} antialiased`}
     >
       <body className="min-h-full flex flex-col ">
         <Header />
-        <main className="px-4 flex-1 pt-24 lg:pt-28"> {children}</main>
+        <main className="flex-1 "> {children}</main>
       </body>
     </html>
   );
