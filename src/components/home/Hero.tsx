@@ -5,10 +5,10 @@ import { motion } from "motion/react";
 
 export const HeroSection = () => {
   return (
-    <section className="relative">
+    <section className="relative h-fit ">
       <div className=" w-full">
         <video
-          className="h-[75vh] min-h-[560px] w-full object-cover"
+          className="h-[95vh] min-h-[560px] w-full object-cover"
           autoPlay
           muted
           playsInline
@@ -56,7 +56,7 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.3 }}
-                className="   flex items-center justify-center md:justify-start gap-4 md:gap-8"
+                className="flex items-center justify-center md:justify-start gap-4 md:gap-8"
               >
                 <ButtonLink href="/shop" label="Shop Now" />
 
