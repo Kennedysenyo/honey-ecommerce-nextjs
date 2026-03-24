@@ -1,8 +1,8 @@
-import { Libre_Baskerville, Poppins } from "next/font/google";
+import { Playfair_Display, Poppins } from "next/font/google";
 
-export const headingFont = Libre_Baskerville({
+export const headingFont = Playfair_Display({
   subsets: ["latin"],
-  style: ["normal", "italic"],
+  style: ["normal"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-heading",
 });

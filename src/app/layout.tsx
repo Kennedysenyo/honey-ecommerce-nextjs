@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { bodyFont, headingFont } from "./fonts/fonts";
+import { Header } from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Honey Man",
@@ -17,8 +18,9 @@ export default function RootLayout({
       lang="en"
       className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <main> {children}</main>
+      <body className="min-h-full flex flex-col ">
+        <Header />
+        <main className="px-4 flex-1 pt-24 lg:pt-28"> {children}</main>
       </body>
     </html>
   );
