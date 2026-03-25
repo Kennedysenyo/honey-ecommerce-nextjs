@@ -43,8 +43,8 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
           {product.description}
         </p>
 
-        <div className="flex justify-between flex-wrap items-center gap-3">
-          <span className="text-2xl font-bold text-gold">₵{product.price}</span>
+        <div className="flex justify-between  items-center gap-2">
+          <span className="text-xl font-bold text-gold">₵{product.price}</span>
           <button
             type="button"
             className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 cta-btn-p text-cream"
