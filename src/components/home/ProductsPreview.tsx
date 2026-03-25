@@ -7,11 +7,12 @@ import { ProductsList } from "../ProductsList";
 
 export const ProductsPreview = () => {
   return (
-    <section className="max-w-7xl mx-auto section-p-one">
-      <div className="px-4 sm:px-6 md:px-8 space-y-4 ">
+    <section className="section-p-one">
+      <div className="max-w-7xl mx-auto  px-4 sm:px-6 md:px-8 space-y-4 ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="font-heading title-two text-center">

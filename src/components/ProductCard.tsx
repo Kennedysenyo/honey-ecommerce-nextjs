@@ -14,11 +14,10 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
   return (
     <motion.li
       initial={{ opacity: 0, y: 50 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       whileInView={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -8 }}
-      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+      className="group bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
     >
       <Link href={`/product/${product.id}`} className="block">
         <div className="relative overflow-hidden aspect-square">
@@ -27,14 +26,14 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
             src={product.image}
             alt={product.name}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </div>
       </Link>
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
           <Link href={`/product/${product.id}`}>
-            <h3 className="font-heading font-semibold title-four group-hover:text-gold transition-colors">
+            <h3 className="font-heading font-semibold title-four group-hover:text-gold transition-colors duration-300">
               {product.name}
             </h3>
           </Link>
@@ -44,10 +43,11 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
           {product.description}
         </p>
 
-        <div className="flex justify-between flex-wrap items-center">
-          <span className="text-2xl font-bold">{product.price}</span>
+        <div className="flex justify-between flex-wrap items-center gap-3">
+          <span className="text-2xl font-bold text-gold">{product.price}</span>
           <button
-            className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-[5%] transition-all duration-300 cta-btn-p text-cream"
+            type="button"
+            className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 cta-btn-p text-cream"
             onClick={() => {
               product.id;
             }}
