@@ -1,24 +1,31 @@
 "use client";
 
 import { Product } from "@/types/types";
+import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { motion } from "motion/react";
 
-export const ProductCard = ({
-  id,
-  name,
-  description,
-  size,
-  price,
-  image,
-}: Omit<Product, "benefits" | "ingredients">) => {
+interface Props {
+  product: Product;
+  index: number;
+}
+
+export const ProductCard = ({ product, index = 0 }: Props) => {
   return (
-    <li className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
-      <Link href={`/product/${id}`} className="block">
+    <motion.li
+      initial={{ opacity: 0, y: 50 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -8 }}
+      className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300"
+    >
+      <Link href={`/product/${product.id}`} className="block">
         <div className="relative overflow-hidden aspect-square">
           <img
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            src={image}
-            alt={name}
+            src={product.image}
+            alt={product.name}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration"></div>
         </div>
@@ -26,26 +33,30 @@ export const ProductCard = ({
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <Link href={`/product/${id}`}>
+          <Link href={`/product/${product.id}`}>
             <h3 className="font-heading font-semibold title-four group-hover:text-gold transition-colors">
-              {name}
+              {product.name}
             </h3>
           </Link>
         </div>
-        <p className="text-sm text-gray-600 mb-2">{size}</p>
-        <p className="text-sm text-gray-700 mb-4 line-clamp-2">{description}</p>
+        <p className="text-sm text-gray-600 mb-2">{product.size}</p>
+        <p className="text-sm text-gray-700 mb-4 line-clamp-2">
+          {product.description}
+        </p>
 
-        <div className="flex justify-between items-center">
-          <span className="text-2xl font-bold">{price}</span>
+        <div className="flex justify-between flex-wrap items-center">
+          <span className="text-2xl font-bold">{product.price}</span>
           <button
+            className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-[5%] transition-all duration-300 cta-btn-p text-cream"
             onClick={() => {
-              id;
+              product.id;
             }}
           >
+            <ShoppingCart className="icon3" />
             Add to Cart
           </button>
         </div>
       </div>
-    </li>
+    </motion.li>
   );
 };
