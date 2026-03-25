@@ -30,16 +30,16 @@ export const Testimonials = () => {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
               key={testimonial.name}
-              className="relative bg-cream/40 over"
+              className="relative bg-cream/40 rounded-2xl "
             >
               <span className="absolute top-5 right-5">
                 <Quote className="icon-lg2 text-gold/20" />
               </span>
-              <div className="absolute inset-0 bg-gradient-to-br from-cream via-transparent to-white" />
+              <div className="rounded-2xl absolute inset-0 bg-gradient-to-br from-cream via-transparent to-white" />
 
-              <div className="relative inset-0 z-10 overflow-hidden rounded-2xl shadow-md p-6 space-y-3">
-                <div className="flex items-center wrap gap-4">
-                  <div className="rounded-full overflow-hidden aspect-square max-w-[60px] border-2 border-gold">
+              <div className="relative z-10 overflow-hidden rounded-2xl shadow-md p-6 space-y-3">
+                <div className="flex items-center flex-wrap gap-4">
+                  <div className="rounded-full overflow-hidden aspect-square size-[60px] border-2 border-gold">
                     <img
                       className="w-full h-full object-cover"
                       src={testimonial.image}
@@ -61,7 +61,7 @@ export const Testimonials = () => {
                     />
                   ))}
                 </div>
-                <p className="testimonial text-sm font-normal italic leading-5 flex wrap">
+                <p className="testimonial text-sm font-normal italic leading-6 flex">
                   {testimonial.content}
                 </p>
               </div>
