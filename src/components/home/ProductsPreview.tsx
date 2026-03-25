@@ -7,8 +7,8 @@ import { ProductsList } from "../ProductsList";
 
 export const ProductsPreview = () => {
   return (
-    <section className="section-py-one">
-      <div className="section-max-w mx-auto  section-px-one  ">
+    <section className="section-py-one bg-background">
+      <div className="section-max-w mx-auto section-px-one  ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

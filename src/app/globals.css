@@ -71,6 +71,17 @@
       var(--color-amber) 75%
     );
   }
+
+  .testimonial::before {
+    content: '"';
+    font-size: 2rem;
+    display: block;
+    color: var(--color-foreground);
+  }
+
+  /* .testimonial span::after {
+    align-self: flex-end;
+  } */
 }
 
 body {
@@ -80,6 +91,10 @@ body {
 
 .section-max-w {
   @apply max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-6xl xl:max-w-7xl;
+}
+
+.icon-lg2 {
+  @apply size-11 lg:size-13;
 }
 
 .icon-lg {
