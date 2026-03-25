@@ -7,13 +7,14 @@ import { ProductsList } from "../ProductsList";
 
 export const ProductsPreview = () => {
   return (
-    <section className="section-p-one">
-      <div className="max-w-7xl mx-auto  px-4 sm:px-6 md:px-8 space-y-4 ">
+    <section className="section-py-one">
+      <div className="section-max-w mx-auto  section-px-one  ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.6 }}
+          className="space-y-4"
         >
           <h2 className="font-heading title-two text-center">
             Our Premium <span className="text-gold">Honey Collection</span>
@@ -25,11 +26,18 @@ export const ProductsPreview = () => {
         </motion.div>
 
         <ProductsList products={products} />
-        <ButtonLink
-          href="/shop"
-          label="View All Products"
-          className="mx-auto"
-        />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: products.length * 0.1 }}
+        >
+          <ButtonLink
+            href="/shop"
+            label="View All Products"
+            className="mx-auto"
+          />
+        </motion.div>
       </div>
     </section>
   );

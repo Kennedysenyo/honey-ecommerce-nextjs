@@ -78,7 +78,7 @@ export const Header = () => {
         className={`fixed top-0 right-0 left-0 z-50 h-fit transition-all duration-300 ${scrolled ? "bg-white/95 backdrop-blur-md shadow-lg" : "bg-transparent"}`}
       >
         <div
-          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
+          className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-2 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
         >
           <Link className="title-three title-font " href="/">
             <div className="flex gap-2 text-center">

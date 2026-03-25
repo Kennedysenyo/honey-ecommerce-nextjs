@@ -14,9 +14,9 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
   return (
     <motion.li
       initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
-      whileInView={{ opacity: 1, y: 0 }}
       className="group bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
     >
       <Link href={`/product/${product.id}`} className="block">
@@ -47,7 +47,7 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
           <span className="text-xl font-bold text-gold">₵{product.price}</span>
           <button
             type="button"
-            className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 cta-btn-p text-cream"
+            className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 cta-btn-p text-cream leading-tight"
             onClick={() => {
               product.id;
             }}

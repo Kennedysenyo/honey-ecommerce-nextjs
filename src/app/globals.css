@@ -9,6 +9,8 @@
   --accent-gold: #ffb703;
   --soft-cream: #fff8e6;
   --dark-cocoa: #3b2a1a;
+
+  --honey-pattern-1: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='%23F4A300' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 @theme inline {
@@ -21,11 +23,67 @@
 
   --font-heading: var(--font-heading);
   --font-body: var(--font-body);
+
+  --bg-honey-pattern: var(--honey-pattern-1);
+}
+
+@layer utilities {
+  .bg-honey-pattern {
+    background-image: var(--bg-honey-pattern);
+    background-repeat: repeat;
+    background-size: 60px 60px;
+  }
+
+  .promise::before {
+    content: "";
+    display: block;
+    width: 70px;
+    height: 4px;
+    background: linear-gradient(
+      to right,
+      var(--color-gold) 25%,
+      var(--color-amber) 75%
+    );
+  }
+
+  .list {
+  }
+
+  .list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transform: translateX(3px);
+  }
+
+  .list li::before {
+    content: "";
+    display: block;
+    padding: 4.5px;
+    border-radius: 50%;
+    background-color: var(--color-gold);
+  }
+
+  .gradient-to-br {
+    background: linear-gradient(
+      to bottom right,
+      var(--color-gold) 25%,
+      var(--color-amber) 75%
+    );
+  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+.section-max-w {
+  @apply max-w-xl sm:max-w-2xl md:max-w-3xl lg:max-w-6xl xl:max-w-7xl;
+}
+
+.icon-lg {
+  @apply size-7 lg:size-8;
 }
 
 .icon {
@@ -45,15 +103,15 @@ body {
 }
 
 .title-one {
-  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+  @apply text-3xl sm:text-4xl lg:text-5xl;
 }
 
 .title-two {
-  @apply text-3xl md:text-4xl lg:text-5xl;
+  @apply text-2xl sm:text-3xl md:text-4xl;
 }
 
 .title-three {
-  @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+  @apply text-xl sm:text-2xl md:text-3xl;
 }
 
 .title-four {
@@ -69,17 +127,25 @@ body {
 }
 
 .cta-btn-p {
-  @apply px-4 py-2 md:px-6 md:py-3;
+  @apply px-4 py-2 lg:px-6 lg:py-3;
 }
 
 .cta-btn-text {
-  @apply text-sm sm:text-base md:text-lg;
+  @apply text-sm sm:text-base lg:text-lg;
 }
 
 .cta-btn2-text {
   @apply text-sm sm:text-sm md:text-base;
 }
 
-.section-p-one {
+.section-py-one {
   @apply py-16 md:py-20 lg:py-24;
+}
+
+.section-px-one {
+  @apply px-4 sm:px-6 md:px-8;
+}
+
+.bg-honey-pattern1 {
+  @apply bg-[var(--honey-pattern)] bg-repeat bg-size-["60px"];
 }
