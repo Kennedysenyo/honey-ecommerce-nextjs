@@ -80,7 +80,7 @@ export const Header = () => {
         <div
           className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
         >
-          <Link className="title-size-subsection title-font " href="/">
+          <Link className="title-three title-font " href="/">
             <div className="flex gap-2 text-center">
               <span className=" text-gold font-semibold">Honey Man</span>
               <span

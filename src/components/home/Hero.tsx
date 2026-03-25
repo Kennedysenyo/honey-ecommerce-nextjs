@@ -36,7 +36,7 @@ export const HeroSection = () => {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
-                    className="text-cream text-center md:text-left title-font title-size-hero text-shadow-md"
+                    className="text-cream text-center md:text-left title-font title-one text-shadow-md"
                   >
                     Pure Natural Honey <br />
                     <span className="text-gold">From the Heart of Ghana</span>
@@ -45,7 +45,7 @@ export const HeroSection = () => {
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
-                    className=" text-cream text-center md:text-left text-base md:text-2xl xl:text-3xl leading-6 md:leading-8 text-shadow-md "
+                    className="subtitle-one text-cream text-center md:text-left  leading-6 md:leading-8 text-shadow-md "
                   >
                     Raw. Unfiltered. 100% Natural. <br />
                     <span className={`hidden xl:block`}>
@@ -75,17 +75,17 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="px-4 sm:px-6 md:px-8 flex flex-wrap items-center  text-cream text-base md:text-lg"
+            className="px-4 sm:px-6 md:px-8 flex flex-wrap gap-4 items-center justify-center  md:justify-start  text-cream text-base md:text-lg"
           >
-            <li className="flex items-center gap-2 mr-auto">
+            <li className="flex items-center gap-2 md:mr-auto">
               <CheckCircle className="icon text-gold" />
               <span>No Additives</span>
             </li>
-            <li className="flex items-center gap-2 mr-auto">
+            <li className="flex items-center gap-2 md:mr-auto">
               <CheckCircle className="icon text-gold" />
               <span>Sustainably Sourced</span>
             </li>
-            <li className="flex items-center gap-2 mr-auto">
+            <li className="flex items-center gap-2 md:mr-auto">
               <CheckCircle className="icon text-gold" />
               <span>Premium Quality</span>
             </li>

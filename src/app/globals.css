@@ -44,20 +44,32 @@ body {
   @apply font-heading leading-tight;
 }
 
-.title-size-hero {
+.title-one {
   @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
 }
 
-.title-size-section {
-  @apply text-lg sm:text-2xl lg:text-3xl;
+.title-two {
+  @apply text-3xl md:text-4xl lg:text-5xl;
 }
 
-.title-size-subsection {
-  @apply text-lg sm:text-2xl;
+.title-three {
+  @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+}
+
+.title-four {
+  @apply text-lg sm:text-xl;
+}
+
+.subtitle-one {
+  @apply text-lg md:text-xl lg:text-2xl;
+}
+
+.subtitle-two {
+  @apply text-lg md:text-xl;
 }
 
 .cta-btn-p {
-  @apply px-2 py-1 md:px-4 md:py-2 lg:px-6 lg:py-3;
+  @apply px-4 py-2 md:px-6 md:py-3;
 }
 
 .cta-btn-text {
@@ -66,4 +78,8 @@ body {
 
 .cta-btn2-text {
   @apply text-sm sm:text-sm md:text-base;
+}
+
+.section-p-one {
+  @apply py-16 md:py-20 lg:py-24;
 }
