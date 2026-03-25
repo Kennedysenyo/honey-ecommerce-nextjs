@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "motion/react";
 import { badges, testimonials } from "@/lib/utils/dummy-data/testimonials";
 import { Quote, Star } from "lucide-react";
 
@@ -5,17 +8,30 @@ export const Testimonials = () => {
   return (
     <section className="bg-background">
       <div className="section-max-w section-py-one section-px-one mx-auto space-y-16">
-        <div className="space-y-4 text-center max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.7 }}
+          className="space-y-4 text-center max-w-2xl mx-auto"
+        >
           <h2 className="font-heading title-two ">What Our Customers Say</h2>
           <p className="subtitle-two">
             Join thousands of satisfied customers who trust Honey Man for
             premium natural honey.
           </p>
-        </div>
+        </motion.div>
 
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6 sm:gap-8">
-          {testimonials.map((testimonial) => (
-            <li key={testimonial.name} className="relative bg-cream/40 over">
+          {testimonials.map((testimonial, i) => (
+            <motion.li
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              key={testimonial.name}
+              className="relative bg-cream/40 over"
+            >
               <span className="absolute top-5 right-5">
                 <Quote className="icon-lg2 text-gold/20" />
               </span>
@@ -49,21 +65,28 @@ export const Testimonials = () => {
                   {testimonial.content}
                 </p>
               </div>
-            </li>
+            </motion.li>
           ))}
         </ul>
 
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
-          {badges.map((badge) => (
-            <li
-              className="rounded-2xl gradient-to-br p-6 text-center text-cream"
+        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
+          {badges.map((badge, i) => (
+            <motion.li
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.6,
+                delay: (testimonials.length + i) * 0.1,
+              }}
+              className="rounded-2xl gradient-to-br p-6 text-center text-cream shadow-md"
               key={badge.label}
             >
               <h4 className="font-heading title-four font-semibold">
                 {badge.label}
-              </h4>{" "}
+              </h4>
               <p className="text-sm">{badge.sublabel}</p>
-            </li>
+            </motion.li>
           ))}
         </ul>
       </div>

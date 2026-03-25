@@ -11,9 +11,9 @@ export const ProductsPreview = () => {
       <div className="section-max-w mx-auto section-px-one  ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.9 }}
           className="space-y-4"
         >
           <h2 className="font-heading title-two text-center">
