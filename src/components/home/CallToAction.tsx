@@ -14,7 +14,7 @@ export const CallToAction = () => {
           initial={{ scale: 0 }}
           whileInView={{ scale: 1.1 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.4, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="bg-white p-4 rounded-full shadow-md"
         >
           <Mail className="icon-lg2 text-gold" />
@@ -23,7 +23,7 @@ export const CallToAction = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center max-w-2xl mx-auto space-y-4"
         >
           <h2 className="font-heading title-two text-white ">
@@ -35,35 +35,35 @@ export const CallToAction = () => {
           </p>
         </motion.div>
 
-        <div className="w-full max-w-2xl  grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-0 md:gap-x-4">
+        <form className="w-full max-w-2xl  grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-0 md:gap-x-4">
           <motion.input
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            type="text"
-            aria-label="email"
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            type="email"
+            aria-label="Email Address"
             placeholder="Enter your email address"
-            className="col-span-2 text-base md:text-lg backdrop-blur-sm border-2 border-white focus:outline-none px-6 py-2 leading-8 rounded-full text-cream shadow-md"
+            className="col-span-2 text-base md:text-lg backdrop-blur-sm border-2 border-white focus:outline-none px-6 py-2 leading-8 rounded-full h-12 md:h-14 text-white placeholder:text-white/70 shadow-md"
           />
           <motion.button
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5 }}
-            className="px-6 py-3 text-base font-semibold text-gold cursor-pointer text-lg flex items-center justify-center gap-2 bg-white rounded-full shadow-md w-full"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="px-6 py-3 text-base font-semibold text-gold cursor-pointer text-lg flex items-center justify-center gap-2 bg-white h-12 md:h-14 rounded-full shadow-md w-full"
           >
-            Subscrbe <Send className="icon" />
+            Subscribe <Send className="icon" />
           </motion.button>
-        </div>
+        </form>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <ul className="list disc-white flex items-center gap-8 list text-white">
+          <ul className="list disc-white flex flex-wrap justify-center items-center gap-4 md:gap-8 text-white">
             <li>Early Discounts</li>
             <li>Exclusive Offers</li>
             <li>Beekeeping Insights</li>
@@ -74,10 +74,10 @@ export const CallToAction = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.6 }}
-          className="text-sm text-cream/80"
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="text-sm text-cream/85"
         >
-          We respenct your privacy. Unsubscribe anytime.
+          We respect your privacy. Unsubscribe anytime.
         </motion.p>
       </div>
     </section>
