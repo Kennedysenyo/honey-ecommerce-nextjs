@@ -6,8 +6,8 @@ import { Quote, Star } from "lucide-react";
 
 export const Testimonials = () => {
   return (
-    <section className="bg-background">
-      <div className="section-max-w section-py-one section-px-one mx-auto space-y-16">
+    <section className="bg-background section-py-one">
+      <div className="section-max-w  section-px-one mx-auto space-y-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
