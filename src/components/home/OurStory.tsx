@@ -7,7 +7,7 @@ export const OurStory = () => {
   return (
     <section className=" relative bg-cream ">
       {/* Honey Pattern */}
-      <div className="absolute inset-0 bg-honey-pattern opacity-60" />
+      <div className="absolute inset-0 bg-honey-pattern1 opacity-60" />
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-white/60" />
@@ -73,7 +73,7 @@ export const OurStory = () => {
               <h4 className="flex items-center gap-4 title-four font-semibold promise">
                 <span>Our Promise</span>
               </h4>
-              <ul className="list space-y-2 text-base leading-6 tracking-normal">
+              <ul className="list disc-gold space-y-2 text-base leading-6 tracking-normal">
                 <li>100% Pure & Natural</li>
                 <li>No Artificial Additives</li>
                 <li>Ethically Sourced</li>
