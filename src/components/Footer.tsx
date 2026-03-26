@@ -119,7 +119,14 @@ export const Footer = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 text-cream/50 gap-y-4 gap-x-12">
           <p className="text-center md:text-left">
-            © {new Date().getFullYear()} Honey Man Ghana. All rights reserved.
+            © {new Date().getFullYear()}{" "}
+            <Link
+              className="hover:text-gold transition-colors"
+              href="https://websendor.com"
+            >
+              Websendor
+            </Link>
+            . All rights reserved.
           </p>
           <div className="flex items-center flex-wrap justify-center md:justify-start gap-6">
             <Link

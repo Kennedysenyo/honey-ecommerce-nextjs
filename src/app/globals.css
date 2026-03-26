@@ -145,7 +145,7 @@ body {
 }
 
 .title-one {
-  @apply text-3xl sm:text-4xl lg:text-5xl;
+  @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl;
 }
 
 .title-two {
@@ -161,7 +161,7 @@ body {
 }
 
 .subtitle-one {
-  @apply text-lg md:text-xl lg:text-2xl;
+  @apply text-base sm:text-lg md:text-xl lg:text-2xl;
 }
 
 .subtitle-two {
@@ -169,7 +169,7 @@ body {
 }
 
 .cta-btn-p {
-  @apply px-4 py-2 lg:px-6 lg:py-3;
+  @apply px-3 py-1 sm:px-4 sm:py-2 lg:px-6 lg:py-3;
 }
 
 .cta-btn-text {

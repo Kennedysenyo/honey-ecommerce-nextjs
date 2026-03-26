@@ -81,12 +81,12 @@ export const Header = () => {
           className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-2 flex justify-between items-center ${isMobileOpen ? "bg-white" : ""}`}
         >
           <Link className="title-three title-font " href="/">
-            <div className="flex gap-2 text-center">
-              <span className=" text-gold font-semibold">Honey Man</span>
+            <div className="flex text-center">
+              <span className=" text-gold font-semibold">HM</span>
               <span
                 className={` ${scrolled ? "" : isMobileOpen ? "text-foreground" : "text-cream"}`}
               >
-                Ghana
+                G
               </span>
             </div>
           </Link>
