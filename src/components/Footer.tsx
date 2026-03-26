@@ -1,4 +1,4 @@
-import { LocateIcon, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { FiFacebook } from "react-icons/fi";
 import { PiInstagramLogo } from "react-icons/pi";
@@ -20,19 +20,22 @@ export const Footer = () => {
             <div className="flex items-center gap-4">
               <Link
                 href="#"
-                className="p-2 rounded-full bg-cream/15 text-background hover:text-gold transition-color duration-300"
+                aria-label="Facebook"
+                className="rounded-full bg-cream/15 p-2 text-background transition-all duration-300 hover:-translate-y-0.5 hover:text-gold"
               >
                 <FiFacebook className="icon " />
               </Link>
               <Link
                 href="#"
-                className="p-2 rounded-full bg-cream/15 text-background hover:text-gold transition-color duration-300"
+                aria-label="Instagram"
+                className="rounded-full bg-cream/15 p-2 text-background transition-all duration-300 hover:-translate-y-0.5 hover:text-gold"
               >
                 <PiInstagramLogo className="icon" />
               </Link>
               <Link
                 href="#"
-                className="p-2 rounded-full bg-cream/15 text-background hover:text-gold transition-color duration-300"
+                aria-label="Twitter (X)"
+                className="rounded-full bg-cream/15 p-2 text-background transition-all duration-300 hover:-translate-y-0.5 hover:text-gold"
               >
                 <RiTwitterXLine className="icon" />
               </Link>
@@ -40,27 +43,29 @@ export const Footer = () => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-background title-four">Quick Links</h3>
+            <h4 className="text-background title-four font-semibold">
+              Quick Links
+            </h4>
             <ul className="space-y-2 ul-link-hover ">
               <li>
-                <Link href="#">Home</Link>
+                <Link href="/">Home</Link>
               </li>
               <li>
-                <Link href="#">Shop</Link>
+                <Link href="/shop">Shop</Link>
               </li>
               <li>
-                <Link href="#">Our Story</Link>
+                <Link href="/our-story">Our Story</Link>
               </li>
               <li>
-                <Link href="#">Contact</Link>
+                <Link href="/contact">Contact</Link>
               </li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-background font-semibold title-four">
+            <h4 className="text-background font-semibold title-four">
               Support
-            </h3>
+            </h4>
             <ul className="space-y-2 ul-link-hover">
               <li>
                 <Link href="#">FAQ</Link>
@@ -72,18 +77,20 @@ export const Footer = () => {
                 <Link href="#">Returns</Link>
               </li>
               <li>
-                <Link href="#">Privacy Policy</Link>
+                <Link href="/privacy-policy">Privacy Policy</Link>
               </li>
               <li>
-                <Link href="#">Terms & Conditions</Link>
+                <Link href="/terms">Terms & Conditions</Link>
               </li>
             </ul>
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-background title-four">Contact Us</h3>
+            <h4 className="text-background font-semibold title-four">
+              Contact Us
+            </h4>
 
-            <ul className="footer-contact-ul">
+            <ul className="footer-contact-ul ul-link-hover">
               <li>
                 <span>
                   <MapPin className="icon2" />
@@ -94,31 +101,35 @@ export const Footer = () => {
                 <span>
                   <Phone className="icon2" />
                 </span>{" "}
-                +233 123 456 789
+                <Link href="tel:+233123456789">+233 123 456 789</Link>
               </li>
               <li>
                 <span>
                   <Mail className="icon2" />
                 </span>{" "}
-                info@honeymanghana.com
+                <Link href="mailto:info@honeymanghana.com">
+                  info@honeymanghana.com
+                </Link>
               </li>
             </ul>
           </div>
         </div>
-        <hr className="text-cream/20" />
-        <div className="grid grid-cols-1 md:grid-cols-2 text-cream/50 gap-4">
-          <p>
+
+        <hr className="border-cream/20" />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 text-cream/50 gap-y-4 gap-x-12">
+          <p className="text-center md:text-left">
             © {new Date().getFullYear()} Honey Man Ghana. All rights reserved.
           </p>
-          <div className="flex items-center flex-wrap ">
+          <div className="flex items-center flex-wrap justify-center md:justify-start gap-6">
             <Link
-              className="mr-auto hover:text-gold/90 transition-color duration-300"
+              className=" hover:text-gold/90 transition-colors duration-300"
               href="#"
             >
               Privacy Policy
             </Link>
             <Link
-              className="mr-auto hover:text-gold/90 transition-color duration-300"
+              className=" hover:text-gold/90 transition-colors duration-300"
               href="#"
             >
               Terms of Service

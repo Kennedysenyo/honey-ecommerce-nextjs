@@ -180,8 +180,8 @@ body {
   @apply text-sm sm:text-sm md:text-base;
 }
 
-.ul-link-hover > li > a {
-  @apply hover:text-gold transition-all duration-300;
+.ul-link-hover > li a {
+  @apply hover:text-gold transition-colors duration-300;
 }
 .footer-contact-ul {
   @apply space-y-4;
