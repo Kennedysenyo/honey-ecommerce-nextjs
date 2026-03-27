@@ -30,7 +30,7 @@ export const useProducts = () => {
         const response = await fetch("/api/products");
 
         if (!response.ok) {
-          dispatch({ type: "ERROR", payload: "An Error Occured" });
+          dispatch({ type: "ERROR", payload: "An Error Occurred" });
           return;
         }
 
@@ -50,24 +50,29 @@ export const useProducts = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleSearch = useCallback(
-    (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
-      const value = e.target.value;
+  const handleSearch = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
 
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    setSearchTerm(value);
+
+    timeoutRef.current = setTimeout(() => {
+      dispatch({ type: "FILTER", payload: value });
+    }, 300);
+  }, []);
+
+  useEffect(() => {
+    return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-
-      setSearchTerm(value);
-
-      timeoutRef.current = setTimeout(() => {
-        dispatch({ type: "FILTER", payload: value });
-      }, 300);
-    },
-    [],
-  );
+    };
+  }, []);
 
   const handlePagination = (start: number, limit: number) => {
     dispatch({ type: "PAGINATE", payload: [Math.max(0, start), limit] });

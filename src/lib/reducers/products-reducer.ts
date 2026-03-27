@@ -26,6 +26,7 @@ export const productsReducer = (
     case "ERROR":
       return {
         ...state,
+        loading: false,
         error: action.payload,
         products: [],
         filteredProducts: [],
@@ -37,8 +38,8 @@ export const productsReducer = (
         filteredProducts: action.payload.trim()
           ? state.products.filter((product) =>
               product.name
-                .toLocaleLowerCase()
-                .includes(action.payload.trim().toLocaleLowerCase()),
+                .toLowerCase()
+                .includes(action.payload.trim().toLowerCase()),
             )
           : state.products,
       };
@@ -55,6 +56,6 @@ export const productsReducer = (
         ),
       };
     default:
-      throw "Unknown Action";
+      throw new Error("Unknown Action");
   }
 };

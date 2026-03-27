@@ -5,15 +5,15 @@ import { ChangeEvent, memo } from "react";
 
 interface Props {
   value: string;
-  handler: (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => void;
+  handler: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SearchBar = memo(({ value, handler }: Props) => {
   return (
-    <form className="absolute top-4 z-30 mx-auto w-full section-px-one flex ">
+    <div className="absolute top-4 z-30 mx-auto w-full section-px-one flex ">
       <div className="mx-auto max-w-lg  w-full relative">
         <span>
-          <Search className="icon2 text-amber/70 absolute translate-x-[100%] lg:translate-x-[50%] -translate-y-[50%] top-[50%]" />
+          <Search className="icon2 absolute left-4 top-1/2 -translate-y-1/2 text-amber/70" />{" "}
         </span>
         <input
           aria-label="Search product"
@@ -24,6 +24,6 @@ export const SearchBar = memo(({ value, handler }: Props) => {
           onChange={handler}
         />
       </div>
-    </form>
+    </div>
   );
 });
