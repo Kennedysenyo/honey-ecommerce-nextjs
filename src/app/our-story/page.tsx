@@ -21,7 +21,13 @@ export default function OurStoryPage() {
 
       <section className="section-py-one bg-white">
         <div className="section-max-w mx-auto section-px-one">
-          <div className="space-y-24">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="space-y-24"
+          >
             <div className="grid grid-cols-1 sm:grid-cols-2">
               <figure className="overflow-hidden rounded-2xl">
                 <img
@@ -52,9 +58,16 @@ export default function OurStoryPage() {
                 </p>
               </div>
             </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2">
-              <div className="flex flex-col justify-center p-6 md:p-8">
-                <div className="space-y-4">
+              <div className="flex flex-col justify-center p-8 md:p-12">
+                <motion.div
+                  initial={{ opacity: 0, x: -50 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 1.1, ease: "easeOut" }}
+                  className="space-y-4"
+                >
                   <h2 className="font-heading title-two">Our Process</h2>
                   <p className="leading-7 text-base">
                     We believe in minimal intervention. Our honey is harvested
@@ -74,23 +87,35 @@ export default function OurStoryPage() {
                     <li>Quality tested</li>
                     <li>Sustainably packaged</li>
                   </ul>
-                </div>
+                </motion.div>
               </div>
-              <figure className="aspect-1/2 overflow-hidden rounded-2xl">
+              <motion.figure
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.1, ease: "easeOut" }}
+                viewport={{ once: true, amount: 0.2 }}
+                className="aspect-1/2 overflow-hidden rounded-2xl"
+              >
                 <img
                   src="/images/honey.jpg"
                   alt="Beekeeper"
                   className="w-full h-full object-cover"
                 />
-              </figure>
+              </motion.figure>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <section className="section-py-one bg-cream ">
         <div className="section-max-w mx-auto space-y-12 md:space-y-16 section-px-one">
-          <div className="mx-auto w-fit text-center space-y-4 md:space-y-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="mx-auto w-fit text-center space-y-4 md:space-y-6"
+          >
             <h2 className="font-heading title-two">
               Our Core <span className="text-gold">Values</span>
             </h2>
@@ -98,16 +123,22 @@ export default function OurStoryPage() {
               These principles guide every decision we make and every jar we
               produce.
             </p>
-          </div>
+          </motion.div>
           <InfoCardList features={values} />
         </div>
       </section>
 
       <section className="section-py-one">
         <div className="section-max-w mx-auto section-px-one space-y-8 md:space-y-12">
-          <h2 className="text-center font-heading title-two">
+          <motion.h2
+            initial={{ opacity: 0, y: 60 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="text-center font-heading title-two"
+          >
             Our <span className="text-gold">Impact</span>
-          </h2>
+          </motion.h2>
 
           <ul className="grid grid-cols-1 smd:grid-cols-2 md:grid-cols-3 gap-6 ">
             {badges.map((badge, i) => (
