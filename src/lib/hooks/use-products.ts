@@ -1,7 +1,14 @@
 "use client";
 
 import { ProductsState } from "@/types/types";
-import { useEffect, useReducer } from "react";
+import {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { productsReducer } from "../reducers/products-reducer";
 
 export const useProducts = () => {
@@ -40,5 +47,26 @@ export const useProducts = () => {
     fetchProducts();
   }, []);
 
-  return state;
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>(null);
+
+  const handleSearch = useCallback(
+    (e: ChangeEvent<HTMLInputElement, HTMLInputElement>) => {
+      const value = e.target.value;
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      setSearchTerm(value);
+
+      timeoutRef.current = setTimeout(() => {
+        dispatch({ type: "FILTER", payload: value });
+      }, 300);
+    },
+    [],
+  );
+
+  return { state, searchTerm, handleSearch };
 };

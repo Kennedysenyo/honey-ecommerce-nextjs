@@ -43,7 +43,7 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
           {product.description}
         </p>
 
-        <div className="flex justify-between  items-center gap-2">
+        <div className="flex justify-between flex-wrap items-center gap-2">
           <span className="text-xl font-bold text-gold">₵{product.price}</span>
           <button
             type="button"
