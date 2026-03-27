@@ -11,11 +11,12 @@ export const Pagination = memo(({ numberOfPages, handler }: Props) => {
   const buttonElements = Array.from({ length: numberOfPages }).map((_, i) => (
     <button
       key={i}
+      type="button"
       className="px-4 py-2 rounded-md bg-gold hover:bg-amber text-cream shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
       onClick={() => {
-        const start = ITEMS_PER_PAGE * (i + 1) - ITEMS_PER_PAGE;
-        const limit = ITEMS_PER_PAGE * (i + 1);
-        handler(start, limit);
+        const start = ITEMS_PER_PAGE * i;
+        const end = ITEMS_PER_PAGE * (i + 1);
+        handler(start, end);
       }}
     >
       {i + 1}
