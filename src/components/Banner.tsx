@@ -23,12 +23,12 @@ export const Banner = ({ title, subtitle, image }: Props) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="p-6 rounded-2xl text-center text-background w-full space-y-2 md:space-y-4 max-w-4xl mx-auto"
+            className="p-6 rounded-2xl text-center w-full space-y-2 md:space-y-4 max-w-4xl mx-auto"
           >
-            <h1 className="font-heading title-one text-gold text-shadow-sm">
+            <h1 className="font-heading title-one text-background text-shadow-sm">
               {title}
             </h1>
-            <p className="subtitle-one">{subtitle}</p>
+            <p className="subtitle-one text-accent-gold">{subtitle}</p>
           </motion.div>
         </div>
       </div>
