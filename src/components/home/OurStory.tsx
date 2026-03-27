@@ -2,6 +2,7 @@
 
 import { features } from "@/lib/utils/dummy-data/features";
 import { motion } from "motion/react";
+import { InfoCardList } from "../InfoCardList";
 
 export const OurStory = () => {
   return (
@@ -31,7 +32,7 @@ export const OurStory = () => {
           </p>
         </motion.div>
 
-        <div className="overflow-hidden grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div className="overflow-hidden grid grid-cols-1 lg:grid-cols-2 ">
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -50,7 +51,7 @@ export const OurStory = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 1.1, ease: "easeInOut" }}
-            className="flex flex-col justify-center gap-8"
+            className="flex flex-col justify-center gap-8 p-6 md:p-8"
           >
             <div className="space-y-4 max-w-3xl">
               <h3 className="title-three font-heading">
@@ -83,24 +84,7 @@ export const OurStory = () => {
           </motion.div>
         </div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {features.map((feature, i) => (
-            <motion.li
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: "easeInOut", delay: i * 0.1 }}
-              key={feature.title}
-              className="text-center flex flex-col items-center gap-4 p-6 rounded-2xl bg-white shadow-md "
-            >
-              <span className="p-4 text-cream gradient-to-br rounded-full">
-                <feature.icon className="icon-lg" />
-              </span>
-              <h3 className="title-four font-semibold">{feature.title}</h3>
-              <p className="text-sm leading-6">{feature.description}</p>
-            </motion.li>
-          ))}
-        </ul>
+        <InfoCardList features={features} />
       </div>
     </section>
   );

@@ -29,8 +29,8 @@ export const testimonials = [
 ];
 
 export const badges = [
-  { label: "100% Pure", sublabel: "No Additives" },
-  { label: "Organic", sublabel: "Naturally Sourced" },
-  { label: "Quality", sublabel: "Guaranteed" },
-  { label: "Locally", sublabel: "Harvested" },
+  { id: 1, label: "100% Pure", sublabel: "No Additives" },
+  { id: 2, label: "Organic", sublabel: "Naturally Sourced" },
+  { id: 3, label: "Quality", sublabel: "Guaranteed" },
+  { id: 4, label: "Locally", sublabel: "Harvested" },
 ];

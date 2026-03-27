@@ -7,6 +7,7 @@ interface Props {
   numberOfPages: number;
   handler: (start: number, limit: number) => void;
 }
+
 export const Pagination = memo(({ numberOfPages, handler }: Props) => {
   const buttonElements = Array.from({ length: numberOfPages }).map((_, i) => (
     <button

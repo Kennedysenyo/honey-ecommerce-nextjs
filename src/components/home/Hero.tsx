@@ -23,7 +23,7 @@ export const HeroSection = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30 pt-4 sm:pt-6 md:pt-0">
         <div className="section-max-w mx-auto h-full flex flex-col justify-center gap-4 md:gap-0">
-          <div className="section-px-one grid grid-cols-1 md:grid-cols-2">
+          <div className="section-px-one grid grid-cols-1 sm:grid-cols-2">
             <div className="py-2 sm:py-8 flex flex-col justify-center ">
               <motion.div
                 initial={{ opacity: 0, y: 24 }}

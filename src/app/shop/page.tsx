@@ -15,9 +15,9 @@ export default function ShopPage() {
       <Banner
         title="Shop Our Premium Honey "
         subtitle="Browse our complete collection of pure, natural honey products."
-        image="/images/shop-banner2.jpg"
+        image="/images/shop-banner.jpg"
       />
-      <section className="section-py-one relative bg-cream/40">
+      <section className="section-py-one relative bg-background">
         <SearchBar handler={handleSearch} value={searchTerm} />
         <div className="section-max-w mt-4 section-px-one mx-auto">
           {state.loading ? (

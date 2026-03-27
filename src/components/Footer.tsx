@@ -8,7 +8,7 @@ export const Footer = () => {
   return (
     <footer className="section-py-one bg-foreground">
       <div className="section-max-w text-cream/90 section-px-one mx-auto space-y-8 ">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
           <div className="space-y-4 ">
             <h4 className="font-heading title-four text-gold">
               Honey Man <span className="text-background">Ghana</span>
@@ -117,7 +117,7 @@ export const Footer = () => {
 
         <hr className="border-cream/20" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 text-cream/50 gap-y-4 gap-x-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 text-cream/50 gap-y-4 gap-x-12">
           <p className="text-center md:text-left">
             © {new Date().getFullYear()}{" "}
             <Link

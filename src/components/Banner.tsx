@@ -28,7 +28,7 @@ export const Banner = ({ title, subtitle, image }: Props) => {
             <h1 className="font-heading title-one text-background text-shadow-sm">
               {title}
             </h1>
-            <p className="subtitle-one text-accent-gold">{subtitle}</p>
+            <p className="subtitle-one text-accent-gold max-w-lg">{subtitle}</p>
           </motion.div>
         </div>
       </div>

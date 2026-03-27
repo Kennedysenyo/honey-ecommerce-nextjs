@@ -22,7 +22,7 @@ export const Testimonials = () => {
           </p>
         </motion.div>
 
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6 sm:gap-8">
+        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6 sm:gap-8">
           {testimonials.map((testimonial, i) => (
             <motion.li
               initial={{ opacity: 0, y: 50 }}
@@ -80,7 +80,7 @@ export const Testimonials = () => {
                 delay: (testimonials.length + i) * 0.1,
               }}
               className="rounded-2xl gradient-to-br p-6 text-center text-cream shadow-md"
-              key={badge.label}
+              key={badge.id}
             >
               <h4 className="font-heading title-four font-semibold">
                 {badge.label}

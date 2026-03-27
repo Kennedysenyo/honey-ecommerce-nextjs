@@ -64,7 +64,7 @@ export const Header = () => {
   const navLinksElements = NAV_LINKS.map((link) => (
     <li key={link.path}>
       <Link
-        className={`${pathname === link.path ? "text-gold" : scrolled ? "" : "text-cream text-shadow-sm"} hover:text-gold`}
+        className={`${pathname === link.path ? (scrolled ? "text-gold" : "text-accent-gold") : scrolled ? "" : "text-cream text-shadow-sm"} hover:text-gold`}
         href={link.path}
       >
         {link.label}
