@@ -17,6 +17,7 @@ export const useProducts = () => {
     error: null,
     products: [],
     filteredProducts: [],
+    paginatedProducts: [],
   };
 
   const [state, dispatch] = useReducer(productsReducer, initialState);
@@ -68,5 +69,9 @@ export const useProducts = () => {
     [],
   );
 
-  return { state, searchTerm, handleSearch };
+  const handlePagination = (start: number, limit: number) => {
+    dispatch({ type: "PAGINATE", payload: [Math.max(0, start), limit] });
+  };
+
+  return { state, searchTerm, handleSearch, handlePagination };
 };

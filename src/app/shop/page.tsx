@@ -2,11 +2,13 @@
 
 import { Banner } from "@/components/Banner";
 import { ProductsList } from "@/components/ProductsList";
+import { Pagination } from "@/components/shop/Pagination";
 import { SearchBar } from "@/components/shop/SearchBar";
 import { useProducts } from "@/lib/hooks/use-products";
+import { ITEMS_PER_PAGE } from "@/lib/reducers/products-reducer";
 
 export default function ShopPage() {
-  const { state, handleSearch, searchTerm } = useProducts();
+  const { state, handleSearch, searchTerm, handlePagination } = useProducts();
 
   return (
     <div className="">
@@ -25,8 +27,14 @@ export default function ShopPage() {
               <p className="text-lg text-red-600">{state.error}</p>
             </div>
           ) : (
-            <ProductsList products={state.filteredProducts} />
+            <ProductsList products={state.paginatedProducts} />
           )}
+          <Pagination
+            numberOfPages={Math.ceil(
+              state.filteredProducts.length / ITEMS_PER_PAGE,
+            )}
+            handler={handlePagination}
+          />
         </div>
       </section>
     </div>

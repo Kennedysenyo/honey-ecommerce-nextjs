@@ -25,7 +25,7 @@ export const ProductsPreview = () => {
           </p>
         </motion.div>
 
-        <ProductsList products={products} />
+        <ProductsList products={products.slice(0, 4)} />
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

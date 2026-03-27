@@ -14,10 +14,12 @@ export type ProductsState = {
   error: string | null;
   products: Product[];
   filteredProducts: Product[];
+  paginatedProducts: Product[];
 };
 
 export type ProductsStateAction =
   | { type: "LOADING" }
   | { type: "PRODUCTS_FETCHED"; payload: Product[] }
   | { type: "ERROR"; payload: string }
-  | { type: "FILTER"; payload: string };
+  | { type: "FILTER"; payload: string }
+  | { type: "PAGINATE"; payload: [number, number] };
