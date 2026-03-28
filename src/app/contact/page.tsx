@@ -1,5 +1,27 @@
+"use client";
+
+import { motion } from "motion/react";
 import { Banner } from "@/components/Banner";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
+
+const list = {
+  hidden: { opacity: 0, x: -40 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      duration: 0.6,
+      staggerChildren: 0.2,
+    },
+  },
+};
+const listItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
 
 export default function ContactPage() {
   return (
@@ -13,7 +35,13 @@ export default function ContactPage() {
       <section className="section-py-one bg-linear-to-br from-cream to-background">
         <div className="section-max-w section-px-one mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="space-y-8 h-fit">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
+              className="space-y-8 h-fit"
+            >
               <h2 className="font-heading title-two">Contact Information</h2>
               <p className="max-w-md leading-6 font-medium text-lg">
                 Whether you're a customer, potential partner, or just curious
@@ -21,8 +49,25 @@ export default function ContactPage() {
                 of these channels.
               </p>
 
-              <ul className="space-y-6 ">
-                <li className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md">
+              <motion.ul
+                variants={list}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                className="space-y-6"
+              >
+                <motion.li
+                  variants={listItem}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.1,
+                    ease: "easeOut",
+                  }}
+                  className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md"
+                >
                   <span className="p-3 rounded-full gradient-to-br">
                     <MapPin className="icon2 text-cream" />
                   </span>
@@ -31,8 +76,19 @@ export default function ContactPage() {
                     <p className="font-medium text-lg">Somanya, E/R, Ghana</p>
                     <p className="font-medium text-lg">West Africa</p>
                   </div>
-                </li>
-                <li className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md">
+                </motion.li>
+                <motion.li
+                  variants={listItem}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.3,
+                    ease: "easeOut",
+                  }}
+                  className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md"
+                >
                   <span className="p-3 rounded-full gradient-to-br">
                     <Phone className="icon2 text-cream" />
                   </span>
@@ -40,8 +96,19 @@ export default function ContactPage() {
                     <p className="font-semibold text-lg">Phone</p>
                     <p className="font-medium text-lg">+233 123 456 789</p>
                   </div>
-                </li>
-                <li className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md">
+                </motion.li>
+                <motion.li
+                  variants={listItem}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.5,
+                    ease: "easeOut",
+                  }}
+                  className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md"
+                >
                   <span className="p-3 rounded-full gradient-to-br">
                     <Mail className="icon2 text-cream" />
                   </span>
@@ -49,10 +116,16 @@ export default function ContactPage() {
                     <p className="font-semibold text-lg">Email</p>
                     <p className="font-medium text-lg">info@ghoneyman.com</p>
                   </div>
-                </li>
-              </ul>
+                </motion.li>
+              </motion.ul>
 
-              <div className="space-y-2 p-6 rounded-2xl gradient-to-br text-cream">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="space-y-2 p-6 rounded-2xl gradient-to-br text-cream"
+              >
                 <h4 className="font-heading title-four text-background">
                   Business Hours
                 </h4>
@@ -65,10 +138,16 @@ export default function ContactPage() {
                   </li>
                   <li className="font-medium text-lg">Sunday: Closed</li>
                 </ul>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            <div className="bg-background p-8 rounded-2xl shadow-lg">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 1.1, ease: "easeOut" }}
+              className="bg-background p-8 rounded-2xl shadow-lg"
+            >
               <form className="space-y-6">
                 <h2 className="font-heading title-two">Send Us a Message</h2>
                 <div className="space-y-6">
@@ -139,7 +218,7 @@ export default function ContactPage() {
                   </button>
                 </div>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
