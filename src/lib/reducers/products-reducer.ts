@@ -1,6 +1,6 @@
 import { ProductsState, ProductsStateAction } from "@/types/types";
 
-export const ITEMS_PER_PAGE = 6;
+export const ITEMS_PER_PAGE = 8;
 
 export const productsReducer = (
   state: ProductsState,
