@@ -7,7 +7,7 @@ export const GET = async () => {
     return new Promise((resolve, reject) =>
       setTimeout(() => {
         resolve(NextResponse.json({ products }, { status: 200 }));
-      }, 3000),
+      }, 1000),
     );
     // return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
