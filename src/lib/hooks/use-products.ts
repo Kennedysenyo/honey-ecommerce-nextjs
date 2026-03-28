@@ -74,9 +74,9 @@ export const useProducts = () => {
     };
   }, []);
 
-  const handlePagination = (start: number, end: number) => {
+  const handlePagination = useCallback((start: number, end: number) => {
     dispatch({ type: "PAGINATE", payload: [Math.max(0, start), end] });
-  };
+  }, []);
 
   return { state, searchTerm, handleSearch, handlePagination };
 };
