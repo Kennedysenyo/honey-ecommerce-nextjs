@@ -25,7 +25,7 @@ export default function OurStoryPage() {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
             className="space-y-24"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2">

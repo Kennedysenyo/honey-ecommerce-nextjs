@@ -84,7 +84,7 @@ export default function ContactPage() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.3,
+                    delay: 0.25,
                     ease: "easeOut",
                   }}
                   className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md"
@@ -104,7 +104,7 @@ export default function ContactPage() {
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{
                     duration: 0.6,
-                    delay: 0.5,
+                    delay: 0.35,
                     ease: "easeOut",
                   }}
                   className="flex items-start gap-4 bg-background p-4 rounded-2xl shadow-md"
@@ -123,7 +123,7 @@ export default function ContactPage() {
                 initial={{ opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.45 }}
                 className="space-y-2 p-6 rounded-2xl gradient-to-br text-cream"
               >
                 <h4 className="font-heading title-four text-background">
