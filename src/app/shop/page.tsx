@@ -11,13 +11,13 @@ export default function ShopPage() {
   const { state, handleSearch, searchTerm, handlePagination } = useProducts();
 
   return (
-    <div className="">
+    <>
       <Banner
         title="Shop Our Premium Honey "
         subtitle="Browse our complete collection of pure, natural honey products."
         image="/images/shop-banner.jpg"
       />
-      <section className="section-py-one relative bg-background">
+      <section className="section-py-one relative bg-linear-to-br from-cream to-background">
         <SearchBar handler={handleSearch} value={searchTerm} />
         <div className="section-max-w mt-4 section-px-one mx-auto">
           {state.loading ? (
@@ -37,6 +37,6 @@ export default function ShopPage() {
           />
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -51,7 +51,7 @@ export const CallToAction = () => {
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="px-6 py-3 text-base font-semibold text-gold cursor-pointer text-lg flex items-center justify-center gap-2 bg-white h-12 md:h-14 rounded-full shadow-md w-full"
+            className="px-6 py-3 text-base font-semibold text-gold cursor-pointer text-lg flex items-center justify-center gap-2 bg-white h-12 md:h-14 rounded-full shadow-md w-full items-center gap-2 rounded-full bg-gold hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300"
           >
             Subscribe <Send className="icon" />
           </motion.button>

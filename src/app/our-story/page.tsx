@@ -12,7 +12,7 @@ export const badges = [
 
 export default function OurStoryPage() {
   return (
-    <div>
+    <>
       <Banner
         title="Our Story"
         subtitle="Honey Man founded on a simple belief: that nature's gifts should be shared in their purest form."
@@ -164,6 +164,6 @@ export default function OurStoryPage() {
       </section>
 
       <CallToAction />
-    </div>
+    </>
   );
 }
