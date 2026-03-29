@@ -21,22 +21,28 @@ export default function OurStoryPage() {
 
       <section className="section-py-one bg-white">
         <div className="section-max-w mx-auto section-px-one">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
-            className="space-y-24"
-          >
+          <div className="space-y-24">
             <div className="grid grid-cols-1 sm:grid-cols-2">
-              <figure className="overflow-hidden rounded-2xl">
+              <motion.figure
+                initial={{ opacity: 0, x: -50 }}
+                animate={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+                className="overflow-hidden rounded-2xl"
+              >
                 <img
                   src="/images/bee-keepers.jpg"
                   alt="Bee Keepers"
                   className="w-full h-full object-cover"
                 />
-              </figure>
-              <div className="space-y-4 md:space-y-6 p-6 md:p-8">
+              </motion.figure>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                animate={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.9, ease: "easeOut", delay: 0.2 }}
+                className="space-y-4 md:space-y-6 p-6 md:p-8"
+              >
                 <h2 className="font-heading title-two">The Beginning</h2>
                 <p className="leading-7 text-base">
                   Our journey began in the lush forests of Ghana, where local
@@ -56,7 +62,7 @@ export default function OurStoryPage() {
                   possible when tradition meets innovation, and when profit is
                   balanced with purpose.
                 </p>
-              </div>
+              </motion.div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2">
@@ -103,7 +109,7 @@ export default function OurStoryPage() {
                 />
               </motion.figure>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
