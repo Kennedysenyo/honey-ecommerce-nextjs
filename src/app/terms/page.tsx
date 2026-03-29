@@ -276,13 +276,14 @@ export default function TermsPage() {
             </p>
             <ul className="list disc-gold">
               <li>
-                <b>Email</b>: info@honeyman.com
+                <span className="font-semibold">Email</span>: info@honeyman.com
               </li>
               <li>
-                <b>Phone</b>: +233 123 456 789
+                <span className="font-semibold">Phone</span>: +233 123 456 789
               </li>
               <li>
-                <b>Location</b>: Somanya, E/R, Ghana
+                <span className="font-semibold">Location</span>: Somanya, E/R,
+                Ghana
               </li>
             </ul>
           </div>
