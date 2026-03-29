@@ -131,13 +131,13 @@ export const Footer = () => {
           <div className="flex items-center flex-wrap justify-center md:justify-start gap-6">
             <Link
               className=" hover:text-gold/90 transition-colors duration-300"
-              href="#"
+              href="/privacy-policy"
             >
               Privacy Policy
             </Link>
             <Link
               className=" hover:text-gold/90 transition-colors duration-300"
-              href="#"
+              href="/terms"
             >
               Terms of Service
             </Link>
