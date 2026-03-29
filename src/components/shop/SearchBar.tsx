@@ -10,9 +10,9 @@ interface Props {
 
 export const SearchBar = memo(({ value, handler }: Props) => {
   return (
-    <div className="absolute top-4 z-30 w-full section-px-one flex ">
+    <div className="absolute top-4 z-30 w-full flex ">
       <div className="section-max-w w-full section-px-one mx-auto flex items-center justify-center md:justify-end">
-        <div className="max-w-xs sm:max-w-sm    w-full relative">
+        <div className="max-w-xs sm:max-w-sm w-full relative">
           <span>
             <Search className="icon2 absolute left-4 top-1/2 -translate-y-1/2 text-amber/70" />
           </span>

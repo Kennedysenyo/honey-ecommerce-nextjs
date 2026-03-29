@@ -1,6 +1,6 @@
 "use client";
 import { Banner } from "@/components/Banner";
-import { CallToAction } from "@/components/home/CallToAction";
+import { CallToAction } from "@/components/CallToAction";
 import { InfoCardList } from "@/components/InfoCardList";
 import { values } from "@/lib/utils/dummy-data/values";
 import { motion } from "motion/react";

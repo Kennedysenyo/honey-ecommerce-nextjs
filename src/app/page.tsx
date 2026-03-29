@@ -1,4 +1,4 @@
-import { CallToAction } from "@/components/home/CallToAction";
+import { CallToAction } from "@/components/CallToAction";
 import { HeroSection } from "@/components/home/Hero";
 import { OurStory } from "@/components/home/OurStory";
 import { ProductsPreview } from "@/components/home/ProductsPreview";

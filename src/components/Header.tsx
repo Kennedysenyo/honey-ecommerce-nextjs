@@ -4,7 +4,7 @@ import { Menu, ShoppingCart, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { path: "/", label: "Home" },
@@ -131,6 +131,7 @@ export const Header = () => {
             <motion.nav
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
+              transition={{ ease: "easeInOut" }}
               exit={{ opacity: 0, height: 0 }}
               className=" md:hidden bg-white shadow-lg border-t border-gold/20"
             >
@@ -141,12 +142,13 @@ export const Header = () => {
                 exit="hidden"
                 className="p-4 text-lg  space-y-3"
               >
-                {NAV_LINKS.map((link) => (
+                {NAV_LINKS.map((link, i) => (
                   <motion.li
                     variants={item}
                     initial="hidden"
                     animate="visible"
                     exit="hidden"
+                    transition={{ delay: i * 0.2 }}
                     className=" font-medium"
                     key={link.path}
                   >
@@ -164,13 +166,15 @@ export const Header = () => {
           )}
         </AnimatePresence>
       </header>
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className={`${isMobileOpen ? "fixed bg-black/20 inset-0 z-40" : "hidden"}`}
-        onClick={() => setIsMobileOpen(false)}
-      ></motion.div>
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className={`${isMobileOpen ? "fixed bg-black/20 inset-0 z-40" : "hidden"}`}
+          onClick={() => setIsMobileOpen(false)}
+        ></motion.div>
+      </AnimatePresence>
     </>
   );
 };

@@ -6,7 +6,7 @@ export default function TermsPage() {
   return (
     <>
       <Banner
-        title="Term & Conditions"
+        title="Terms & Conditions"
         subtitle={`Last updated: ${date}`}
         image="/images/terms-banner.jpg"
       />

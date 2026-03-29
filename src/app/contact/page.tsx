@@ -10,8 +10,8 @@ const list = {
     opacity: 1,
     x: 0,
     transition: {
-      duration: 0.6,
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
+      delayChildren: 0.5,
     },
   },
 };
@@ -60,7 +60,7 @@ export default function ContactPage() {
                   variants={listItem}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, amount: 0.3 }}
+                  viewport={{ once: true, amount: 0.2 }}
                   transition={{
                     duration: 0.6,
                     delay: 0.1,
@@ -146,7 +146,7 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 1.1, ease: "easeOut" }}
-              className="bg-background p-8 rounded-2xl shadow-lg"
+              className="bg-background p-8 rounded-2xl shadow-lg flex flex-col justify-center"
             >
               <form className="space-y-6">
                 <h2 className="font-heading title-two">Send Us a Message</h2>
@@ -213,7 +213,10 @@ export default function ContactPage() {
                       ></textarea>
                     </div>
                   </div>
-                  <button className="flex w-full justify-center items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 px-8 py-4 text-cream leading-tight">
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className="flex w-full justify-center items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 px-8 py-4 text-cream leading-tight"
+                  >
                     Send Message <Send className="icon3" />
                   </button>
                 </div>
