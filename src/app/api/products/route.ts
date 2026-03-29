@@ -1,15 +1,11 @@
 import { products } from "@/lib/utils/dummy-data/products";
-
 import { NextResponse } from "next/server";
 
-export const GET = async () => {
+export async function GET(): Promise<Response> {
   try {
-    return new Promise((resolve, reject) =>
-      setTimeout(() => {
-        resolve(NextResponse.json({ products }, { status: 200 }));
-      }, 1000),
-    );
-    // return NextResponse.json({ products }, { status: 200 });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    return NextResponse.json({ products }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       {
@@ -19,4 +15,4 @@ export const GET = async () => {
       { status: 400 },
     );
   }
-};
+}
