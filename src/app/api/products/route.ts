@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
 
     return NextResponse.json({ products }, { status: 200 });
   } catch (error) {

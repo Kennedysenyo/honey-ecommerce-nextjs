@@ -133,6 +133,20 @@
         60px 100%;
     }
   }
+
+  .abs-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .abs-left {
+    left: 1;
+  }
+
+  .abs-right {
+    right: 1;
+  }
 }
 
 body {

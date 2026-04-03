@@ -4,7 +4,7 @@ export type Product = {
   description: string;
   price: number;
   size: string;
-  image: string;
+  image: string | string[];
   benefits: string[];
   ingredients: string[];
 };

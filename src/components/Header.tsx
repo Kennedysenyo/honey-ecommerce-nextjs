@@ -103,7 +103,7 @@ export const Header = () => {
                 className={`${scrolled ? "hover:bg-cream" : "bg-cream/20"} group md:mr-8 p-2 md:p-3 rounded-full  `}
               >
                 <ShoppingCart
-                  className={`icon2 ${scrolled ? "" : "text-cream "} group-hover:text-accent-gold `}
+                  className={`icon3 ${scrolled ? "" : "text-cream "} group-hover:text-accent-gold `}
                 />
               </button>
             )}

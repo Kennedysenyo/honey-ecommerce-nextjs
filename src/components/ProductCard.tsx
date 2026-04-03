@@ -19,11 +19,13 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="group bg-white rounded-2xl overflow-hidden shadow-md hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
     >
-      <Link href={`/product/${product.id}`} className="block">
+      <Link href={`/shop/${product.id}/product-details`} className="block">
         <div className="relative overflow-hidden aspect-square">
           <img
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            src={product.image}
+            src={
+              Array.isArray(product.image) ? product.image[0] : product.image
+            }
             alt={product.name}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -32,7 +34,7 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
 
       <div className="p-6">
         <div className="flex items-start justify-between mb-2">
-          <Link href={`/product/${product.id}`}>
+          <Link href={`/shop/${product.id}/product-details`}>
             <h3 className="font-heading font-semibold title-four group-hover:text-gold transition-colors duration-300">
               {product.name}
             </h3>
