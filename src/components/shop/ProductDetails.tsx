@@ -5,6 +5,7 @@ import { ArrowLeft, Check, Minus, Plus, ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ProductImagesPreview } from "./ProductImagesPreview";
 import { useState } from "react";
+import { motion } from "motion/react";
 
 interface Props {
   product: Product;
@@ -38,13 +39,24 @@ export const ProductDetails = ({ product }: Props) => {
             </button>
           </div>
           <div className="flex-1 section-px-one section-max-w mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 w-full ">
-            <div className="">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+            >
               <ProductImagesPreview
                 images={product.image}
                 name={product.name}
               />
-            </div>
-            <div className="px-8">
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
+              viewport={{ once: true, amount: 0.2 }}
+              className="px-8"
+            >
               <div className="space-y-8">
                 <h1 className="title-one font-heading">{product.name}</h1>
 
@@ -92,15 +104,22 @@ export const ProductDetails = ({ product }: Props) => {
                     </button>
                   </div>
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.9 }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 15,
+                  }}
                   type="button"
-                  className="px-6 py-3 flex items-center cursor-pointer gap-2 hover:bg-amber/90 transition-all duration-300 justify-center w-full bg-gold text-background text-lg rounded-full"
+                  className="px-6 py-3 flex items-center cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full"
                 >
                   <ShoppingCart className="icon3" />
                   Add to Cart
-                </button>
+                </motion.button>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
