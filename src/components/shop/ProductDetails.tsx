@@ -37,7 +37,8 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
             }
             alt=""
           />
-          <div className="absolute inset-0 bg-linear-to-t from-cream from-20% via-40% via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-linear-to-t from-cream from-20% via-40% via-black/80 to-transparent" />
         </figure>
         <div className="py-3 flex-1 bg-cream/90 ">
           <div className="w-full section-max-w section-px-one mx-auto mb-6">
@@ -79,7 +80,9 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                 </p>
                 <p className="font-medium leading-8">{product.description}</p>
                 <div>
-                  <h3 className="font-heading title-three mb-4">Ingredients</h3>
+                  <h3 className="font-heading title-three mb-4">
+                    Health Benefits
+                  </h3>
                   <ul className="grid grid-cols-2 gap-4">
                     {product.benefits.map((ben, i) => (
                       <li
