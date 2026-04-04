@@ -15,16 +15,13 @@ export default async function ({
   }
 
   const similarProducts = products.filter((prod) => {
-    for (const term of product.name.split("")) {
-      if (prod.name.includes(term)) return true;
-    }
-    return false;
+    const terms = product.name.toLowerCase().split(" ");
+
+    return (
+      terms.some((term) => prod.name.toLocaleLowerCase().includes(term)) &&
+      prod.name.toLowerCase() !== product.name.toLowerCase()
+    );
   });
 
-  // for (const prod of products) {
-  //   for (const term of product.name.split("")) {
-  //     if (prod.name.includes(term)) return prod;
-  //   }
-  // }
   return <ProductDetails product={product} similarProducts={similarProducts} />;
 }

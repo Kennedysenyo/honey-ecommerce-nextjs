@@ -125,7 +125,7 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                     damping: 15,
                   }}
                   type="button"
-                  className="px-6 py-3 flex items-center cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full"
+                  className="px-6 py-3 flex items-center shadow-lg cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full"
                 >
                   <ShoppingCart className="icon3" />
                   Add to Cart

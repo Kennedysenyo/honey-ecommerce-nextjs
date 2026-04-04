@@ -10,15 +10,6 @@ export const products: Product[] = [
     size: "500ml",
     image: [
       "https://images.unsplash.com/photo-1719871766551-b9ecf87eee51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25leSUyMGphciUyMGVsZWdhbnQlMjBnbGFzc3xlbnwxfHx8fDE3NzI1NTQ4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1695638696498-706b5082eeb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3Jlc3QlMjBob25leSUyMHByZW1pdW0lMjBib3R0bGV8ZW58MXx8fHwxNzcyNTU0ODkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-
-      "https://images.unsplash.com/photo-1719871766551-b9ecf87eee51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25leSUyMGphciUyMGVsZWdhbnQlMjBnbGFzc3xlbnwxfHx8fDE3NzI1NTQ4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1695638696498-706b5082eeb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3Jlc3QlMjBob25leSUyMHByZW1pdW0lMjBib3R0bGV8ZW58MXx8fHwxNzcyNTU0ODkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-
-      "https://images.unsplash.com/photo-1719871766551-b9ecf87eee51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25leSUyMGphciUyMGVsZWdhbnQlMjBnbGFzc3xlbnwxfHx8fDE3NzI1NTQ4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      "https://images.unsplash.com/photo-1695638696498-706b5082eeb8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb3Jlc3QlMjBob25leSUyMHByZW1pdW0lMjBib3R0bGV8ZW58MXx8fHwxNzcyNTU0ODkxfDA&ixlib=rb-4.1.0&q=80&w=1080",
-
-      "https://images.unsplash.com/photo-1719871766551-b9ecf87eee51?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxob25leSUyMGphciUyMGVsZWdhbnQlMjBnbGFzc3xlbnwxfHx8fDE3NzI1NTQ4OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
     ],
     benefits: [
       "Natural energy booster",
