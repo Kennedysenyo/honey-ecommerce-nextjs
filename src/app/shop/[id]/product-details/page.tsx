@@ -13,5 +13,18 @@ export default async function ({
   if (!product) {
     notFound();
   }
-  return <ProductDetails product={product} />;
+
+  const similarProducts = products.filter((prod) => {
+    for (const term of product.name.split("")) {
+      if (prod.name.includes(term)) return true;
+    }
+    return false;
+  });
+
+  // for (const prod of products) {
+  //   for (const term of product.name.split("")) {
+  //     if (prod.name.includes(term)) return prod;
+  //   }
+  // }
+  return <ProductDetails product={product} similarProducts={similarProducts} />;
 }

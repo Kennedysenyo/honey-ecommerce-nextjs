@@ -1,17 +1,29 @@
 "use client";
 
 import { Product } from "@/types/types";
-import { ArrowLeft, Check, Minus, Plus, ShoppingCart } from "lucide-react";
+import {
+  ArrowLeft,
+  Award,
+  Check,
+  Gift,
+  Leaf,
+  Minus,
+  Plus,
+  ShoppingCart,
+  Sprout,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ProductImagesPreview } from "./ProductImagesPreview";
 import { useState } from "react";
 import { motion } from "motion/react";
+import { ProductsList } from "../ProductsList";
 
 interface Props {
   product: Product;
+  similarProducts: Product[];
 }
 
-export const ProductDetails = ({ product }: Props) => {
+export const ProductDetails = ({ product, similarProducts }: Props) => {
   const router = useRouter();
   const [count, setCount] = useState(0);
 
@@ -118,12 +130,41 @@ export const ProductDetails = ({ product }: Props) => {
                   <ShoppingCart className="icon3" />
                   Add to Cart
                 </motion.button>
+                <hr className="border-b border-gray-200" />
+
+                <div className="flex flex-wrap items-center justify-center sm:justify-between gap-4">
+                  <span className="text-xs flex flex-col gap-2 items-center text-semibold">
+                    <Sprout className="icon text-green-400" />
+                    100% Natrual
+                  </span>
+                  <span className="text-xs flex flex-col gap-2 items-center text-semibold">
+                    <Gift className="icon text-gold" />
+                    Free Shipping for 100+ Orders
+                  </span>
+                  <span className="text-xs flex flex-col gap-2 items-center text-semibold">
+                    <Award className="icon text-orange-400" />
+                    Quality Guranteed
+                  </span>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
-      <div>The Similar product section</div>
+      <section className="section-py-one bg-cream">
+        <div className="section-max-w section-px-one mx-auto space-y-16">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.2 }}
+            className="font-heading title-two text-center"
+          >
+            You May Also Like
+          </motion.h2>
+          <ProductsList products={similarProducts.slice(0, 4)} />
+        </div>
+      </section>
     </>
   );
 };
