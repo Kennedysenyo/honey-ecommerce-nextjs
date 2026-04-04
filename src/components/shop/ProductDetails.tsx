@@ -5,12 +5,11 @@ import {
   ArrowLeft,
   Award,
   Check,
-  Gift,
-  Leaf,
   Minus,
   Plus,
   ShoppingCart,
   Sprout,
+  Truck,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ProductImagesPreview } from "./ProductImagesPreview";
@@ -93,7 +92,7 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                   </ul>
                 </div>
                 <div className="p-4 bg-gold/10 rounded-lg space-y-2">
-                  <p className="font-medium">Ingredients:</p>
+                  <p className="font-semibold">Ingredients:</p>
                   <p>{product.ingredients}</p>
                 </div>
                 <div className="flex items-center gap-4">
@@ -138,7 +137,7 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                     100% Natrual
                   </span>
                   <span className="text-xs flex flex-col gap-2 items-center text-semibold">
-                    <Gift className="icon text-gold" />
+                    <Truck className="icon text-gold" />
                     Free Shipping for 100+ Orders
                   </span>
                   <span className="text-xs flex flex-col gap-2 items-center text-semibold">

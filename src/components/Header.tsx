@@ -1,10 +1,11 @@
 "use client";
 
-import { Menu, ShoppingCart, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { CartButton } from "./cartButton";
 
 const NAV_LINKS = [
   { path: "/", label: "Home" },
@@ -98,15 +99,7 @@ export const Header = () => {
           </nav>
 
           <div className="flex items-center gap-8">
-            {!isMobileOpen && (
-              <button
-                className={`${scrolled ? "hover:bg-cream" : "bg-cream/20"} group md:mr-8 p-2 md:p-3 rounded-full  `}
-              >
-                <ShoppingCart
-                  className={`icon3 ${scrolled ? "" : "text-cream "} group-hover:text-accent-gold `}
-                />
-              </button>
-            )}
+            {!isMobileOpen && <CartButton scrolled={scrolled} />}
 
             <button
               className="md:hidden"

@@ -4,6 +4,7 @@ import { Product } from "@/types/types";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { motion } from "motion/react";
+import { useCart } from "@/lib/hooks/useCart";
 
 interface Props {
   product: Product;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const ProductCard = ({ product, index = 0 }: Props) => {
+  const { dispatch } = useCart();
   return (
     <motion.li
       initial={{ opacity: 0, y: 50 }}
@@ -51,7 +53,10 @@ export const ProductCard = ({ product, index = 0 }: Props) => {
             type="button"
             className="flex items-center gap-2 rounded-full bg-gold hover:bg-amber hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold/60 cursor-pointer transition-all duration-300 cta-btn-p text-cream leading-tight"
             onClick={() => {
-              product.id;
+              dispatch({
+                type: "ADD_PRODUCT",
+                payload: { product, quantity: 1 },
+              });
             }}
           >
             <ShoppingCart className="icon3" />

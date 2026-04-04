@@ -23,3 +23,8 @@ export type ProductsStateAction =
   | { type: "ERROR"; payload: string }
   | { type: "FILTER"; payload: string }
   | { type: "PAGINATE"; payload: [number, number] };
+
+export type CartItem = {
+  product: Product;
+  quantity: number;
+};
