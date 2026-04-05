@@ -15,8 +15,8 @@ export const HeroSection = () => {
           playsInline
           loop
         >
-          <source src="/videos/hero-video.mp4" type="video/mp4" />
-          <source src="/videos/hero-video.webm" type="video/webm" />
+          <source src="/assets/videos/hero-video.webm" type="video/webm" />
+          <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
         </video>
       </div>
 

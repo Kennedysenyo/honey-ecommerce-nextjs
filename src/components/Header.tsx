@@ -99,6 +99,12 @@ export const Header = () => {
           </nav>
 
           <div className="flex items-center gap-8">
+            <Link
+              className="hidden md:block px-4 py-2 rounded-md bg-gold text-background tracking-wide text-sm hover:bg-amber transition-all duration-300"
+              href="/sign-in"
+            >
+              Sign In
+            </Link>
             {!isMobileOpen && <CartButton scrolled={scrolled} />}
 
             <button
@@ -154,6 +160,22 @@ export const Header = () => {
                     </Link>
                   </motion.li>
                 ))}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{
+                    delay: NAV_LINKS.length * 0.05,
+                    ease: "easeOut",
+                  }}
+                >
+                  <Link
+                    className=" md:hidden block text-center px-4 py-2 rounded-md bg-gold text-background tracking-wide text-sm hover:bg-amber transition-all duration-300"
+                    href="/sign-in"
+                  >
+                    Sign In
+                  </Link>
+                </motion.div>
               </motion.ul>
             </motion.nav>
           )}

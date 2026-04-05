@@ -12,7 +12,7 @@ export const CartButton = ({ scrolled }: Props) => {
   return (
     <button
       onClick={() => dispatch({ type: "OPEN_CART", payload: true })}
-      className={`${scrolled ? "hover:bg-cream" : "bg-cream/20"} group md:mr-8 p-2 md:p-3 rounded-full relative`}
+      className={`${scrolled ? "hover:bg-cream" : "bg-cream/20"} group md:mr-8 p-2 md:p-3 rounded-full relative cursor-pointer`}
     >
       <ShoppingCart
         className={`icon3 ${scrolled ? "" : "text-cream "} group-hover:text-accent-gold `}

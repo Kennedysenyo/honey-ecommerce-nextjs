@@ -42,7 +42,7 @@ export const OurStory = () => {
           >
             <img
               className="w-full h-full object-cover"
-              src="/images/honey-harvesting.jpg"
+              src="/assets/images/honey-harvesting.jpg"
               alt="Honey harvesting"
             />
           </motion.div>

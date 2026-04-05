@@ -127,7 +127,7 @@ export const CartPreview = () => {
               </button>
             </div>
 
-            <div className="flex-1 overflow-auto p-8">
+            <div className="flex-1 overflow-auto p-6">
               {cart.length !== 0 ? (
                 <>
                   <ul className="space-y-4 h-full">{cartProducts}</ul>

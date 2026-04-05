@@ -5,6 +5,9 @@ export type CartState = {
   isOpen: boolean;
 };
 
+// TODO : Save cart to local storage while not signed in.
+// And when signed in, existing and new ones to DB.
+
 export type CartAction =
   | {
       type: "ADD_PRODUCT";
