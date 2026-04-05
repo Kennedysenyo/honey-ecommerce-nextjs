@@ -72,6 +72,7 @@ export default function SignIn() {
                         type="email"
                         name="email"
                         placeholder="johndoe@email.com"
+                        autoComplete="username"
                         className="pl-10 py-2 pr-4 w-full border  border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                     </div>
