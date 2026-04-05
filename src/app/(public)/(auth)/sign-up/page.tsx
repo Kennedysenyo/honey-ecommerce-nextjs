@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
@@ -38,7 +38,7 @@ export default function SignUp() {
       <div className="absolute inset-0 ">
         <img
           className="w-full h-full object-cover"
-          src="/assets/images/sign-in.jpg"
+          src="/assets/images/sign-up.jpg"
         />
       </div>
       <div className=" absolute inset-0 bg-black/35">
@@ -78,7 +78,7 @@ export default function SignUp() {
                       Full Name
                     </label>
                     <div className="relative ">
-                      <Mail className="icon3 absolute top-4 left-3 text-gray-600/70" />
+                      <User className="icon3 absolute top-4 left-3 text-gray-600/70" />
                       <input
                         id="name"
                         type="text"
