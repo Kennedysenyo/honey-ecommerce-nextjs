@@ -6,23 +6,35 @@ import { useEffect, useRef, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "motion/react";
 
-export default function SignIn() {
-  const [reveal, setReveal] = useState(false);
+export default function SignUp() {
+  const [revealPassword, setRevealPassword] = useState(false);
+  const [revealCnfrmPassword, setRevealCnfrmPassword] = useState(false);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     if (passwordRef.current) {
       const originalType = passwordRef.current.type;
-      if (reveal) {
+      if (revealPassword) {
         passwordRef.current.type = "text";
       } else {
         passwordRef.current.type = originalType;
       }
     }
-  }, [reveal, passwordRef.current]);
+  }, [revealPassword, passwordRef.current]);
 
+  useEffect(() => {
+    if (confirmPasswordRef.current) {
+      const originalType = confirmPasswordRef.current.type;
+      if (revealCnfrmPassword) {
+        confirmPasswordRef.current.type = "text";
+      } else {
+        confirmPasswordRef.current.type = originalType;
+      }
+    }
+  }, [revealCnfrmPassword, confirmPasswordRef.current]);
   return (
-    <div className="flex-1 min-h-[900px] bg-amber/10 relative">
+    <div className="flex-1 min-h-[1100px] bg-amber/10 relative">
       <div className="absolute inset-0 ">
         <img
           className="w-full h-full object-cover"
@@ -31,18 +43,18 @@ export default function SignIn() {
       </div>
       <div className=" absolute inset-0 bg-black/35">
         <div className="absolute inset-0 z-10 w-full h-full section-py-one">
-          <div className="section-max-w mx-auto section-px-one h-full flex flex-col gap-4 justify-center ">
+          <div className="section-max-w mx-auto section-px-one h-full flex flex-col justify-center gap-4 ">
             <div className="space-y-12 w-full">
               <div className="space-y-4 text-center">
                 <h1 className="font-heading title-one text-background">
-                  Welcome Back
+                  Join Us
                 </h1>
                 <p className="text-background subtitle-one">
-                  Sign in to your Honey Man account
+                  Create your account and discover premium organic honey
                 </p>
               </div>
 
-              <div className="bg-background p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto space-y-6 ">
+              <div className="bg-background p-8 rounded-2xl shadow-lg w-full max-w-lg mx-auto space-y-6 ">
                 <div>
                   <button className="flex items-center gap-2 justify-center text-xs sm:text-base px-6 py-3 w-full border-2 border-gray-200 rounded-lg hover:border-gray-300 transtion-all duration-300 cursor-pointer">
                     <FcGoogle className="icon" />
@@ -55,15 +67,31 @@ export default function SignIn() {
                 <div className="flex items-center justify-between gap-4">
                   <hr className="border border-gray-200  flex-1" />
                   <span className="shrink-0 text-center">
-                    Or sign up with email
+                    Or continue with email
                   </span>
                   <hr className="border border-gray-200 flex-1" />
                 </div>
 
                 <form className="space-y-4">
                   <div className="flex flex-col gap-2">
+                    <label htmlFor="name" className="text-semibold leading-8">
+                      Full Name
+                    </label>
+                    <div className="relative ">
+                      <Mail className="icon3 absolute top-4 left-3 text-gray-600/70" />
+                      <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        placeholder="John Doe"
+                        className="pl-10 py-2 pr-4 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-2">
                     <label htmlFor="email" className="text-semibold leading-8">
-                      Email
+                      Email Address
                     </label>
                     <div className="relative ">
                       <Mail className="icon3 absolute top-4 left-3 text-gray-600/70" />
@@ -96,9 +124,9 @@ export default function SignIn() {
                       <button
                         type="button"
                         className="absolute top-4 right-3 text-gray-600/70"
-                        onClick={() => setReveal((o) => !o)}
+                        onClick={() => setRevealPassword((o) => !o)}
                       >
-                        {reveal ? (
+                        {revealPassword ? (
                           <Eye className="icon3" />
                         ) : (
                           <EyeOff className="icon3" />
@@ -107,19 +135,49 @@ export default function SignIn() {
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between text-xs sm:text-base">
-                    <label className="flex items-center gap-2">
-                      <input type="checkbox" />
-                      Remember Me
-                    </label>
-
-                    <Link
-                      href="/forgot-password"
-                      className="hover:text-gold transition-colors duration-300"
+                  <div className="flex flex-col gap-2">
+                    <label
+                      htmlFor="cnfrmPassword"
+                      className="text-semibold leading-8"
                     >
-                      Forgot Password
-                    </Link>
+                      Confirm Password
+                    </label>
+                    <div className="relative">
+                      <Lock className="icon3 absolute top-4 left-3 text-gray-600/70" />
+                      <input
+                        ref={confirmPasswordRef}
+                        id="cnfrmPassword"
+                        type="password"
+                        name="cnfrmPassword"
+                        className="pl-10 py-2 pr-10 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-4 right-3 text-gray-600/70"
+                        onClick={() => setRevealCnfrmPassword((o) => !o)}
+                      >
+                        {revealCnfrmPassword ? (
+                          <Eye className="icon3" />
+                        ) : (
+                          <EyeOff className="icon3" />
+                        )}
+                      </button>
+                    </div>
                   </div>
+
+                  <label className="flex items-center gap-2 ">
+                    <input type="checkbox" />
+                    <span className="text-xs sm:text-base">
+                      I agree to the{" "}
+                      <Link href="/terms" className="text-gold">
+                        Terms & Conditions
+                      </Link>{" "}
+                      and{" "}
+                      <Link href="/privacy-policy" className="text-gold">
+                        Privacy Policy
+                      </Link>
+                    </span>
+                  </label>
 
                   <motion.button
                     whileHover={{ scale: 1.05, backgroundColor: "#c46b00" }}
@@ -127,16 +185,16 @@ export default function SignIn() {
                     transition={{ duration: 0.25, ease: "easeOut" }}
                     className="block text-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
                   >
-                    Sign In
+                    Sign Up
                   </motion.button>
                   <p className="text-center text-xs sm:text-base">
-                    Don't have an account?
+                    Already have an account?
                     <Link
-                      href="/sign-up"
+                      href="/sign-in"
                       className="text-gold hover:text-amber transition-colors duration-300"
                     >
                       {" "}
-                      Sign Up
+                      Sign In
                     </Link>
                   </p>
                 </form>
