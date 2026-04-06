@@ -37,7 +37,7 @@ export default function SignIn() {
                 <h1 className="font-heading title-one text-background">
                   Welcome Back
                 </h1>
-                <p className="text-background subtitle-one">
+                <p className="text-background subtitle-two">
                   Sign in to your Honey Man account
                 </p>
               </div>

@@ -1,16 +1,39 @@
 "use client";
 
-import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
+import { Eye, EyeOff, Loader, Lock, Mail, User } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "motion/react";
+import {
+  SignUpFormReturnType,
+  UserSignUpDataType,
+} from "@/features/auth/auth.types";
+import { validateSignUpForm } from "@/features/auth/auth.service";
+import { useRouter } from "next/navigation";
 
 export default function SignUp() {
   const [revealPassword, setRevealPassword] = useState(false);
   const [revealCnfrmPassword, setRevealCnfrmPassword] = useState(false);
+
+  const [formData, setFormData] = useState<UserSignUpDataType>({
+    name: "",
+    email: "",
+    password: "",
+    cnfrmPassword: "",
+    agreeToTerms: false,
+  });
+
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const confirmPasswordRef = useRef<HTMLInputElement | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (passwordRef.current) {
@@ -33,8 +56,42 @@ export default function SignUp() {
       }
     }
   }, [revealCnfrmPassword, confirmPasswordRef.current]);
+
+  const initialState: SignUpFormReturnType = {
+    errors: {},
+    success: false,
+    errorMessage: null,
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value, checked } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "aggreeToTerms" ? checked : value,
+    }));
+  };
+
+  const [state, formAction, isPending] = useActionState(
+    validateSignUpForm,
+    initialState,
+  );
+
+  useEffect(() => {
+    if (state.success) {
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        cnfrmPassword: "",
+        agreeToTerms: false,
+      });
+      router.replace("/");
+    }
+  }, [state.success, router]);
+
   return (
-    <div className="flex-1 min-h-[1100px] bg-amber/10 relative">
+    <div className="flex-1 min-h-[1250px] bg-amber/10 relative">
       <div className="absolute inset-0 ">
         <img
           className="w-full h-full object-cover"
@@ -49,7 +106,7 @@ export default function SignUp() {
                 <h1 className="font-heading title-one text-background">
                   Join Us
                 </h1>
-                <p className="text-background subtitle-one">
+                <p className="text-background subtitle-two">
                   Create your account and discover premium organic honey
                 </p>
               </div>
@@ -72,7 +129,19 @@ export default function SignUp() {
                   <hr className="border border-gray-200 flex-1" />
                 </div>
 
-                <form className="space-y-4">
+                <div className="p-1  text-center">
+                  {state.errorMessage ? (
+                    <p className="min-h-4 p-1 text-xs text-red-600">
+                      {state.errorMessage}
+                    </p>
+                  ) : (
+                    <p className="text-xs sm:text-base">
+                      Fill in the fields below
+                    </p>
+                  )}
+                </div>
+
+                <form action={formAction} className="space-y-4">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="name" className="text-semibold leading-8">
                       Full Name
@@ -84,9 +153,16 @@ export default function SignUp() {
                         type="text"
                         name="name"
                         placeholder="John Doe"
+                        onChange={handleChange}
+                        value={formData.name}
                         className="pl-10 py-2 pr-4 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                     </div>
+                    {state.errors.name && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.name}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -101,9 +177,16 @@ export default function SignUp() {
                         name="email"
                         placeholder="johndoe@email.com"
                         autoComplete="username"
+                        onChange={handleChange}
+                        value={formData.email}
                         className="pl-10 py-2 pr-4 w-full border  border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                     </div>
+                    {state.errors.email && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.email}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -121,6 +204,8 @@ export default function SignUp() {
                         type="password"
                         name="password"
                         autoComplete="new-password"
+                        onChange={handleChange}
+                        value={formData.password}
                         className="pl-10 py-2 pr-10 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                       <button
@@ -135,6 +220,11 @@ export default function SignUp() {
                         )}
                       </button>
                     </div>
+                    {state.errors.password && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.password}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -152,6 +242,8 @@ export default function SignUp() {
                         type="password"
                         name="cnfrmPassword"
                         autoComplete="new-password"
+                        onChange={handleChange}
+                        value={formData.cnfrmPassword}
                         className="pl-10 py-2 pr-10 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                       <button
@@ -166,29 +258,55 @@ export default function SignUp() {
                         )}
                       </button>
                     </div>
+                    {state.errors.cnfrmPassword && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.cnfrmPassword}
+                      </span>
+                    )}
                   </div>
 
-                  <label className="flex items-center gap-2 ">
-                    <input type="checkbox" />
-                    <span className="text-xs sm:text-base">
-                      I agree to the{" "}
-                      <Link href="/terms" className="text-gold">
-                        Terms & Conditions
-                      </Link>{" "}
-                      and{" "}
-                      <Link href="/privacy-policy" className="text-gold">
-                        Privacy Policy
-                      </Link>
-                    </span>
-                  </label>
+                  <div>
+                    <label className="flex items-center gap-2 ">
+                      <input
+                        type="checkbox"
+                        name="agreeToTerms"
+                        value={formData.agreeToTerms ? "true" : undefined}
+                        onChange={handleChange}
+                        className={`w-4 h-4 border-2 rounded-sm
+  ${state.errors.agreeToTerms ? "border-red-400" : "border-[#c46b00]"}`}
+                      />
+                      <span className="text-xs sm:text-base">
+                        I agree to the{" "}
+                        <Link href="/terms" className="text-gold">
+                          Terms & Conditions
+                        </Link>{" "}
+                        and{" "}
+                        <Link href="/privacy-policy" className="text-gold">
+                          Privacy Policy
+                        </Link>
+                      </span>
+                    </label>
+                    {state.errors.agreeToTerms && (
+                      <p className="text-red-500 text-xs">
+                        {state.errors.agreeToTerms}
+                      </p>
+                    )}
+                  </div>
 
                   <motion.button
                     whileHover={{ scale: 1.05, backgroundColor: "#c46b00" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="block text-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
+                    aria-disabled={isPending}
+                    className="block flex items-center justify-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
                   >
-                    Sign Up
+                    {isPending ? (
+                      <span className="animate-spin">
+                        <Loader className="icon3" />
+                      </span>
+                    ) : (
+                      "Sign Up"
+                    )}
                   </motion.button>
                   <p className="text-center text-xs sm:text-base">
                     Already have an account?
