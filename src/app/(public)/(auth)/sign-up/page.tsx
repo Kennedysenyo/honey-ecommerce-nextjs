@@ -86,7 +86,7 @@ export default function SignUp() {
         cnfrmPassword: "",
         agreeToTerms: false,
       });
-      router.replace("/");
+      router.replace("/verify-otp");
     }
   }, [state.success, router]);
 

@@ -1,14 +1,33 @@
 "use client";
 
-import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { Eye, EyeOff, Loader, Lock, Mail } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  useActionState,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { FcGoogle } from "react-icons/fc";
 import { motion } from "motion/react";
+import {
+  SignInFormReturnType,
+  UserSignInDataType,
+} from "@/features/auth/auth.types";
+import { validateSingInForm } from "@/features/auth/auth.service";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
   const [reveal, setReveal] = useState(false);
+  const [formData, setFormData] = useState<UserSignInDataType>({
+    email: "",
+    password: "",
+  });
+
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (passwordRef.current) {
@@ -20,6 +39,34 @@ export default function SignIn() {
       }
     }
   }, [reveal, passwordRef.current]);
+
+  const initialState: SignInFormReturnType = {
+    errors: {},
+    success: false,
+    errorMessage: null,
+  };
+
+  const [state, formAction, isPending] = useActionState(
+    validateSingInForm,
+    initialState,
+  );
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  useEffect(() => {
+    if (state.success) {
+      setFormData({
+        email: "",
+        password: "",
+      });
+
+      router.replace("/");
+    }
+  }, [state.success, router]);
 
   return (
     <div className="flex-1 min-h-[900px] bg-amber/10 relative">
@@ -60,7 +107,19 @@ export default function SignIn() {
                   <hr className="border border-gray-200 flex-1" />
                 </div>
 
-                <form className="space-y-4">
+                <div className="p-1  text-center">
+                  {state.errorMessage ? (
+                    <p className="min-h-4 p-1 text-xs text-red-600">
+                      {state.errorMessage}
+                    </p>
+                  ) : (
+                    <p className="text-xs sm:text-base">
+                      Fill in the fields below
+                    </p>
+                  )}
+                </div>
+
+                <form action={formAction} className="space-y-4">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email" className="text-semibold leading-8">
                       Email
@@ -73,9 +132,16 @@ export default function SignIn() {
                         name="email"
                         placeholder="johndoe@email.com"
                         autoComplete="username"
+                        value={formData.email}
+                        onChange={handleChange}
                         className="pl-10 py-2 pr-4 w-full border  border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                     </div>
+                    {state.errors.email && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.email}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -93,6 +159,8 @@ export default function SignIn() {
                         type="password"
                         name="password"
                         autoComplete="current-password"
+                        value={formData.password}
+                        onChange={handleChange}
                         className="pl-10 py-2 pr-10 w-full border border-gray-200 leading-8 rounded-lg outline-none focus:ring-2 focus:ring-gold"
                       />
                       <button
@@ -107,11 +175,19 @@ export default function SignIn() {
                         )}
                       </button>
                     </div>
+                    {state.errors.password && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.password}
+                      </span>
+                    )}
                   </div>
 
                   <div className="flex items-center justify-between text-xs sm:text-base">
                     <label className="flex items-center gap-2">
-                      <input type="checkbox" />
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 border-2 rounded-sm"
+                      />
                       Remember Me
                     </label>
 
@@ -127,9 +203,16 @@ export default function SignIn() {
                     whileHover={{ scale: 1.05, backgroundColor: "#c46b00" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="block text-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
+                    aria-disabled={isPending}
+                    className="block flex items-center justify-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
                   >
-                    Sign In
+                    {isPending ? (
+                      <span className="animate-spin">
+                        <Loader className="icon3" />
+                      </span>
+                    ) : (
+                      "Sign In"
+                    )}
                   </motion.button>
                   <p className="text-center text-xs sm:text-base">
                     Don't have an account?

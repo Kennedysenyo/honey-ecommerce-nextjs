@@ -239,3 +239,10 @@ export const orderItems = pgTable(
     check("quantity_check", sql`${table.quantity} > 0`),
   ],
 );
+
+export const authSchema = {
+  user,
+  session,
+  account,
+  verification,
+};

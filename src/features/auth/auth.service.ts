@@ -1,16 +1,19 @@
 "use server";
 
 import z from "zod";
-import { userSignUpSchema } from "./auth.schema";
+import { userSignInSchema, userSignUpSchema } from "./auth.schema";
 import {
+  SignInFormErrorsType,
+  SignInFormReturnType,
   SignUpFormErrorsType,
   SignUpFormReturnType,
+  UserSignInDataType,
   UserSignUpDataType,
 } from "./auth.types";
 import { handleErrors } from "@/lib/utils/handleErrors";
 import { auth } from "@/lib/better-auth/auth";
 
-export const signUp = async ({
+const signUp = async ({
   name,
   email,
   password,
@@ -61,6 +64,53 @@ export const validateSignUpForm = async (
   const { name, email, password, agreeToTerms } = result.data;
 
   const errorMessage = await signUp({ name, email, password, agreeToTerms });
+
+  if (errorMessage) {
+    return { errors: {}, success: false, errorMessage };
+  }
+
+  return { errors: {}, success: true, errorMessage: null };
+};
+
+const signIn = async ({
+  email,
+  password,
+}: UserSignInDataType): Promise<string | null> => {
+  try {
+    const res = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+      },
+    });
+
+    return null;
+  } catch (error) {
+    return handleErrors(error);
+  }
+};
+
+export const validateSingInForm = async (
+  _prevState: SignInFormReturnType,
+  formData: FormData,
+): Promise<SignInFormReturnType> => {
+  const rawInput = Object.fromEntries(formData);
+
+  const result = userSignInSchema.safeParse(rawInput);
+
+  if (!result.success) {
+    let errors: SignInFormErrorsType = {};
+
+    const flattenedErrors = z.flattenError(result.error).fieldErrors;
+
+    for (const [key, value] of Object.entries(flattenedErrors)) {
+      errors = { ...errors, [key]: value[0] };
+    }
+
+    return { errors, success: false, errorMessage: null };
+  }
+
+  const errorMessage = await signIn(result.data);
 
   if (errorMessage) {
     return { errors: {}, success: false, errorMessage };

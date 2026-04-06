@@ -40,3 +40,12 @@ export const userSignUpSchema = dbUserSchema
     message: "Passwords do not match",
     path: ["cnfrmPassword"],
   });
+
+export const userSignInSchema = dbUserSchema
+  .pick({
+    email: true,
+  })
+  .extend({
+    email: z.email(),
+    password: z.string().min(1, { error: "Enter password" }),
+  });
