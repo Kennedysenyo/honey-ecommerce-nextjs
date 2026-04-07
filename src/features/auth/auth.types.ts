@@ -1,5 +1,9 @@
 import z from "zod";
-import { userSignInSchema, userSignUpSchema } from "./auth.schema";
+import {
+  userSignInSchema,
+  userSignUpSchema,
+  verifyOTPSchema,
+} from "./auth.schema";
 
 // Sign UP
 
@@ -20,6 +24,22 @@ export interface SignInFormErrorsType extends Partial<UserSignInDataType> {}
 
 export type SignInFormReturnType = {
   errors: SignInFormErrorsType;
+  success: boolean;
+  errorMessage: string | null;
+};
+
+// Verify OTP
+
+export type VerifyOTPDataType = z.infer<typeof verifyOTPSchema>;
+
+export interface VerifyOTPFormErrors extends Partial<VerifyOTPDataType> {}
+
+// export interface VerifyOTPInsertType extends VerifyOTPDataType {
+//   email: string;
+// }
+
+export type VerifyEmailFormReturnType = {
+  errors: VerifyOTPFormErrors;
   success: boolean;
   errorMessage: string | null;
 };

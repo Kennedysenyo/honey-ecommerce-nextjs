@@ -3,6 +3,7 @@
 import { CheckCircle } from "lucide-react";
 import { ButtonLink } from "../ButtonLink";
 import { motion } from "motion/react";
+import { AnimatedButton } from "../AnimatedButton";
 
 export const HeroSection = () => {
   return (
@@ -60,13 +61,17 @@ export const HeroSection = () => {
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-4 "
                 >
-                  <ButtonLink href="/shop" label="Shop Now" />
+                  <AnimatedButton>
+                    <ButtonLink href="/shop" label="Shop Now" />
+                  </AnimatedButton>
 
-                  <ButtonLink
-                    href="/contact"
-                    label="Contact Us"
-                    variant="outline"
-                  />
+                  <AnimatedButton>
+                    <ButtonLink
+                      href="/contact"
+                      label="Contact Us"
+                      variant="outline"
+                    />
+                  </AnimatedButton>
                 </motion.div>
               </motion.div>
             </div>

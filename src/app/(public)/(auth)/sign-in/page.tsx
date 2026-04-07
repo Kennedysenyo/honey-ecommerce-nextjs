@@ -29,17 +29,6 @@ export default function SignIn() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (passwordRef.current) {
-      const originalType = passwordRef.current.type;
-      if (reveal) {
-        passwordRef.current.type = "text";
-      } else {
-        passwordRef.current.type = originalType;
-      }
-    }
-  }, [reveal, passwordRef.current]);
-
   const initialState: SignInFormReturnType = {
     errors: {},
     success: false,
@@ -69,7 +58,7 @@ export default function SignIn() {
   }, [state.success, router]);
 
   return (
-    <div className="flex-1 min-h-[900px] bg-amber/10 relative">
+    <div className="flex-1 min-h-[1000px] bg-amber/10 relative">
       <div className="absolute inset-0 ">
         <img
           className="w-full h-full object-cover"
@@ -79,7 +68,7 @@ export default function SignIn() {
       <div className=" absolute inset-0 bg-black/35">
         <div className="absolute inset-0 z-10 w-full h-full section-py-one">
           <div className="section-max-w mx-auto section-px-one h-full flex flex-col gap-4 justify-center ">
-            <div className="space-y-12 w-full">
+            <div className="space-y-8 w-full">
               <div className="space-y-4 text-center">
                 <h1 className="font-heading title-one text-background">
                   Welcome Back
@@ -156,7 +145,7 @@ export default function SignIn() {
                       <input
                         ref={passwordRef}
                         id="password"
-                        type="password"
+                        type={reveal ? "text" : "password"}
                         name="password"
                         autoComplete="current-password"
                         value={formData.password}

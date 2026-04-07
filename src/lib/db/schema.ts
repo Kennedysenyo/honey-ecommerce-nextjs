@@ -17,7 +17,7 @@ export const roleEnum = pgEnum("role", ["admin", "customer"]);
 export const user = pgTable(
   "user",
   {
-    id: uuid("id").primaryKey(),
+    id: text("id").primaryKey(),
     name: text("name").notNull(),
     email: text("email").notNull().unique(),
     emailVerified: boolean("emailVerified").default(false).notNull(),
@@ -37,7 +37,7 @@ export const user = pgTable(
 export const session = pgTable(
   "session",
   {
-    id: uuid("id").primaryKey(),
+    id: text("id").primaryKey(),
     expiresAt: timestamp("expiresAt").notNull(),
     token: text("token").notNull().unique(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),
@@ -46,7 +46,7 @@ export const session = pgTable(
       .notNull(),
     ipAddress: text("ipAddress"),
     userAgent: text("userAgent"),
-    userId: uuid("userId")
+    userId: text("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
   },
@@ -56,10 +56,10 @@ export const session = pgTable(
 export const account = pgTable(
   "account",
   {
-    id: uuid("id").primaryKey(),
+    id: text("id").primaryKey(),
     accountId: text("accountId").notNull(),
     providerId: text("providerId").notNull(),
-    userId: uuid("userId")
+    userId: text("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     accessToken: text("accessToken"),
@@ -80,7 +80,7 @@ export const account = pgTable(
 export const verification = pgTable(
   "verification",
   {
-    id: uuid("id").primaryKey(),
+    id: text("id").primaryKey(),
     identifier: text("identifier").notNull(),
     value: text("value").notNull(),
     expiresAt: timestamp("expiresAt").notNull(),
@@ -157,7 +157,7 @@ export const cartItems = pgTable(
   "cart_items",
   {
     id: uuid().primaryKey(),
-    userId: uuid("userId")
+    userId: text("userId")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     productId: uuid("productId")
@@ -193,7 +193,7 @@ export const orders = pgTable(
   "orders",
   {
     id: uuid().primaryKey(),
-    userId: uuid("userId")
+    userId: text("userId")
       .notNull()
       .references(() => user.id),
     customerName: text("customerName").notNull(),

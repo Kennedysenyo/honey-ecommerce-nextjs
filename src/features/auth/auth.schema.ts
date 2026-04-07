@@ -1,8 +1,10 @@
 import { user } from "@/lib/db/schema";
 import { createInsertSchema } from "drizzle-zod";
-import z from "zod";
+import z, { email } from "zod";
 
 const dbUserSchema = createInsertSchema(user);
+
+// Sign Up
 
 export const userSignUpSchema = dbUserSchema
   .pick({
@@ -41,6 +43,8 @@ export const userSignUpSchema = dbUserSchema
     path: ["cnfrmPassword"],
   });
 
+// Sign In
+
 export const userSignInSchema = dbUserSchema
   .pick({
     email: true,
@@ -48,4 +52,15 @@ export const userSignInSchema = dbUserSchema
   .extend({
     email: z.email(),
     password: z.string().min(1, { error: "Enter password" }),
+  });
+
+// Verify OTP
+
+export const verifyOTPSchema = dbUserSchema
+  .pick({
+    email: true,
+  })
+  .extend({
+    email: z.email(),
+    otp: z.string().length(6, { error: "OTP should be 6 digits" }),
   });

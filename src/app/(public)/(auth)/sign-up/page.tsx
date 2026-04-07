@@ -35,28 +35,6 @@ export default function SignUp() {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (passwordRef.current) {
-      const originalType = passwordRef.current.type;
-      if (revealPassword) {
-        passwordRef.current.type = "text";
-      } else {
-        passwordRef.current.type = originalType;
-      }
-    }
-  }, [revealPassword, passwordRef.current]);
-
-  useEffect(() => {
-    if (confirmPasswordRef.current) {
-      const originalType = confirmPasswordRef.current.type;
-      if (revealCnfrmPassword) {
-        confirmPasswordRef.current.type = "text";
-      } else {
-        confirmPasswordRef.current.type = originalType;
-      }
-    }
-  }, [revealCnfrmPassword, confirmPasswordRef.current]);
-
   const initialState: SignUpFormReturnType = {
     errors: {},
     success: false,
@@ -86,7 +64,7 @@ export default function SignUp() {
         cnfrmPassword: "",
         agreeToTerms: false,
       });
-      router.replace("/verify-otp");
+      router.push("/verify-email");
     }
   }, [state.success, router]);
 
@@ -101,7 +79,7 @@ export default function SignUp() {
       <div className=" absolute inset-0 bg-black/35">
         <div className="absolute inset-0 z-10 w-full h-full section-py-one">
           <div className="section-max-w mx-auto section-px-one h-full flex flex-col justify-center gap-4 ">
-            <div className="space-y-12 w-full">
+            <div className="space-y-8 w-full">
               <div className="space-y-4 text-center">
                 <h1 className="font-heading title-one text-background">
                   Join Us
@@ -201,7 +179,7 @@ export default function SignUp() {
                       <input
                         ref={passwordRef}
                         id="password"
-                        type="password"
+                        type={revealPassword ? "text" : "password"}
                         name="password"
                         autoComplete="new-password"
                         onChange={handleChange}
@@ -239,7 +217,7 @@ export default function SignUp() {
                       <input
                         ref={confirmPasswordRef}
                         id="cnfrmPassword"
-                        type="password"
+                        type={revealCnfrmPassword ? "text" : "password"}
                         name="cnfrmPassword"
                         autoComplete="new-password"
                         onChange={handleChange}
