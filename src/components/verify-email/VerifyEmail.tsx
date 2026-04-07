@@ -8,15 +8,23 @@ import { useActionState, useRef, useState, useEffect } from "react";
 import "dotenv/config";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { handleErrors } from "@/lib/utils/handleErrors";
 
 interface Props {
   email: string;
   codeExpiresIn: number;
+  isReset: boolean;
 }
 
-export const VerifyEmail = ({ email, codeExpiresIn }: Props) => {
+export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
   const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
   const [timer, setTimer] = useState(codeExpiresIn);
+  const [resendLoading, setResendLoading] = useState(false);
+
+  const [respones, setResponse] = useState<{
+    type: "error" | "success";
+    message: string;
+  } | null>(null);
 
   const router = useRouter();
 
@@ -119,9 +127,36 @@ export const VerifyEmail = ({ email, codeExpiresIn }: Props) => {
     return () => clearInterval(intervalId);
   }, [timer]);
 
-  const handleResend = () => {
-    setTimer(codeExpiresIn);
-    setOtp(Array(6).fill(""));
+  const handleResend = async () => {
+    try {
+      setResendLoading(true);
+      setResponse(null);
+
+      const res = await fetch("/api/auth/resend-otp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, isReset }),
+      });
+
+      const data = await res.json();
+      if (res.status === 200) {
+        setResponse({ type: "success", message: data.message });
+        setTimer(codeExpiresIn);
+        setOtp(Array(6).fill(""));
+      } else {
+        throw new Error(data.message);
+      }
+    } catch (error) {
+      const errorMessage =
+        handleErrors(error) === "Email and isReset are required!"
+          ? "An Error Occured, Try Again!"
+          : handleErrors(error);
+      setResponse({ type: "error", message: errorMessage });
+    } finally {
+      setResendLoading(false);
+    }
   };
 
   const initialState: VerifyEmailFormReturnType = {
@@ -134,6 +169,12 @@ export const VerifyEmail = ({ email, codeExpiresIn }: Props) => {
     validateOTPForm.bind(null, email),
     initialState,
   );
+
+  useEffect(() => {
+    if (state.errorMessage) {
+      setResponse({ type: "error", message: state.errorMessage });
+    }
+  }, [state.errorMessage]);
 
   useEffect(() => {
     if (state.success) {
@@ -179,6 +220,17 @@ export const VerifyEmail = ({ email, codeExpiresIn }: Props) => {
 
               <div className="bg-background p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto space-y-6 ">
                 <form action={formAction} className="space-y-4">
+                  {respones?.message && (
+                    <p
+                      style={{
+                        color: respones.type === "error" ? "red" : "green",
+                      }}
+                      className="text-center mb-2"
+                    >
+                      {respones.message}
+                    </p>
+                  )}
+
                   <div className="flex justify-center items-center gap-2">
                     {inputElements}
                   </div>
@@ -202,8 +254,15 @@ export const VerifyEmail = ({ email, codeExpiresIn }: Props) => {
                         <button
                           type="button"
                           className="text-gold cursor-pointer"
+                          onClick={() => handleResend()}
                         >
-                          Resend
+                          {resendLoading ? (
+                            <span className="animate-spin">
+                              <Loader className="icon3" />
+                            </span>
+                          ) : (
+                            "Resend"
+                          )}
                         </button>
                       </span>
                     </div>

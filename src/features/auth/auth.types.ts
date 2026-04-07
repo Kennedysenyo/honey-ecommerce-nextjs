@@ -1,5 +1,6 @@
 import z from "zod";
 import {
+  sendOTPSchema,
   userSignInSchema,
   userSignUpSchema,
   verifyOTPSchema,
@@ -34,12 +35,12 @@ export type VerifyOTPDataType = z.infer<typeof verifyOTPSchema>;
 
 export interface VerifyOTPFormErrors extends Partial<VerifyOTPDataType> {}
 
-// export interface VerifyOTPInsertType extends VerifyOTPDataType {
-//   email: string;
-// }
-
 export type VerifyEmailFormReturnType = {
   errors: VerifyOTPFormErrors;
   success: boolean;
   errorMessage: string | null;
 };
+
+// ResendOtp
+
+export type sendOTPDataType = z.infer<typeof sendOTPSchema>;

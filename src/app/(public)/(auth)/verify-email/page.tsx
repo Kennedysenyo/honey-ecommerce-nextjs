@@ -12,9 +12,17 @@ export default async function VerifyEmailPage() {
   const cookiesStore = await cookies();
   const email = cookiesStore.get("email")?.value;
 
+  const isPasswordReset = cookiesStore.get("reset")?.value === "true";
+
   if (!email) {
     redirect("/sign-up");
   }
 
-  return <VerifyEmail email={email} codeExpiresIn={codeExpiresIn} />;
+  return (
+    <VerifyEmail
+      email={email}
+      codeExpiresIn={codeExpiresIn}
+      isReset={isPasswordReset}
+    />
+  );
 }

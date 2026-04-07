@@ -107,17 +107,11 @@ export default function SignUp() {
                   <hr className="border border-gray-200 flex-1" />
                 </div>
 
-                <div className="p-1  text-center">
-                  {state.errorMessage ? (
-                    <p className="min-h-4 p-1 text-xs text-red-600">
-                      {state.errorMessage}
-                    </p>
-                  ) : (
-                    <p className="text-xs sm:text-base">
-                      Fill in the fields below
-                    </p>
-                  )}
-                </div>
+                {state.errorMessage && (
+                  <p className="min-h-4 p-1 text-xs text-red-600">
+                    {state.errorMessage}
+                  </p>
+                )}
 
                 <form action={formAction} className="space-y-4">
                   <div className="flex flex-col gap-2">

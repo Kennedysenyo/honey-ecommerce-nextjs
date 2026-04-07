@@ -64,3 +64,10 @@ export const verifyOTPSchema = dbUserSchema
     email: z.email(),
     otp: z.string().length(6, { error: "OTP should be 6 digits" }),
   });
+
+// resendOTP
+
+export const sendOTPSchema = z.object({
+  email: z.email(),
+  isReset: z.boolean(),
+});

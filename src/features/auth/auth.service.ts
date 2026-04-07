@@ -7,6 +7,7 @@ import {
   verifyOTPSchema,
 } from "./auth.schema";
 import {
+  sendOTPDataType,
   SignInFormErrorsType,
   SignInFormReturnType,
   SignUpFormErrorsType,
@@ -20,6 +21,23 @@ import {
 import { handleErrors } from "@/lib/utils/handleErrors";
 import { auth } from "@/lib/better-auth/auth";
 import { cookies } from "next/headers";
+
+export const sendOTP = async ({ email, isReset }: sendOTPDataType) => {
+  if (isReset) {
+    await auth.api.requestPasswordResetEmailOTP({
+      body: {
+        email,
+      },
+    });
+  } else {
+    await auth.api.sendVerificationOTP({
+      body: {
+        email,
+        type: "email-verification",
+      },
+    });
+  }
+};
 
 const signUp = async ({
   name,
@@ -35,12 +53,7 @@ const signUp = async ({
       },
     });
 
-    await auth.api.sendVerificationOTP({
-      body: {
-        email,
-        type: "email-verification",
-      },
-    });
+    await sendOTP({ email, isReset: false });
 
     return null;
   } catch (error) {
@@ -83,7 +96,13 @@ export const validateSignUpForm = async (
   }
 
   const cookiesStore = await cookies();
-  cookiesStore.set("email", email);
+  cookiesStore.set("email", email, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 15 * 60,
+    path: "/",
+  });
 
   return { errors: {}, success: true, errorMessage: null };
 };
@@ -142,16 +161,13 @@ const verifyOTP = async ({
   email,
 }: VerifyOTPDataType): Promise<string | null> => {
   try {
-    const { success } = await auth.api.checkVerificationOTP({
-      body: { email, otp, type: "sign-in" },
+    const data = await auth.api.verifyEmailOTP({
+      body: { email, otp },
     });
 
-    if (!success) {
+    if (!data.status) {
       throw new Error("Invalid or expired verification code");
     }
-
-    const cookiesStore = await cookies();
-    cookiesStore.delete("email");
 
     return null;
   } catch (error) {
@@ -184,7 +200,7 @@ export const validateOTPForm = async (
   const errorMessage = await verifyOTP(result.data);
 
   if (errorMessage) {
-    return { errors: {}, success: false, errorMessage };
+    return { errors: {}, success: false, errorMessage: errorMessage };
   }
 
   return { errors: {}, success: true, errorMessage: null };
