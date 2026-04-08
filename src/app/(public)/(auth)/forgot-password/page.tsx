@@ -16,7 +16,6 @@ export default function ForgotPassword() {
   const initialState: ForgotPasswordFormReturnType = {
     errors: {},
     success: false,
-    errorMessage: null,
   };
 
   const [state, formAction, isPending] = useActionState(
@@ -68,11 +67,6 @@ export default function ForgotPassword() {
               </div>
 
               <div className="bg-background p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto space-y-6 ">
-                {state.errorMessage && (
-                  <p className="text-red-400 text-center">
-                    {state.errorMessage}erereere
-                  </p>
-                )}
                 <form action={formAction} className="space-y-4">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email" className="text-semibold leading-8">

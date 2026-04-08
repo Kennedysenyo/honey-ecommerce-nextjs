@@ -2,6 +2,7 @@ import z from "zod";
 import {
   forgotPasswordSchema,
   sendOTPSchema,
+  setNewPasswordSchema,
   userSignInSchema,
   userSignUpSchema,
   verifyOTPSchema,
@@ -54,6 +55,17 @@ export interface ForgotPasswordFormErrors extends Partial<ForgotPasswordDataType
 
 export type ForgotPasswordFormReturnType = {
   errors: ForgotPasswordFormErrors;
+  success: boolean;
+};
+
+// Set New Password
+
+export type SetNewPasswordDataType = z.infer<typeof setNewPasswordSchema>;
+
+export interface SetNewPasswordFormErrors extends Partial<SetNewPasswordDataType> {}
+
+export type SetNewPasswordFormReturnType = {
+  errors: SetNewPasswordFormErrors;
   success: boolean;
   errorMessage: string | null;
 };

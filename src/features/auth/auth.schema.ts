@@ -1,4 +1,5 @@
 import { user } from "@/lib/db/schema";
+import { error } from "console";
 import { createInsertSchema } from "drizzle-zod";
 import z, { email } from "zod";
 
@@ -76,3 +77,25 @@ export const sendOTPSchema = verifyOTPSchema.pick({
 export const forgotPasswordSchema = dbUserSchema
   .pick({ email: true })
   .extend({ email: z.email() });
+
+// Set New Password
+
+export const setNewPasswordSchema = dbUserSchema
+  .pick({
+    email: true,
+  })
+  .extend({
+    email: z.email(),
+    otp: z.string().length(6, { error: "OTP must be 6 digits" }),
+    password: z.string().min(8, {
+      error: (iss) =>
+        iss.input?.length === 0
+          ? "Enter password"
+          : "Password must be >= 8 characters",
+    }),
+    cnfrmPassword: z.string().min(8, { error: "Confirm password" }),
+  })
+  .refine((data) => data.password === data.cnfrmPassword, {
+    message: "Passwords do not match",
+    path: ["cnfrmPassword"],
+  });

@@ -3,6 +3,7 @@
 import z from "zod";
 import {
   forgotPasswordSchema,
+  setNewPasswordSchema,
   userSignInSchema,
   userSignUpSchema,
   verifyOTPSchema,
@@ -12,6 +13,9 @@ import {
   ForgotPasswordFormErrors,
   ForgotPasswordFormReturnType,
   SendOTPDataType,
+  SetNewPasswordDataType,
+  SetNewPasswordFormErrors,
+  SetNewPasswordFormReturnType,
   SignInFormErrorsType,
   SignInFormReturnType,
   SignUpFormErrorsType,
@@ -178,6 +182,22 @@ const verifyOTP = async ({
           otp,
         },
       });
+
+      const cookiesStore = await cookies();
+      cookiesStore.set("otp", otp, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 5 * 60,
+        path: "/",
+      });
+      cookiesStore.set("email", email, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 5 * 60,
+        path: "/",
+      });
     } else {
       await auth.api.verifyEmailOTP({
         body: { email, otp },
@@ -251,14 +271,17 @@ export const validateForgotPasswordForm = async (
       errors = { ...errors, [key]: value[0] };
     }
 
-    return { errors, success: false, errorMessage: null };
+    return { errors, success: false };
   }
   console.log("This is the result", result.data);
 
   const errorMessage = await initiatePasswordReset(result.data);
   if (errorMessage) {
-    return { errors: {}, success: false, errorMessage };
+    // This is temporal.
+    return { errors: {}, success: false };
   }
+
+  // TODO: Clean up flow to avoid saving emails as cookies.
 
   const cookiesStore = await cookies();
   cookiesStore.set("reset", "true", {
@@ -277,5 +300,60 @@ export const validateForgotPasswordForm = async (
   });
 
   console.log("This was returned....");
+  return { errors: {}, success: true };
+};
+
+// Set new Password
+
+const setNewPassword = async ({
+  email,
+  otp,
+  password,
+}: Omit<SetNewPasswordDataType, "cnfrmPassword">): Promise<string | null> => {
+  try {
+    await auth.api.resetPasswordEmailOTP({
+      body: {
+        email,
+        otp,
+        password,
+      },
+    });
+
+    return null;
+  } catch (error) {
+    return handleErrors(error);
+  }
+};
+
+export const validateSetNewPasswordForm = async (
+  data: Pick<SetNewPasswordDataType, "email" | "otp">,
+  _prevState: SetNewPasswordFormReturnType,
+  formData: FormData,
+): Promise<SetNewPasswordFormReturnType> => {
+  const rawInput = Object.fromEntries(formData);
+
+  const input = { ...rawInput, email: data.email, otp: data.otp };
+
+  const result = setNewPasswordSchema.safeParse(input);
+
+  if (!result.success) {
+    let errors: SetNewPasswordFormErrors = {};
+
+    const flattenedErrors = z.flattenError(result.error).fieldErrors;
+
+    for (const [key, value] of Object.entries(flattenedErrors)) {
+      errors = { ...errors, [key]: value };
+    }
+
+    return { errors, success: false, errorMessage: null };
+  }
+  const { email, otp, password } = result.data;
+
+  const errorMessage = await setNewPassword({ email, otp, password });
+
+  if (errorMessage) {
+    return { errors: {}, success: false, errorMessage };
+  }
+
   return { errors: {}, success: true, errorMessage: null };
 };
