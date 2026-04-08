@@ -1,5 +1,6 @@
 import z from "zod";
 import {
+  forgotPasswordSchema,
   sendOTPSchema,
   userSignInSchema,
   userSignUpSchema,
@@ -43,4 +44,16 @@ export type VerifyEmailFormReturnType = {
 
 // ResendOtp
 
-export type sendOTPDataType = z.infer<typeof sendOTPSchema>;
+export type SendOTPDataType = z.infer<typeof sendOTPSchema>;
+
+// Forgot password
+
+export type ForgotPasswordDataType = z.infer<typeof forgotPasswordSchema>;
+
+export interface ForgotPasswordFormErrors extends Partial<ForgotPasswordDataType> {}
+
+export type ForgotPasswordFormReturnType = {
+  errors: ForgotPasswordFormErrors;
+  success: boolean;
+  errorMessage: string | null;
+};

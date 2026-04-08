@@ -63,11 +63,16 @@ export const verifyOTPSchema = dbUserSchema
   .extend({
     email: z.email(),
     otp: z.string().length(6, { error: "OTP should be 6 digits" }),
+    isReset: z.boolean(),
   });
 
 // resendOTP
-
-export const sendOTPSchema = z.object({
-  email: z.email(),
-  isReset: z.boolean(),
+export const sendOTPSchema = verifyOTPSchema.pick({
+  email: true,
+  isReset: true,
 });
+
+// Forgot Password
+export const forgotPasswordSchema = dbUserSchema
+  .pick({ email: true })
+  .extend({ email: z.email() });

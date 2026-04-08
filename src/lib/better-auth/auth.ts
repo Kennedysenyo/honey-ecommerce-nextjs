@@ -23,13 +23,14 @@ export const auth = betterAuth({
   },
   plugins: [
     emailOTP({
+      expiresIn: codeExpiresIn,
       async sendVerificationOTP({ email, otp, type }) {
-        {
-          if (type === "email-verification") {
-            console.log(otp);
-          } else if (type === "forget-password") {
-            console.log(otp);
-          }
+        if (type === "email-verification") {
+          console.log("Verify OTP:", otp);
+        } else if (type === "forget-password") {
+          console.log("Reset OTP:", otp);
+        } else {
+          console.log("Sign-in OTP:", otp);
         }
       },
     }),

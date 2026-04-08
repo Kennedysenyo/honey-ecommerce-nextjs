@@ -2,12 +2,16 @@
 
 import z from "zod";
 import {
+  forgotPasswordSchema,
   userSignInSchema,
   userSignUpSchema,
   verifyOTPSchema,
 } from "./auth.schema";
 import {
-  sendOTPDataType,
+  ForgotPasswordDataType,
+  ForgotPasswordFormErrors,
+  ForgotPasswordFormReturnType,
+  SendOTPDataType,
   SignInFormErrorsType,
   SignInFormReturnType,
   SignUpFormErrorsType,
@@ -22,20 +26,25 @@ import { handleErrors } from "@/lib/utils/handleErrors";
 import { auth } from "@/lib/better-auth/auth";
 import { cookies } from "next/headers";
 
-export const sendOTP = async ({ email, isReset }: sendOTPDataType) => {
-  if (isReset) {
-    await auth.api.requestPasswordResetEmailOTP({
-      body: {
-        email,
-      },
-    });
-  } else {
-    await auth.api.sendVerificationOTP({
-      body: {
-        email,
-        type: "email-verification",
-      },
-    });
+export const sendOTP = async ({ email, isReset }: SendOTPDataType) => {
+  try {
+    if (isReset) {
+      await auth.api.requestPasswordResetEmailOTP({
+        body: {
+          email,
+        },
+      });
+    } else {
+      await auth.api.sendVerificationOTP({
+        body: {
+          email,
+          type: "email-verification",
+        },
+      });
+    }
+    return null;
+  } catch (error) {
+    throw new Error(handleErrors(error));
   }
 };
 
@@ -68,7 +77,6 @@ export const validateSignUpForm = async (
   const rawInput = Object.fromEntries(formData);
 
   const hasAgreed = (formData.get("agreeToTerms") as string) === "true";
-  console.log(hasAgreed);
 
   const result = userSignUpSchema.safeParse({
     ...rawInput,
@@ -147,7 +155,7 @@ export const validateSingInForm = async (
 
   const errorMessage = await signIn(result.data);
 
-  if (errorMessage) {
+  if (errorMessage !== null) {
     return { errors: {}, success: false, errorMessage };
   }
 
@@ -159,14 +167,21 @@ export const validateSingInForm = async (
 const verifyOTP = async ({
   otp,
   email,
+  isReset,
 }: VerifyOTPDataType): Promise<string | null> => {
   try {
-    const data = await auth.api.verifyEmailOTP({
-      body: { email, otp },
-    });
-
-    if (!data.status) {
-      throw new Error("Invalid or expired verification code");
+    if (isReset) {
+      await auth.api.checkVerificationOTP({
+        body: {
+          email,
+          type: "forget-password",
+          otp,
+        },
+      });
+    } else {
+      await auth.api.verifyEmailOTP({
+        body: { email, otp },
+      });
     }
 
     return null;
@@ -176,12 +191,12 @@ const verifyOTP = async ({
 };
 
 export const validateOTPForm = async (
-  email: string,
+  { email, isReset }: SendOTPDataType,
   _prevState: VerifyEmailFormReturnType,
   formData: FormData,
 ): Promise<VerifyEmailFormReturnType> => {
   const otp = (formData.get("otp") as string).trim();
-  const rawInput = { otp, email };
+  const rawInput = { otp, email, isReset };
 
   const result = verifyOTPSchema.safeParse(rawInput);
 
@@ -203,5 +218,64 @@ export const validateOTPForm = async (
     return { errors: {}, success: false, errorMessage: errorMessage };
   }
 
+  return { errors: {}, success: true, errorMessage: null };
+};
+
+// Forgot Password
+const initiatePasswordReset = async ({
+  email,
+}: ForgotPasswordDataType): Promise<string | null> => {
+  try {
+    await sendOTP({ email, isReset: true });
+
+    return null;
+  } catch (error) {
+    return handleErrors(error);
+  }
+};
+
+export const validateForgotPasswordForm = async (
+  _prevState: ForgotPasswordFormReturnType,
+  formData: FormData,
+): Promise<ForgotPasswordFormReturnType> => {
+  const rawInput = Object.fromEntries(formData);
+
+  const result = forgotPasswordSchema.safeParse(rawInput);
+
+  if (!result.success) {
+    let errors: ForgotPasswordFormErrors = {};
+
+    const flattenedErrors = z.flattenError(result.error).fieldErrors;
+
+    for (const [key, value] of Object.entries(flattenedErrors)) {
+      errors = { ...errors, [key]: value[0] };
+    }
+
+    return { errors, success: false, errorMessage: null };
+  }
+  console.log("This is the result", result.data);
+
+  const errorMessage = await initiatePasswordReset(result.data);
+  if (errorMessage) {
+    return { errors: {}, success: false, errorMessage };
+  }
+
+  const cookiesStore = await cookies();
+  cookiesStore.set("reset", "true", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 15 * 60,
+    path: "/",
+  });
+  cookiesStore.set("email", result.data.email, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 15 * 60,
+    path: "/",
+  });
+
+  console.log("This was returned....");
   return { errors: {}, success: true, errorMessage: null };
 };

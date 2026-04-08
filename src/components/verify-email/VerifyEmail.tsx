@@ -166,7 +166,7 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
   };
 
   const [state, formAction, isPending] = useActionState(
-    validateOTPForm.bind(null, email),
+    validateOTPForm.bind(null, { email, isReset }),
     initialState,
   );
 
@@ -177,10 +177,14 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
   }, [state.errorMessage]);
 
   useEffect(() => {
+    console.log("STATE:", state);
+  }, [state]);
+
+  useEffect(() => {
     if (state.success) {
       setOtp(Array(6).fill(""));
 
-      router.replace("/");
+      router.replace(isReset ? "/set-new-password" : "/");
     }
   }, [state.success, router]);
 
@@ -219,20 +223,26 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
               </div>
 
               <div className="bg-background p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto space-y-6 ">
+                {respones?.message && (
+                  <p
+                    style={{
+                      color: respones.type === "error" ? "red" : "green",
+                    }}
+                    className="text-center mb-2"
+                  >
+                    {respones.message}
+                  </p>
+                )}
                 <form action={formAction} className="space-y-4">
-                  {respones?.message && (
-                    <p
-                      style={{
-                        color: respones.type === "error" ? "red" : "green",
-                      }}
-                      className="text-center mb-2"
-                    >
-                      {respones.message}
-                    </p>
-                  )}
-
-                  <div className="flex justify-center items-center gap-2">
-                    {inputElements}
+                  <div>
+                    <div className="flex justify-center items-center gap-2">
+                      {inputElements}
+                    </div>
+                    {state.errors.otp && (
+                      <span className="text-xs text-red-400">
+                        {state.errors.otp}
+                      </span>
+                    )}
                   </div>
                   <input name="otp" defaultValue={otp.join("")} hidden />
 
@@ -268,10 +278,13 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
                     </div>
                   )}
                   <motion.button
+                    type="submit"
                     whileHover={{ scale: 1.05, background: "#c46b00" }}
                     whileTap={{ scale: 0.95 }}
                     transition={{ duration: 0.25, ease: "easeOut" }}
-                    aria-disabled={isPending}
+                    aria-disabled={
+                      isPending || otp.join("").trim().length !== 6
+                    }
                     className="block flex items-center justify-center bg-gold text-base font-semibold text-cream cursor-pointer w-full px-6 py-3 rounded-lg"
                   >
                     {isPending ? (
