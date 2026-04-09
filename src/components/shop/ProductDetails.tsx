@@ -16,6 +16,7 @@ import { ProductImagesPreview } from "./ProductImagesPreview";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { ProductsList } from "../ProductsList";
+import { useCart } from "@/lib/hooks/useCart";
 
 interface Props {
   product: Product;
@@ -25,6 +26,7 @@ interface Props {
 export const ProductDetails = ({ product, similarProducts }: Props) => {
   const router = useRouter();
   const [count, setCount] = useState(0);
+  const { dispatch } = useCart();
 
   return (
     <>
@@ -119,6 +121,13 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                   </div>
                 </div>
                 <motion.button
+                  type="button"
+                  onClick={() =>
+                    dispatch({
+                      type: "ADD_PRODUCT",
+                      payload: { quantity: count, product: product },
+                    })
+                  }
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.9 }}
                   transition={{
@@ -126,8 +135,8 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                     stiffness: 300,
                     damping: 15,
                   }}
-                  type="button"
-                  className="px-6 py-3 flex items-center shadow-lg cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full"
+                  aria-disabled={count === 0}
+                  className={`${count === 0 ? "pointer-events-none opacity-50 cursor-not-allowed " : ""} px-6 py-3 flex items-center shadow-lg cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full`}
                 >
                   <ShoppingCart className="icon3" />
                   Add to Cart
