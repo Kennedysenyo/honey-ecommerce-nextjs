@@ -135,6 +135,7 @@ export const ProductDetails = ({ product, similarProducts }: Props) => {
                     stiffness: 300,
                     damping: 15,
                   }}
+                  disabled={count === 0}
                   aria-disabled={count === 0}
                   className={`${count === 0 ? "pointer-events-none opacity-50 cursor-not-allowed " : ""} px-6 py-3 flex items-center shadow-lg cursor-pointer gap-2 justify-center w-full bg-gold text-background text-lg rounded-full`}
                 >

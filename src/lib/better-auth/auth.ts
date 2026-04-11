@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db";
 import { authSchema } from "../db/schema";
 import { emailOTP } from "better-auth/plugins";
+import { headers } from "next/headers";
 
 const codeExpiresIn = Number(process.env.CODE_EXPIRES_IN);
 
@@ -36,3 +37,12 @@ export const auth = betterAuth({
     }),
   ],
 });
+
+export const hasSession = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  console.log(session);
+
+  return !!session;
+};

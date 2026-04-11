@@ -158,6 +158,33 @@
   .abs-right {
     right: 1;
   }
+
+  /* .user-menu {
+    display: none;
+  } */
+
+  .user-menu {
+    display: block;
+    position: absolute;
+    bottom: -14px;
+    width: 100vw;
+    max-width: 200px;
+    height: fit-content;
+
+    transform: translate(-80%, 100%);
+    transition: position ease 0.3s;
+  }
+
+  @media (max-width: 480px) {
+    .user-menu {
+      transform: translate(-50%, 100%);
+    }
+  }
+  @media (max-width: 300px) {
+    .user-menu {
+      transform: translate(-30%, 100%);
+    }
+  }
 }
 
 body {

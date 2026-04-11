@@ -28,7 +28,7 @@ import {
 } from "./auth.types";
 import { handleErrors } from "@/lib/utils/handleErrors";
 import { auth } from "@/lib/better-auth/auth";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export const sendOTP = async ({ email, isReset }: SendOTPDataType) => {
   try {
@@ -356,4 +356,12 @@ export const validateSetNewPasswordForm = async (
   }
 
   return { errors: {}, success: true, errorMessage: null };
+};
+
+export const signOut = async () => {
+  try {
+    const da = auth.api.signOut({ headers: await headers() });
+  } catch (error) {
+    throw new Error(handleErrors(error));
+  }
 };
