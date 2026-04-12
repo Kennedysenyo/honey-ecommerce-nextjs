@@ -16,8 +16,17 @@ export async function requireSession() {
 }
 
 export const isSignedIn = async () => {
+  const sessionData = process.env.BETTER_AUTH_SESSION_DATA_KEY;
+  const sessionToken = process.env.BETTER_AUTH_SESSION_DATA_TOKEN;
+
+  if (!sessionData || !sessionToken) {
+    throw new Error(
+      "BETTER_AUTH_SESSION_DATA_KEY and BETTER_AUTH_SESSION_DATA_TOKEN are required",
+    );
+  }
+
   const cookiesStore = await cookies();
-  const data = cookiesStore.get("better-auth.session_data")?.value;
-  const token = cookiesStore.get("better-auth.session_token")?.value;
+  const data = cookiesStore.get(sessionData)?.value;
+  const token = cookiesStore.get(sessionToken)?.value;
   return !!data && !!token;
 };

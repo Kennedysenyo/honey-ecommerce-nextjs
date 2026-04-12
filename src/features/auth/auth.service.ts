@@ -271,7 +271,6 @@ export const validateForgotPasswordForm = async (
 
     return { errors, success: false };
   }
-  console.log("This is the result", result.data);
 
   const errorMessage = await initiatePasswordReset(result.data);
   if (errorMessage) {
@@ -297,7 +296,6 @@ export const validateForgotPasswordForm = async (
     path: "/",
   });
 
-  console.log("This was returned....");
   return { errors: {}, success: true };
 };
 
