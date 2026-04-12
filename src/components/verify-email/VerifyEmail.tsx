@@ -180,7 +180,7 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
     if (state.success) {
       setOtp(Array(6).fill(""));
 
-      router.replace(isReset ? "/set-new-password" : "/");
+      router.replace(isReset ? "/set-new-password" : "/sign-in");
     }
   }, [state.success, router]);
 

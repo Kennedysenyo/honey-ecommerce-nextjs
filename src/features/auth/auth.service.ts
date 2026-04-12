@@ -202,12 +202,15 @@ const verifyOTP = async ({
     } else {
       await auth.api.verifyEmailOTP({
         body: { email, otp },
+        headers: await headers(),
       });
       const baseURL = process.env.BETTER_AUTH_URL;
       if (!baseURL) {
         throw new Error("BETTER_AUTH_URL is required to send email");
       }
-
+      // TODO: change the way the email is sent.
+      // After otp verification, there's no session.
+      // So the name is not available.
       const session = await requireSession();
       await sendEmail({
         type: "WELCOME",
