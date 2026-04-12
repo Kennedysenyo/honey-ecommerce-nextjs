@@ -177,10 +177,6 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
   }, [state.errorMessage]);
 
   useEffect(() => {
-    console.log("STATE:", state);
-  }, [state]);
-
-  useEffect(() => {
     if (state.success) {
       setOtp(Array(6).fill(""));
 

@@ -2,17 +2,15 @@
 
 import { signOut } from "@/features/auth/auth.service";
 import { Loader } from "lucide-react";
-import { usePathname } from "next/navigation";
+
 import { useTransition } from "react";
 
 export const SignOutButton = () => {
   const [pending, startTransition] = useTransition();
 
-  const pathname = usePathname();
-
   const handleClick = () => {
     startTransition(async () => {
-      await signOut(pathname);
+      await signOut();
     });
   };
 
