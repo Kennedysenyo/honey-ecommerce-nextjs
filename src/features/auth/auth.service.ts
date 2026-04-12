@@ -29,6 +29,8 @@ import {
 import { handleErrors } from "@/lib/utils/handleErrors";
 import { auth } from "@/lib/better-auth/auth";
 import { cookies, headers } from "next/headers";
+import { sendEmail } from "@/lib/resend/send-email";
+import { requireSession } from "@/lib/better-auth/server-auth";
 
 export const sendOTP = async ({ email, isReset }: SendOTPDataType) => {
   try {
@@ -64,6 +66,7 @@ const signUp = async ({
         email,
         password,
       },
+      headers: await headers(),
     });
 
     await sendOTP({ email, isReset: false });
@@ -199,6 +202,21 @@ const verifyOTP = async ({
     } else {
       await auth.api.verifyEmailOTP({
         body: { email, otp },
+      });
+      const baseURL = process.env.BETTER_AUTH_URL;
+      if (!baseURL) {
+        throw new Error("BETTER_AUTH_URL is required to send email");
+      }
+
+      const session = await requireSession();
+      await sendEmail({
+        type: "WELCOME",
+        details: {
+          to: email,
+          subject: "Welcome to Honey Man",
+          name: session?.user.name!,
+        },
+        baseURL,
       });
     }
 
