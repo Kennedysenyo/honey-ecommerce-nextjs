@@ -267,8 +267,8 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
                           onClick={() => handleResend()}
                         >
                           {resendLoading ? (
-                            <span className="animate-spin">
-                              <Loader className="icon3" />
+                            <span className="">
+                              <Loader className="icon3 animate-spin" />
                             </span>
                           ) : (
                             "Resend"

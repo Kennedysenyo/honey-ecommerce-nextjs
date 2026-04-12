@@ -3,7 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db";
 import { authSchema } from "../db/schema";
 import { emailOTP } from "better-auth/plugins";
-import { headers } from "next/headers";
+import { nextCookies } from "better-auth/next-js";
 
 const codeExpiresIn = Number(process.env.CODE_EXPIRES_IN);
 
@@ -17,12 +17,14 @@ export const auth = betterAuth({
     provider: "pg",
   }),
   emailAndPassword: {
+    autoSignIn: false,
     enabled: true,
     requireEmailVerification: true,
     resetPasswordTokenExpiresIn: Number(codeExpiresIn),
     revokeSessionsOnPasswordReset: true,
   },
   plugins: [
+    nextCookies(),
     emailOTP({
       expiresIn: codeExpiresIn,
       async sendVerificationOTP({ email, otp, type }) {
@@ -36,13 +38,15 @@ export const auth = betterAuth({
       },
     }),
   ],
+  session: {
+    expiresIn: 60 * 60 * 24 * 3,
+    updateAge: 60 * 60 * 24,
+    freshAge: 60 * 10,
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60,
+      strategy: "compact",
+    },
+    deferSessionRefresh: true,
+  },
 });
-
-export const hasSession = async () => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-  console.log(session);
-
-  return !!session;
-};

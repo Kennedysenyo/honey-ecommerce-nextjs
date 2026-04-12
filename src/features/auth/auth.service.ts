@@ -125,10 +125,8 @@ const signIn = async ({
 }: UserSignInDataType): Promise<string | null> => {
   try {
     await auth.api.signInEmail({
-      body: {
-        email,
-        password,
-      },
+      body: { email, password },
+      headers: await headers(),
     });
 
     return null;
@@ -360,7 +358,7 @@ export const validateSetNewPasswordForm = async (
 
 export const signOut = async () => {
   try {
-    const da = auth.api.signOut({ headers: await headers() });
+    await auth.api.signOut({ headers: await headers() });
   } catch (error) {
     throw new Error(handleErrors(error));
   }

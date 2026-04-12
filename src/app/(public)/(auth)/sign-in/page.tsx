@@ -54,6 +54,7 @@ export default function SignIn() {
       });
 
       router.replace("/");
+      router.refresh();
     }
   }, [state.success, router]);
 

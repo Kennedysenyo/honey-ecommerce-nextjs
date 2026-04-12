@@ -1,12 +1,7 @@
-import { authClient } from "@/lib/better-auth/auth-client";
+import { isSignedIn } from "@/lib/better-auth/server-auth";
 import { HeaderContent } from "./HeaderContent";
-import { hasSession } from "@/lib/better-auth/auth";
 
 export const Header = async () => {
-  // const { data } = await authClient.getSession();
-  // console.log(data);
-  // const hasSeesion = !!data?.user;
-
-  const isSignedIn = await hasSession();
-  return <HeaderContent hasSession={isSignedIn} />;
+  const s = await isSignedIn();
+  return <HeaderContent hasSession={s} />;
 };

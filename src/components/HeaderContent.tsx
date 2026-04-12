@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu, X } from "lucide-react";
+import { Loader, Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import { CartButton } from "./cartButton";
 import { AnimatedButton } from "./AnimatedButton";
 import { UserButton } from "./UserButton";
+import { useSession } from "@/lib/hooks/useSession";
+import { authClient } from "@/lib/better-auth/auth-client";
 
 const NAV_LINKS = [
   { path: "/", label: "Home" },
@@ -40,10 +42,13 @@ const item = {
 interface Props {
   hasSession: boolean;
 }
+
 export const HeaderContent = ({ hasSession }: Props) => {
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const pathname = usePathname();
+
+  // const { isLoading, isSignedIn } = useSession();
 
   useEffect(() => {
     function handleScroll() {
@@ -180,14 +185,16 @@ export const HeaderContent = ({ hasSession }: Props) => {
                     ease: "easeOut",
                   }}
                 >
-                  <AnimatedButton className="w-full">
-                    <Link
-                      className=" md:hidden w-full text-center block px-6 py-3 rounded-md bg-gold text-background tracking-wide text-sm hover:bg-amber transition-all duration-300"
-                      href="/sign-in"
-                    >
-                      Sign In
-                    </Link>
-                  </AnimatedButton>
+                  {!hasSession && (
+                    <AnimatedButton className="w-full">
+                      <Link
+                        className=" md:hidden w-full text-center block px-6 py-3 rounded-md bg-gold text-background tracking-wide text-sm hover:bg-amber transition-all duration-300"
+                        href="/sign-in"
+                      >
+                        Sign In
+                      </Link>
+                    </AnimatedButton>
+                  )}
                 </motion.div>
               </motion.ul>
             </motion.nav>
