@@ -4,11 +4,17 @@ import { db } from "../db/db";
 import { authSchema } from "../db/schema";
 import { emailOTP } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
+import { sendEmail } from "../resend/send-email";
 
 const codeExpiresIn = Number(process.env.CODE_EXPIRES_IN);
 
 if (!codeExpiresIn || isNaN(codeExpiresIn)) {
   throw new Error("CODE_EXPIRES_IN must be a valid number.");
+}
+
+const baseURL = process.env.BETTER_AUTH_URL;
+if (!baseURL) {
+  throw new Error("BETTER_AUTH_URL is required to send email");
 }
 
 export const auth = betterAuth({
@@ -29,9 +35,27 @@ export const auth = betterAuth({
       expiresIn: codeExpiresIn,
       async sendVerificationOTP({ email, otp, type }) {
         if (type === "email-verification") {
-          console.log("Verify OTP:", otp);
+          // console.log("Verify OTP:", otp);
+          await sendEmail({
+            type: "OTP",
+            details: {
+              to: email,
+              subject: "Your Email Verification Code",
+              otp,
+            },
+            baseURL,
+          });
         } else if (type === "forget-password") {
-          console.log("Reset OTP:", otp);
+          // console.log("Reset OTP:", otp);
+          await sendEmail({
+            type: "OTP",
+            details: {
+              to: email,
+              subject: "Your Password Reset Code",
+              otp,
+            },
+            baseURL,
+          });
         } else {
           console.log("Sign-in OTP:", otp);
         }

@@ -8,8 +8,6 @@ import { useEffect, useState } from "react";
 import { CartButton } from "./cartButton";
 import { AnimatedButton } from "./AnimatedButton";
 import { UserButton } from "./UserButton";
-import { useSession } from "@/lib/hooks/useSession";
-import { authClient } from "@/lib/better-auth/auth-client";
 
 const NAV_LINKS = [
   { path: "/", label: "Home" },
@@ -47,8 +45,6 @@ export const HeaderContent = ({ hasSession }: Props) => {
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const pathname = usePathname();
-
-  // const { isLoading, isSignedIn } = useSession();
 
   useEffect(() => {
     function handleScroll() {
