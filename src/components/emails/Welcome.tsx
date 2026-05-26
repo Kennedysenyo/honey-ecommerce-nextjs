@@ -12,6 +12,7 @@ import {
   Text,
 } from "@react-email/components";
 import tailwindConfig from "./config/tailwind";
+
 interface Props {
   name: string;
   baseURL: string;

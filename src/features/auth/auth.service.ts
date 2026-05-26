@@ -31,6 +31,26 @@ import { auth } from "@/lib/better-auth/auth";
 import { cookies, headers } from "next/headers";
 import { sendEmail } from "@/lib/resend/send-email";
 import { requireSession } from "@/lib/better-auth/server-auth";
+import {
+  aj,
+  botSettings,
+  emailSettings,
+  laxRateLimitSettings,
+  restrictiveRateLimitSettings,
+} from "@/lib/arcjet/arcjet";
+import findIp, {
+  detectBot,
+  protectSignup,
+  request,
+  slidingWindow,
+  tokenBucket,
+} from "@arcjet/next";
+// import  from "@arcjet/next
+
+const baseURL = process.env.BETTER_AUTH_URL;
+if (!baseURL) {
+  throw new Error("BETTER_AUTH_URL is required!");
+}
 
 export const sendOTP = async ({ email, isReset }: SendOTPDataType) => {
   try {
@@ -60,6 +80,34 @@ const signUp = async ({
   password,
 }: Omit<UserSignUpDataType, "cnfrmPassword">): Promise<string | null> => {
   try {
+    const req = await request();
+
+    const protectConfig = aj.withRule(
+      protectSignup({
+        email: emailSettings,
+        bots: botSettings,
+        rateLimit: restrictiveRateLimitSettings,
+      }),
+    );
+
+    const decision = await protectConfig.protect(req, { email });
+
+    if (decision.isDenied()) {
+      if (decision.reason.isRateLimit()) {
+        throw new Error("Too many signup requests! Try again later.");
+      } else if (decision.reason.isEmail()) {
+        if (decision.reason.emailTypes.includes("INVALID")) {
+          throw new Error("Email address formate is invalid");
+        } else if (decision.reason.emailTypes.includes("DISPOSABLE")) {
+          throw new Error("Disposable emails are not allowed");
+        } else if (decision.reason.emailTypes.includes("NO_MX_RECORDS")) {
+          throw new Error("Email domain is not valid");
+        } else {
+          throw new Error("Forbidden");
+        }
+      }
+    }
+
     await auth.api.signUpEmail({
       body: {
         name,
@@ -127,6 +175,23 @@ const signIn = async ({
   password,
 }: UserSignInDataType): Promise<string | null> => {
   try {
+    const req = await request();
+
+    const decision = await aj
+      .withRule(detectBot(botSettings))
+      .withRule(slidingWindow(laxRateLimitSettings))
+      .protect(req, { email });
+
+    if (decision.isDenied()) {
+      if (decision.reason.isBot()) {
+        throw new Error("Bots are not allowed");
+      } else if (decision.reason.isRateLimit()) {
+        throw new Error("Too many requests from this email");
+      } else {
+        throw new Error("Forbidden");
+      }
+    }
+
     await auth.api.signInEmail({
       body: { email, password },
       headers: await headers(),

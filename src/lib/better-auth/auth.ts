@@ -29,6 +29,9 @@ export const auth = betterAuth({
     resetPasswordTokenExpiresIn: Number(codeExpiresIn),
     revokeSessionsOnPasswordReset: true,
   },
+  emailVerification: {
+    autoSignInAfterVerification: true,
+  },
   plugins: [
     nextCookies(),
     emailOTP({
