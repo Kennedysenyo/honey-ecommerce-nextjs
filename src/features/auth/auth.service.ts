@@ -84,7 +84,7 @@ const signUp = async ({
   try {
     const req = await request();
 
-    const globalDecision = await aj.protect(req);
+    const globalDecision = await aj.protect(req, { requested: 1 });
 
     if (globalDecision.isDenied()) {
       if (globalDecision.reason.isBot()) {
@@ -125,6 +125,7 @@ const signUp = async ({
 
     const emailDecision = await emailChecker.protect(req, {
       email,
+      requested: 1,
     });
 
     if (emailDecision.isDenied()) {
@@ -210,23 +211,23 @@ const signIn = async ({
   try {
     const req = await request();
 
-    const decision = await aj.protect(req);
+    const decision = await aj.protect(req, { requested: 1 });
 
-    if (decision.isDenied()) {
-      if (decision.reason.isBot()) {
-        throw new Error("Bots are not allowed");
-      } else {
-        throw new Error("Forbidden");
-      }
-    }
+    // if (decision.isDenied()) {
+    //   if (decision.reason.isBot()) {
+    //     throw new Error("Bots are not allowed");
+    //   } else if (decision.reason.isRateLimit()) {
+    //     throw new Error("Too many requests. Try again later!");
+    //   }
+    // }
 
     const rateLimitter = aj.withRule(
       tokenBucket({
         mode: "LIVE",
         characteristics: ["email"],
-        capacity: 5,
-        refillRate: 5,
-        interval: "5m",
+        capacity: 3,
+        refillRate: 3,
+        interval: "60s",
       }),
     );
 
@@ -234,11 +235,12 @@ const signIn = async ({
       email,
       requested: 1,
     });
+    console.log(rateLimitDecision);
     if (rateLimitDecision.isDenied()) {
       if (rateLimitDecision.reason.isRateLimit()) {
         throw new Error("Too many signup attempts. Try again later!");
       } else {
-        throw new Error("Forbidden");
+        throw new Error("Forbidden  454");
       }
     }
 
