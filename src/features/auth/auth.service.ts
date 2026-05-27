@@ -33,14 +33,17 @@ import { sendEmail } from "@/lib/resend/send-email";
 import { requireSession } from "@/lib/better-auth/server-auth";
 import {
   aj,
+  arcjetKey,
+  botSettings,
   emailSettings,
   laxRateLimitSettings,
   restrictiveRateLimitSettings,
 } from "@/lib/arcjet/arcjet";
-import {
+import arcjet, {
   detectBot,
   protectSignup,
   request,
+  shield,
   slidingWindow,
   tokenBucket,
   validateEmail,
@@ -80,47 +83,46 @@ const signUp = async ({
 }: Omit<UserSignUpDataType, "cnfrmPassword">): Promise<string | null> => {
   try {
     const req = await request();
-    const reqHeaders = (await headers()) as unknown as Request;
 
-    const globalDecision = await aj.protect(reqHeaders, { requested: 1 });
+    const globalDecision = await aj.protect(req, { requested: 1 });
 
-    // if (globalDecision.isDenied()) {
-    //   if (globalDecision.reason.isRateLimit()) {
-    //     throw new Error("Too many signup requests! Try again later.");
-    //   } else {
-    //     throw new Error("Forbidden");
-    //   }
-    // }
+    if (globalDecision.isDenied()) {
+      if (globalDecision.reason.isBot()) {
+        throw new Error("Auotomated bots are not allowed!");
+      }
 
-    const emailValidator = aj.withRule(validateEmail(emailSettings));
+      if (globalDecision.reason.isRateLimit()) {
+        throw new Error("Too many requests");
+      }
+    }
 
-    const emailDecision = await emailValidator.protect(req, {
+    const emailChecker = aj.withRule(
+      validateEmail({
+        mode: "LIVE",
+        deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+      }),
+    );
+
+    const emailDecision = await emailChecker.protect(req, {
       email,
       requested: 1,
     });
 
+    console.log(emailDecision);
+
     if (emailDecision.isDenied()) {
       if (emailDecision.reason.isEmail()) {
-        if (emailDecision.reason.emailTypes.includes("INVALID")) {
-          throw new Error("Email address format invalid");
-        } else if (emailDecision.reason.emailTypes.includes("DISPOSABLE")) {
+        if (emailDecision.reason.emailTypes.includes("DISPOSABLE")) {
           throw new Error("Disposable emails are not allowed");
         } else if (emailDecision.reason.emailTypes.includes("NO_MX_RECORDS")) {
           throw new Error("Invalid email domain");
+        } else if (emailDecision.reason.emailTypes.includes("INVALID")) {
+          throw new Error("Invalid email format");
+        } else {
+          throw new Error("Forbidden");
         }
       }
     }
-
-    // 🔍 ADD THESE LOGS HERE:
-    console.log("--- ARCJET DEBUG START ---");
-    console.log("Is Allowed?:", emailDecision.isAllowed());
-    console.log("Conclusion:", emailDecision.conclusion);
-    console.log(
-      "Reasoning Details:",
-      JSON.stringify(emailDecision.reason, null, 2),
-    );
-    console.log("IP Detected:", emailDecision.ip);
-    console.log("--- ARCJET DEBUG END ---");
 
     await auth.api.signUpEmail({
       body: {

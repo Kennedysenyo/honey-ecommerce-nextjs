@@ -197,14 +197,14 @@ export const VerifyEmail = ({ email, codeExpiresIn, isReset }: Props) => {
           <div className="section-max-w mx-auto section-px-one h-full flex flex-col gap-4 justify-center ">
             <div className="space-y-8 w-full">
               <div className="max-w-md mx-auto">
-                <Link
-                  href="/sign-in"
+                <button
+                  onClick={() => router.back()}
                   type="button"
                   className="flex items-center gap-4 text-background cursor-pointer hover:-translate-x-1 hover:text-gold transition-all duration-300"
                 >
                   <ArrowLeft className="icon2" />
-                  Back to Sign in
-                </Link>
+                  Go Back
+                </button>
               </div>
               <div className="space-y-4 text-center">
                 <h1 className="font-heading title-one text-background">

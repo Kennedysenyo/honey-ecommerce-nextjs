@@ -8,20 +8,20 @@ import arcjet, {
   validateEmail,
 } from "@arcjet/next";
 
-const arcjetKey = process.env.ARCJET_KEY;
+export const arcjetKey = process.env.ARCJET_KEY;
 
 if (!arcjetKey) {
   throw new Error("ARCJET_KEY is required to setup Arcjet");
 }
 
-const botSettings = {
+export const botSettings = {
   mode: "LIVE",
   allow: [],
 } satisfies BotOptions;
 
 export const restrictiveRateLimitSettings = {
   mode: "LIVE",
-  max: 10,
+  max: 0,
   interval: "10m",
 } satisfies SlidingWindowRateLimitOptions<[]>;
 
@@ -34,6 +34,8 @@ export const laxRateLimitSettings = {
 export const emailSettings = {
   mode: "LIVE",
   deny: ["DISPOSABLE", "INVALID", "NO_MX_RECORDS"],
+  allowDomainLiteral: true,
+  requireTopLevelDomain: true,
 } satisfies EmailOptions;
 
 export const aj = arcjet({
@@ -42,12 +44,11 @@ export const aj = arcjet({
   rules: [
     shield({ mode: "LIVE" }),
     detectBot(botSettings),
-
     tokenBucket({
       mode: "LIVE",
       capacity: 5,
-      refillRate: 10,
-      interval: "10m",
+      refillRate: 5,
+      interval: "5m",
     }),
   ],
 });
