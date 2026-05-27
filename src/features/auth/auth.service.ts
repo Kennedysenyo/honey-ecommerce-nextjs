@@ -84,15 +84,35 @@ const signUp = async ({
   try {
     const req = await request();
 
-    const globalDecision = await aj.protect(req, { requested: 1 });
+    const globalDecision = await aj.protect(req);
 
     if (globalDecision.isDenied()) {
       if (globalDecision.reason.isBot()) {
         throw new Error("Auotomated bots are not allowed!");
+      } else {
+        throw new Error("Forbidden");
       }
+    }
 
-      if (globalDecision.reason.isRateLimit()) {
-        throw new Error("Too many requests");
+    const rateLimitter = aj.withRule(
+      tokenBucket({
+        mode: "LIVE",
+        characteristics: ["email"],
+        capacity: 5,
+        refillRate: 5,
+        interval: "5m",
+      }),
+    );
+
+    const rateLimitDecision = await rateLimitter.protect(req, {
+      email,
+      requested: 1,
+    });
+    if (rateLimitDecision.isDenied()) {
+      if (rateLimitDecision.reason.isRateLimit()) {
+        throw new Error("Too many signup attempts. Try again later!");
+      } else {
+        throw new Error("Forbidden");
       }
     }
 
@@ -105,10 +125,7 @@ const signUp = async ({
 
     const emailDecision = await emailChecker.protect(req, {
       email,
-      requested: 1,
     });
-
-    console.log(emailDecision);
 
     if (emailDecision.isDenied()) {
       if (emailDecision.reason.isEmail()) {
@@ -193,20 +210,37 @@ const signIn = async ({
   try {
     const req = await request();
 
-    // const decision = await aj
+    const decision = await aj.protect(req);
 
-    //   .withRule(slidingWindow(laxRateLimitSettings))
-    //   .protect(req, { email });
+    if (decision.isDenied()) {
+      if (decision.reason.isBot()) {
+        throw new Error("Bots are not allowed");
+      } else {
+        throw new Error("Forbidden");
+      }
+    }
 
-    // if (decision.isDenied()) {
-    //   if (decision.reason.isBot()) {
-    //     throw new Error("Bots are not allowed");
-    //   } else if (decision.reason.isRateLimit()) {
-    //     throw new Error("Too many requests from this email");
-    //   } else {
-    //     throw new Error("Forbidden");
-    //   }
-    // }
+    const rateLimitter = aj.withRule(
+      tokenBucket({
+        mode: "LIVE",
+        characteristics: ["email"],
+        capacity: 5,
+        refillRate: 5,
+        interval: "5m",
+      }),
+    );
+
+    const rateLimitDecision = await rateLimitter.protect(req, {
+      email,
+      requested: 1,
+    });
+    if (rateLimitDecision.isDenied()) {
+      if (rateLimitDecision.reason.isRateLimit()) {
+        throw new Error("Too many signup attempts. Try again later!");
+      } else {
+        throw new Error("Forbidden");
+      }
+    }
 
     await auth.api.signInEmail({
       body: { email, password },

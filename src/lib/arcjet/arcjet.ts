@@ -41,14 +41,5 @@ export const emailSettings = {
 export const aj = arcjet({
   key: arcjetKey,
   characteristics: ["ip.src"],
-  rules: [
-    shield({ mode: "LIVE" }),
-    detectBot(botSettings),
-    tokenBucket({
-      mode: "LIVE",
-      capacity: 5,
-      refillRate: 5,
-      interval: "5m",
-    }),
-  ],
+  rules: [shield({ mode: "LIVE" }), detectBot(botSettings)],
 });
