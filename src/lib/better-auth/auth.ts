@@ -22,6 +22,7 @@ export const auth = betterAuth({
     schema: authSchema,
     provider: "pg",
   }),
+
   emailAndPassword: {
     autoSignIn: true,
     enabled: true,

@@ -33,19 +33,18 @@ import { sendEmail } from "@/lib/resend/send-email";
 import { requireSession } from "@/lib/better-auth/server-auth";
 import {
   aj,
-  botSettings,
   emailSettings,
   laxRateLimitSettings,
   restrictiveRateLimitSettings,
 } from "@/lib/arcjet/arcjet";
-import findIp, {
+import {
   detectBot,
   protectSignup,
   request,
   slidingWindow,
   tokenBucket,
+  validateEmail,
 } from "@arcjet/next";
-// import  from "@arcjet/next
 
 const baseURL = process.env.BETTER_AUTH_URL;
 if (!baseURL) {
@@ -81,32 +80,47 @@ const signUp = async ({
 }: Omit<UserSignUpDataType, "cnfrmPassword">): Promise<string | null> => {
   try {
     const req = await request();
+    const reqHeaders = (await headers()) as unknown as Request;
 
-    const protectConfig = aj.withRule(
-      protectSignup({
-        email: emailSettings,
-        bots: botSettings,
-        rateLimit: restrictiveRateLimitSettings,
-      }),
-    );
+    const globalDecision = await aj.protect(reqHeaders, { requested: 1 });
 
-    const decision = await protectConfig.protect(req, { email });
+    // if (globalDecision.isDenied()) {
+    //   if (globalDecision.reason.isRateLimit()) {
+    //     throw new Error("Too many signup requests! Try again later.");
+    //   } else {
+    //     throw new Error("Forbidden");
+    //   }
+    // }
 
-    if (decision.isDenied()) {
-      if (decision.reason.isRateLimit()) {
-        throw new Error("Too many signup requests! Try again later.");
-      } else if (decision.reason.isEmail()) {
-        if (decision.reason.emailTypes.includes("INVALID")) {
-          throw new Error("Email address formate is invalid");
-        } else if (decision.reason.emailTypes.includes("DISPOSABLE")) {
+    const emailValidator = aj.withRule(validateEmail(emailSettings));
+
+    const emailDecision = await emailValidator.protect(req, {
+      email,
+      requested: 1,
+    });
+
+    if (emailDecision.isDenied()) {
+      if (emailDecision.reason.isEmail()) {
+        if (emailDecision.reason.emailTypes.includes("INVALID")) {
+          throw new Error("Email address format invalid");
+        } else if (emailDecision.reason.emailTypes.includes("DISPOSABLE")) {
           throw new Error("Disposable emails are not allowed");
-        } else if (decision.reason.emailTypes.includes("NO_MX_RECORDS")) {
-          throw new Error("Email domain is not valid");
-        } else {
-          throw new Error("Forbidden");
+        } else if (emailDecision.reason.emailTypes.includes("NO_MX_RECORDS")) {
+          throw new Error("Invalid email domain");
         }
       }
     }
+
+    // 🔍 ADD THESE LOGS HERE:
+    console.log("--- ARCJET DEBUG START ---");
+    console.log("Is Allowed?:", emailDecision.isAllowed());
+    console.log("Conclusion:", emailDecision.conclusion);
+    console.log(
+      "Reasoning Details:",
+      JSON.stringify(emailDecision.reason, null, 2),
+    );
+    console.log("IP Detected:", emailDecision.ip);
+    console.log("--- ARCJET DEBUG END ---");
 
     await auth.api.signUpEmail({
       body: {
@@ -177,20 +191,20 @@ const signIn = async ({
   try {
     const req = await request();
 
-    const decision = await aj
-      .withRule(detectBot(botSettings))
-      .withRule(slidingWindow(laxRateLimitSettings))
-      .protect(req, { email });
+    // const decision = await aj
 
-    if (decision.isDenied()) {
-      if (decision.reason.isBot()) {
-        throw new Error("Bots are not allowed");
-      } else if (decision.reason.isRateLimit()) {
-        throw new Error("Too many requests from this email");
-      } else {
-        throw new Error("Forbidden");
-      }
-    }
+    //   .withRule(slidingWindow(laxRateLimitSettings))
+    //   .protect(req, { email });
+
+    // if (decision.isDenied()) {
+    //   if (decision.reason.isBot()) {
+    //     throw new Error("Bots are not allowed");
+    //   } else if (decision.reason.isRateLimit()) {
+    //     throw new Error("Too many requests from this email");
+    //   } else {
+    //     throw new Error("Forbidden");
+    //   }
+    // }
 
     await auth.api.signInEmail({
       body: { email, password },
