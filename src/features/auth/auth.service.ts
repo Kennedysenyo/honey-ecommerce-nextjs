@@ -235,7 +235,7 @@ const signIn = async ({
       email,
       requested: 1,
     });
-    console.log(rateLimitDecision);
+
     if (rateLimitDecision.isDenied()) {
       if (rateLimitDecision.reason.isRateLimit()) {
         throw new Error("Too many signup attempts. Try again later!");

@@ -1,6 +1,8 @@
 import { sendOTPSchema } from "@/features/auth/auth.schema";
 import { sendOTP } from "@/features/auth/auth.service";
 import { SendOTPDataType } from "@/features/auth/auth.types";
+import { aj } from "@/lib/arcjet/arcjet";
+import { tokenBucket } from "@arcjet/next";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
@@ -14,6 +16,48 @@ export const POST = async (request: NextRequest) => {
         { status: 400 },
       );
     }
+
+    const decision = await aj.protect(request, { requested: 1 });
+    if (decision.isDenied()) {
+      if (decision.reason.isBot()) {
+        return NextResponse.json(
+          { message: "Bot automations not allowed!" },
+          { status: 403 },
+        );
+      } else if (decision.reason.isRateLimit()) {
+        return NextResponse.json(
+          {
+            message: "Too many requests. Try again later",
+          },
+          { status: 403 },
+        );
+      }
+    }
+
+    const emailRateLimiter = aj.withRule(
+      tokenBucket({
+        mode: "LIVE",
+        characteristics: ["email"],
+        capacity: 3,
+        refillRate: 3,
+        interval: "60m",
+      }),
+    );
+
+    const emailDecision = await emailRateLimiter.protect(request, {
+      email: email.toLowerCase().trim(),
+      requested: 1,
+    });
+
+    if (emailDecision.isDenied()) {
+      if (emailDecision.reason.isRateLimit()) {
+        return NextResponse.json(
+          { message: "Too many requests from this email. Try again later!" },
+          { status: 403 },
+        );
+      }
+    }
+
     await sendOTP(result.data);
 
     return NextResponse.json(
