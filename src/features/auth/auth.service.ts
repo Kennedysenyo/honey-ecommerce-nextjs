@@ -213,13 +213,13 @@ const signIn = async ({
 
     const decision = await aj.protect(req, { requested: 1 });
 
-    // if (decision.isDenied()) {
-    //   if (decision.reason.isBot()) {
-    //     throw new Error("Bots are not allowed");
-    //   } else if (decision.reason.isRateLimit()) {
-    //     throw new Error("Too many requests. Try again later!");
-    //   }
-    // }
+    if (decision.isDenied()) {
+      if (decision.reason.isBot()) {
+        throw new Error("Bots are not allowed");
+      } else if (decision.reason.isRateLimit()) {
+        throw new Error("Too many requests. Try again later!");
+      }
+    }
 
     const rateLimitter = aj.withRule(
       tokenBucket({
