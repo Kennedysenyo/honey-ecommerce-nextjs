@@ -1,3 +1,9 @@
+"use client";
+
+import { StatCard } from "@/components/dashboard/StatCard";
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
 import {
   ShoppingCart,
   DollarSign,
@@ -5,10 +11,7 @@ import {
   Users,
   AlertTriangle,
 } from "lucide-react";
-import { StatCard } from "../components/StatCard";
-import { Card } from "../../components/ui/card";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { StatusBadge } from "../components/StatusBadge";
+
 import {
   AreaChart,
   Area,
@@ -101,7 +104,7 @@ const recentActivity = [
   { type: "alert", message: "Manuka Honey running low", time: "2 hours ago" },
 ];
 
-export function Dashboard() {
+export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -136,7 +139,7 @@ export function Dashboard() {
         />
         <StatCard
           title="Total Customers"
-          value={(1, 245)}
+          value={245}
           icon={Users}
           subtitle="Active users"
         />

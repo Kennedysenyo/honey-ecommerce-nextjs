@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Search,
   Bell,
@@ -31,8 +33,9 @@ interface AdminNavbarProps {
   toggleSidebar: () => void;
 }
 
-export function AdminNavbar({ toggleSidebar }: AdminNavbarProps) {
+export function AdminNavbar() {
   const [darkMode, setDarkMode] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <header className="h-16 bg-white border-b border-[var(--honey-gold)]/20 flex items-center justify-between px-4 md:px-6">
@@ -43,7 +46,7 @@ export function AdminNavbar({ toggleSidebar }: AdminNavbarProps) {
           variant="ghost"
           size="icon"
           className="md:hidden"
-          onClick={toggleSidebar}
+          onClick={() => setIsOpen((prev) => !prev)}
         >
           <Menu className="w-5 h-5" />
         </Button>
@@ -77,13 +80,13 @@ export function AdminNavbar({ toggleSidebar }: AdminNavbarProps) {
 
         {/* Notifications */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
+          <DropdownMenuTrigger>
+            <span className="relative">
               <Bell className="w-5 h-5 text-gray-600" />
               <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-[var(--honey-gold)] text-white text-xs">
                 3
               </Badge>
-            </Button>
+            </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80">
             <DropdownMenuLabel>Notifications</DropdownMenuLabel>
@@ -110,7 +113,7 @@ export function AdminNavbar({ toggleSidebar }: AdminNavbarProps) {
 
         {/* Profile Dropdown */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger>
             <Button variant="ghost" className="gap-2 h-auto py-2 px-3">
               <Avatar className="w-8 h-8">
                 <AvatarImage src="" alt="Admin" />

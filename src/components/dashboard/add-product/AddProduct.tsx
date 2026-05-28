@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { ArrowLeft, Upload, X } from "lucide-react";
 import Link from "next/link";
@@ -17,7 +15,7 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 
-export default function ProductForm() {
+export function ProductForm() {
   const [images, setImages] = useState<string[]>([]);
 
   return (

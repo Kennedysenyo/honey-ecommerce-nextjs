@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { bodyFont, headingFont } from "./fonts/fonts";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 export const metadata: Metadata = {
   title: "Honey Man",
@@ -15,7 +19,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${headingFont.variable} ${bodyFont.variable} antialiased`}
+      className={cn("antialiased", headingFont.variable, bodyFont.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-screen flex flex-col ">
         <main className="flex-1 flex flex-col"> {children}</main>

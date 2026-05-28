@@ -1,9 +1,10 @@
+"use client";
+import { StatCard } from "@/components/dashboard/StatCard";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
 import { Package, AlertTriangle, TrendingDown, RefreshCw } from "lucide-react";
-import { StatCard } from "../components/StatCard";
-import { Card } from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import { Progress } from "../../components/ui/progress";
 
 interface InventoryItem {
   id: string;
@@ -79,7 +80,7 @@ const mockInventory: InventoryItem[] = [
   },
 ];
 
-export function Inventory() {
+export default function Inventory() {
   const stats = {
     totalProducts: mockInventory.length,
     lowStock: mockInventory.filter((i) => i.status === "low").length,

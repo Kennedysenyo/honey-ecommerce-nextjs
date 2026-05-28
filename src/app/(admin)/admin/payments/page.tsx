@@ -1,8 +1,10 @@
+"use client";
+
+import { StatCard } from "@/components/dashboard/StatCard";
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Card } from "@/components/ui/card";
 import { DollarSign, TrendingUp, CreditCard, Smartphone } from "lucide-react";
-import { StatCard } from "../components/StatCard";
-import { Card } from "../../components/ui/card";
-import { StatusBadge } from "../components/StatusBadge";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
 
 interface Payment {
   id: string;
@@ -78,7 +80,7 @@ const mockPayments: Payment[] = [
   },
 ];
 
-export function Payments() {
+export default function Payments() {
   const stats = {
     totalRevenue: mockPayments
       .filter((p) => p.status === "success")

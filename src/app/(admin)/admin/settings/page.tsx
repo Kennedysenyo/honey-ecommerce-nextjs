@@ -1,18 +1,15 @@
-import { Store, CreditCard, Truck, Bell, Save } from "lucide-react";
-import { Card } from "../../components/ui/card";
-import { Input } from "../../components/ui/input";
-import { Button } from "../../components/ui/button";
-import { Label } from "../../components/ui/label";
-import { Switch } from "../../components/ui/switch";
-import { Separator } from "../../components/ui/separator";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "../../components/ui/tabs";
+"use client"
 
-export function Settings() {
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Store, CreditCard, Truck, Bell, Save } from "lucide-react";
+
+export default function Settings() {
   return (
     <div className="space-y-6">
       {/* Page Header */}

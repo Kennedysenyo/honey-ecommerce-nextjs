@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Search,
@@ -8,24 +10,25 @@ import {
   Eye,
   Ban,
 } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Card } from "../../components/ui/card";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
+
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "../../components/ui/dialog";
-import { StatusBadge } from "../components/StatusBadge";
+} from "@/components/ui/dialog";
 
 interface Customer {
   id: string;
@@ -108,7 +111,7 @@ const mockCustomers: Customer[] = [
   },
 ];
 
-export function Customers() {
+export default function Customers() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(
     null,
@@ -252,7 +255,7 @@ export function Customers() {
                   </td>
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger>
                         <Button variant="ghost" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>

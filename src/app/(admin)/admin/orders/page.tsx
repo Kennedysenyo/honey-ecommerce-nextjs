@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Search,
@@ -7,24 +9,24 @@ import {
   Download,
   RefreshCw,
 } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Card } from "../../components/ui/card";
-import { StatusBadge } from "../components/StatusBadge";
-import { Avatar, AvatarFallback } from "../../components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 type OrderStatus =
   | "pending"
@@ -125,7 +127,7 @@ const mockOrders: Order[] = [
   },
 ];
 
-export function Orders() {
+export default function Orders() {
   const [searchQuery, setSearchQuery] = useState("");
   const [paymentFilter, setPaymentFilter] = useState<string>("all");
   const [deliveryFilter, setDeliveryFilter] = useState<string>("all");
@@ -211,7 +213,7 @@ export function Orders() {
           </div>
 
           {/* Payment Status Filter */}
-          <Select value={paymentFilter} onValueChange={setPaymentFilter}>
+          <Select value={paymentFilter} onValueChange={() => setPaymentFilter}>
             <SelectTrigger className="w-full md:w-48">
               <SelectValue placeholder="Payment Status" />
             </SelectTrigger>
@@ -224,7 +226,10 @@ export function Orders() {
           </Select>
 
           {/* Delivery Status Filter */}
-          <Select value={deliveryFilter} onValueChange={setDeliveryFilter}>
+          <Select
+            value={deliveryFilter}
+            onValueChange={() => setDeliveryFilter}
+          >
             <SelectTrigger className="w-full md:w-48">
               <SelectValue placeholder="Delivery Status" />
             </SelectTrigger>
@@ -303,7 +308,7 @@ export function Orders() {
                   </td>
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuTrigger>
                         <Button variant="ghost" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>

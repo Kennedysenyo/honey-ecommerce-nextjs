@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { Badge } from "../../components/ui/badge";
-import { cn } from "../../components/ui/utils";
 
 type Status =
   | "pending"

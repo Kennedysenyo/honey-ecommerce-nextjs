@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router";
+"use client";
 import {
   LayoutDashboard,
   Package,
@@ -13,18 +13,17 @@ import {
   Hexagon,
   X,
 } from "lucide-react";
-import { cn } from "../../components/ui/utils";
+
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "../../components/ui/sheet";
-
-interface AdminSidebarProps {
-  collapsed: boolean;
-  setCollapsed: (collapsed: boolean) => void;
-}
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { useState } from "react";
 
 const navItems = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
@@ -37,14 +36,17 @@ const navItems = [
   { path: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
-export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
-  const location = useLocation();
+export function AdminSidebar() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const pathname = usePathname();
 
   const isActive = (path: string, exact?: boolean) => {
     if (exact) {
-      return location.pathname === path;
+      return pathname === path;
     }
-    return location.pathname.startsWith(path);
+    return pathname.startsWith(path);
   };
 
   return (
@@ -59,7 +61,7 @@ export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
         {/* Logo Section */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-[var(--honey-gold)]/20">
           {!collapsed && (
-            <Link to="/admin" className="flex items-center gap-2">
+            <Link href="/admin" className="flex items-center gap-2">
               <Hexagon className="w-8 h-8 text-[var(--honey-gold)] fill-[var(--honey-gold)]/20" />
               <span className="font-semibold text-[var(--dark-cocoa)]">
                 Honey Admin
@@ -80,7 +82,7 @@ export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
             return (
               <Link
                 key={item.path}
-                to={item.path}
+                href={item.path}
                 className={cn(
                   "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                   active
@@ -100,7 +102,7 @@ export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
         {/* Collapse Toggle */}
         <div className="p-3 border-t border-[var(--honey-gold)]/20">
           <button
-            onClick={() => setCollapsed(!collapsed)}
+            onClick={() => setCollapsed((prev) => !prev)}
             className={cn(
               "flex items-center gap-3 px-3 py-2.5 rounded-lg w-full text-gray-700 hover:bg-gray-100 transition-colors",
               collapsed && "justify-center",
@@ -120,11 +122,11 @@ export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
       </aside>
 
       {/* Mobile Sidebar - Drawer */}
-      <Sheet open={!collapsed} onOpenChange={(open) => setCollapsed(!open)}>
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="w-64 p-0 md:hidden">
           <SheetHeader className="p-4 border-b border-[var(--honey-gold)]/20">
             <SheetTitle>
-              <Link to="/admin" className="flex items-center gap-2">
+              <Link href="/admin" className="flex items-center gap-2">
                 <Hexagon className="w-8 h-8 text-[var(--honey-gold)] fill-[var(--honey-gold)]/20" />
                 <span className="font-semibold text-[var(--dark-cocoa)]">
                   Honey Admin
@@ -141,8 +143,8 @@ export function AdminSidebar({ collapsed, setCollapsed }: AdminSidebarProps) {
               return (
                 <Link
                   key={item.path}
-                  to={item.path}
-                  onClick={() => setCollapsed(true)}
+                  href={item.path}
+                  onClick={() => setCollapsed(false)}
                   className={cn(
                     "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200",
                     active

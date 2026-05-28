@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import {
   Plus,
@@ -9,29 +11,26 @@ import {
   Eye,
   Star,
 } from "lucide-react";
-import { Button } from "../../components/ui/button";
-import { Link } from "react-router";
-import { Input } from "../../components/ui/input";
-import { Card } from "../../components/ui/card";
-import { StatusBadge } from "../components/StatusBadge";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "../../components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../../components/ui/dropdown-menu";
+
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "@/components/ui/select";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSubTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface Product {
   id: string;
@@ -107,7 +106,7 @@ const mockProducts: Product[] = [
   },
 ];
 
-export function Products() {
+export default function Products() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
@@ -134,7 +133,7 @@ export function Products() {
             Manage your honey products catalog
           </p>
         </div>
-        <Link to="/admin/products/new">
+        <Link href="/admin/products/new">
           <Button className="bg-[var(--honey-gold)] hover:bg-[var(--deep-amber)] text-white">
             <Plus className="w-4 h-4 mr-2" />
             Add Product
@@ -158,7 +157,10 @@ export function Products() {
           </div>
 
           {/* Status Filter */}
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select
+            value={statusFilter}
+            onValueChange={(e) => setStatusFilter(e ?? "all")}
+          >
             <SelectTrigger className="w-full md:w-40">
               <SelectValue placeholder="Status" />
             </SelectTrigger>
@@ -170,7 +172,10 @@ export function Products() {
           </Select>
 
           {/* Type Filter */}
-          <Select value={typeFilter} onValueChange={setTypeFilter}>
+          <Select
+            value={typeFilter}
+            onValueChange={(e) => setStatusFilter(e ?? "all")}
+          >
             <SelectTrigger className="w-full md:w-48">
               <SelectValue placeholder="Type" />
             </SelectTrigger>
@@ -265,11 +270,11 @@ export function Products() {
                   </td>
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
+                      <DropdownMenuSubTrigger>
                         <Button variant="ghost" size="icon">
                           <MoreVertical className="w-4 h-4" />
                         </Button>
-                      </DropdownMenuTrigger>
+                      </DropdownMenuSubTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
                           <Eye className="w-4 h-4 mr-2" />

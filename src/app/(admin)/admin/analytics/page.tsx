@@ -1,6 +1,9 @@
+"use client";
+
+import { StatCard } from "@/components/dashboard/StatCard";
+import { Card } from "@/components/ui/card";
 import { TrendingUp, Users, ShoppingCart, DollarSign } from "lucide-react";
-import { StatCard } from "../components/StatCard";
-import { Card } from "../../components/ui/card";
+
 import {
   AreaChart,
   Area,
@@ -54,7 +57,7 @@ const salesByCategory = [
 
 const COLORS = ["#F4A300", "#C46B00", "#FFB703", "#FFF8E6"];
 
-export function Analytics() {
+export default function Analytics() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
@@ -199,7 +202,7 @@ export function Analytics() {
                 cy="50%"
                 labelLine={false}
                 label={({ name, percent }) =>
-                  `${name}: ${(percent * 100).toFixed(0)}%`
+                  `${name}: ${(percent ?? 0 * 100).toFixed(0)}%`
                 }
                 outerRadius={100}
                 fill="#8884d8"
