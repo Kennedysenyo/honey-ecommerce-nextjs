@@ -1,10 +1,11 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db";
-import { authSchema } from "../db/schema";
+
 import { emailOTP } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 import { sendEmail } from "../resend/send-email";
+import { authSchema } from "../db/schema";
 
 const codeExpiresIn = Number(process.env.CODE_EXPIRES_IN);
 
