@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { CartButton } from "./cartButton";
 import { AnimatedButton } from "./AnimatedButton";
 import { UserButton } from "./UserButton";
-import { authClient } from "@/lib/better-auth/auth-client";
 
 const NAV_LINKS = [
   { path: "/", label: "Home" },

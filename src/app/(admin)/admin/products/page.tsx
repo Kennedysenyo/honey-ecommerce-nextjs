@@ -13,6 +13,8 @@ import {
 } from "lucide-react";
 
 import Link from "next/link";
+
+import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -24,12 +26,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 interface Product {
@@ -174,7 +176,7 @@ export default function Products() {
           {/* Type Filter */}
           <Select
             value={typeFilter}
-            onValueChange={(e) => setStatusFilter(e ?? "all")}
+            onValueChange={(e) => setTypeFilter(e ?? "all")}
           >
             <SelectTrigger className="w-full md:w-48">
               <SelectValue placeholder="Type" />
@@ -270,11 +272,16 @@ export default function Products() {
                   </td>
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
-                      <DropdownMenuSubTrigger>
-                        <Button variant="ghost" size="icon">
+                      <DropdownMenuTrigger>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 p-0"
+                        >
                           <MoreVertical className="w-4 h-4" />
+                          <span className="sr-only">Open menu</span>
                         </Button>
-                      </DropdownMenuSubTrigger>
+                      </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
                           <Eye className="w-4 h-4 mr-2" />
