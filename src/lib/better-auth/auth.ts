@@ -2,10 +2,16 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/db";
 
-import { emailOTP } from "better-auth/plugins";
+import { admin, emailOTP } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 import { sendEmail } from "../resend/send-email";
-import { authSchema } from "../db/schema";
+import * as authSchema from "../db/auth-schema";
+import {
+  adminRole,
+  customerRole,
+  fullAc,
+  managerRole,
+} from "@/features/auth/auth.permissions";
 
 const codeExpiresIn = Number(process.env.CODE_EXPIRES_IN);
 
@@ -65,6 +71,16 @@ export const auth = betterAuth({
           console.log("Sign-in OTP:", otp);
         }
       },
+    }),
+    admin({
+      ac: fullAc,
+      roles: {
+        manager: managerRole,
+        admin: adminRole,
+        customer: customerRole,
+      },
+      adminRoles: ["manager"],
+      adminUserIds: ["YqYN88SEezZqZxVwG5mqZUBGgOAyuTyA"],
     }),
   ],
   session: {
