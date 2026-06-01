@@ -115,7 +115,7 @@ export function AdminNavbar() {
         {/* Profile Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button variant="ghost" className="gap-2 h-auto py-2 px-3">
+            <span className="gap-2 h-auto py-2 px-3">
               <Avatar className="w-8 h-8">
                 <AvatarImage src="" alt="Admin" />
                 <AvatarFallback className="bg-[var(--honey-gold)]/20 text-[var(--honey-gold)]">
@@ -125,7 +125,7 @@ export function AdminNavbar() {
               <span className="hidden md:block font-medium text-gray-700">
                 Admin
               </span>
-            </Button>
+            </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>

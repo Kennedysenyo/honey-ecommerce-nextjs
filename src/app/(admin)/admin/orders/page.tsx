@@ -309,9 +309,7 @@ export default function Orders() {
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
                       <DropdownMenuTrigger>
-                        <Button variant="ghost" size="icon">
-                          <MoreVertical className="w-4 h-4" />
-                        </Button>
+                        <MoreVertical className="w-4 h-4" />
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>

@@ -272,15 +272,9 @@ export default function Products() {
                   </td>
                   <td className="py-4 px-6 text-right">
                     <DropdownMenu>
-                      <DropdownMenuTrigger>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 p-0"
-                        >
-                          <MoreVertical className="w-4 h-4" />
-                          <span className="sr-only">Open menu</span>
-                        </Button>
+                      <DropdownMenuTrigger className="h-8 w-8 p-0">
+                        <MoreVertical className="w-4 h-4" />
+                        <span className="sr-only">Open menu</span>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem>
