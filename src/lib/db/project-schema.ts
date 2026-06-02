@@ -28,33 +28,30 @@ export const productStatusEnum = pgEnum("product_status", [
   "out_of_stock",
 ]);
 
+export const productCategory = pgTable("product_category", {
+  id: uuid("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  slug: text("slug").notNull().unique(),
+});
+
 export const products = pgTable(
   "products",
   {
     id: uuid().primaryKey(),
-
     name: text().notNull(),
     slug: text().notNull().unique(),
-
     description: text().notNull(),
-
     honeyType: text("honeyType").notNull(),
-
-    category: text("category").notNull(),
-
+    categoryId: uuid("categoryId")
+      .notNull()
+      .references(() => productCategory.id, { onDelete: "set null" }),
     status: text("status").notNull().default("draft"),
-
     featured: boolean("featured").notNull().default(false),
-
     price: numeric("price", {
       precision: 10,
       scale: 2,
     }).notNull(),
-
-    isActive: boolean("isActive").notNull().default(true),
-
     createdAt: timestamp("createdAt").notNull().defaultNow(),
-
     updatedAt: timestamp("updatedAt").notNull().defaultNow(),
   },
   (table) => [check("product_price_check", sql`${table.price} >= 0`)],
@@ -62,38 +59,29 @@ export const products = pgTable(
 
 export const productInventory = pgTable("product_inventory", {
   id: uuid().primaryKey(),
-
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
       onDelete: "cascade",
     }),
-
   sku: text("sku").notNull().unique(),
-
   stockQuantity: integer("stockQuantity").notNull().default(0),
-
   reorderPoint: integer("reorderPoint").notNull().default(5),
-
   trackInventory: boolean("trackInventory").notNull().default(true),
-
   updatedAt: timestamp("updatedAt").notNull().defaultNow(),
 });
 
 export const productSpecifications = pgTable("product_specifications", {
   id: uuid().primaryKey(),
-
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
       onDelete: "cascade",
     }),
-
   weight: numeric("weight", {
     precision: 10,
     scale: 2,
   }),
-
   volume: numeric("volume", {
     precision: 10,
     scale: 2,
@@ -111,7 +99,6 @@ export const productTags = pgTable("product_tags", {
     .references(() => products.id, {
       onDelete: "cascade",
     }),
-
   tagId: uuid("tagId")
     .notNull()
     .references(() => tags.id, {
@@ -119,43 +106,28 @@ export const productTags = pgTable("product_tags", {
     }),
 });
 
-export const categories = pgTable("categories", {
-  id: uuid().primaryKey(),
-  name: text().notNull(),
-  slug: text().notNull().unique(),
-});
-
 export const productSeo = pgTable("product_seo", {
   id: uuid().primaryKey(),
-
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
       onDelete: "cascade",
     }),
-
   metaTitle: text("metaTitle"),
-
   metaDescription: text("metaDescription"),
-
   keywords: text("keywords"),
 });
 
 export const productsImages = pgTable("product_images", {
   id: uuid().primaryKey(),
-
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
       onDelete: "cascade",
     }),
-
   imageURL: text("imageURL").notNull(),
-
   isPrimary: boolean("isPrimary").notNull().default(false),
-
   sortOrder: integer("sortOrder").default(0),
-
   createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
 

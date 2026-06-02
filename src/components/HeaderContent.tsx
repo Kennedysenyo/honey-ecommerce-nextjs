@@ -91,7 +91,7 @@ export const HeaderContent = ({ hasSession }: Props) => {
             <div className="flex text-center">
               <span className=" text-gold font-semibold">HM</span>
               <span
-                className={` ${scrolled ? "" : isMobileOpen ? "text-foreground" : "text-cream"}`}
+                className={` ${scrolled ? "" : isMobileOpen ? "text-foreground" : "text-cream"} `}
               >
                 G
               </span>

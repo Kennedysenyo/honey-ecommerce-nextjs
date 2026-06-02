@@ -15,6 +15,13 @@
       "when": 1780311109984,
       "tag": "0001_milky_luke_cage",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1780411822044,
+      "tag": "0002_jazzy_shotgun",
+      "breakpoints": true
     }
   ]
 }
