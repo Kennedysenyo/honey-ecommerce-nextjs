@@ -1,6 +1,13 @@
 "use client";
 
-import { ChangeEvent, KeyboardEvent, useActionState, useState } from "react";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  SubmitEvent,
+  useActionState,
+  useState,
+  useTransition,
+} from "react";
 import { ArrowLeft, Loader, Tags, Upload, X } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -22,6 +29,7 @@ import {
 } from "@/features/products/products.types";
 import { useRouter } from "next/navigation";
 import { createProductFormValidator } from "@/features/products/products.validators";
+import { createSlug } from "@/lib/utils/createSlug";
 
 export default function ProductForm() {
   const [images, setImages] = useState<string[]>([]);
@@ -121,9 +129,28 @@ export default function ProductForm() {
     createProductFormValidator,
     initialFormState,
   );
+  const [_pending, startTranstion] = useTransition();
+  const handleSubmit = (e: SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const newFormData = new FormData();
+    Object.entries(formData).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        newFormData.append(key, JSON.stringify(value));
+      } else if (typeof value === "number" || typeof value === "boolean") {
+        newFormData.append(key, value.toString());
+      } else {
+        newFormData.append(key, value);
+      }
+    });
+
+    startTranstion(async () => {
+      formAction(newFormData);
+    });
+  };
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -579,13 +606,30 @@ export default function ProductForm() {
 
                   <div className="space-y-2">
                     <Label htmlFor="slug">URL Slug</Label>
-                    <Input
-                      id="slug"
-                      name="slug"
-                      value={formData.slug}
-                      onChange={handleFormFieldChange}
-                      placeholder="wildflower-honey-500ml"
-                    />
+                    <div className="flex items-center gap-3">
+                      <Input
+                        id="slug"
+                        name="slug"
+                        value={formData.slug}
+                        onChange={handleFormFieldChange}
+                        placeholder="wildflower-honey-500ml"
+                      />
+                      <button
+                        className="py-2 px-4 shadow-sm rounded-md hover:bg-gray-100 active:shadow-none"
+                        type="button"
+                        onClick={() =>
+                          setFormData((prev) => ({
+                            ...prev,
+                            slug: createSlug(
+                              formData.name,
+                              `${formData.volume}ml`,
+                            ),
+                          }))
+                        }
+                      >
+                        Automate
+                      </button>
+                    </div>
                     {state.errors.slug && (
                       <p className="text-xs text-red-400">
                         {state.errors.slug}

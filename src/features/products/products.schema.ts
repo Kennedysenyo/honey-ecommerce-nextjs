@@ -38,7 +38,7 @@ export const createProductSchema = dbCreateProductSchema
     categoryId: z.uuid(),
     status: z.enum(["draft", "active", "archived", "out_of_stock"]),
     featured: z.coerce.boolean(),
-    price: z.number().positive(),
+    price: z.coerce.number().positive(),
 
     tags: z.string().array().default([]),
     images: z.string().array().default([]),
@@ -48,11 +48,11 @@ export const createProductSchema = dbCreateProductSchema
       .string()
       .min(3, "SKU must be at least 3 characters")
       .max(50, "SKU must not exceed 50 characters"),
-    stockQuantity: z.number(),
-    reorderPoint: z.number(),
+    stockQuantity: z.coerce.number().min(1),
+    reorderPoint: z.coerce.number(),
     trackInventory: z.coerce.boolean(),
-    weight: z.number(),
-    volume: z.number(),
+    weight: z.coerce.number().min(1),
+    volume: z.coerce.number().min(1),
     metaTitle: z.string(),
     metaDescription: z.string(),
     keywords: z.string().array().default([]),
