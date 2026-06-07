@@ -1,4 +1,4 @@
-import { products } from "@/lib/db/project-schema";
+import { products } from "@/lib/db/app-schema";
 import { createSelectSchema } from "drizzle-zod";
 import z from "zod";
 
@@ -40,8 +40,10 @@ export const createProductSchema = dbCreateProductSchema
     featured: z.coerce.boolean(),
     price: z.number().positive(),
 
-    tags: z.string(),
-    images: z.string(),
+    tags: z.string().array().default([]),
+    images: z.string().array().default([]),
+    ingredients: z.string().array().default([]),
+    benefits: z.string().array().default([]),
     sku: z
       .string()
       .min(3, "SKU must be at least 3 characters")
@@ -53,5 +55,5 @@ export const createProductSchema = dbCreateProductSchema
     volume: z.number(),
     metaTitle: z.string(),
     metaDescription: z.string(),
-    keywords: z.string(),
+    keywords: z.string().array().default([]),
   });

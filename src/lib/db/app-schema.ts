@@ -37,11 +37,13 @@ export const productCategory = pgTable("product_category", {
 export const products = pgTable(
   "products",
   {
-    id: uuid().primaryKey(),
+    id: uuid().primaryKey().defaultRandom().notNull(),
     name: text().notNull(),
     slug: text().notNull().unique(),
     description: text().notNull(),
     honeyType: text("honeyType").notNull(),
+    ingredients: text("ingredients").array().default([]),
+    benefits: text("benefits").array().default([]),
     categoryId: uuid("categoryId")
       .notNull()
       .references(() => productCategory.id, { onDelete: "set null" }),
@@ -51,6 +53,7 @@ export const products = pgTable(
       precision: 10,
       scale: 2,
     }).notNull(),
+    tags: text("tags").array().notNull().default([]),
     createdAt: timestamp("createdAt").notNull().defaultNow(),
     updatedAt: timestamp("updatedAt").notNull().defaultNow(),
   },
@@ -58,7 +61,7 @@ export const products = pgTable(
 );
 
 export const productInventory = pgTable("product_inventory", {
-  id: uuid().primaryKey(),
+  id: uuid().primaryKey().defaultRandom().notNull(),
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
@@ -72,7 +75,7 @@ export const productInventory = pgTable("product_inventory", {
 });
 
 export const productSpecifications = pgTable("product_specifications", {
-  id: uuid().primaryKey(),
+  id: uuid().primaryKey().defaultRandom().notNull(),
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
@@ -88,26 +91,30 @@ export const productSpecifications = pgTable("product_specifications", {
   }),
 });
 
-export const tags = pgTable("tags", {
-  id: uuid().primaryKey(),
-  name: text().notNull().unique(),
-});
+// export const tags = pgTable("tags", {
+//   id: uuid().primaryKey().defaultRandom(),
+//   name: text().notNull().unique(),
+// });
 
-export const productTags = pgTable("product_tags", {
-  productId: uuid("productId")
-    .notNull()
-    .references(() => products.id, {
-      onDelete: "cascade",
-    }),
-  tagId: uuid("tagId")
-    .notNull()
-    .references(() => tags.id, {
-      onDelete: "cascade",
-    }),
-});
+// export const productTags = pgTable(
+//   "product_tags",
+//   {
+//     productId: uuid("productId")
+//       .notNull()
+//       .references(() => products.id, {
+//         onDelete: "cascade",
+//       }),
+//     tagId: uuid("tagId")
+//       .notNull()
+//       .references(() => tags.id, {
+//         onDelete: "cascade",
+//       }),
+//   },
+//   (table) => [primaryKey({ columns: [table.productId, table.tagId] })],
+// );
 
 export const productSeo = pgTable("product_seo", {
-  id: uuid().primaryKey(),
+  id: uuid().primaryKey().defaultRandom(),
   productId: uuid("productId")
     .notNull()
     .references(() => products.id, {
@@ -115,7 +122,7 @@ export const productSeo = pgTable("product_seo", {
     }),
   metaTitle: text("metaTitle"),
   metaDescription: text("metaDescription"),
-  keywords: text("keywords"),
+  keywords: text("keywords").array().default([]),
 });
 
 export const productsImages = pgTable("product_images", {
@@ -131,21 +138,21 @@ export const productsImages = pgTable("product_images", {
   createdAt: timestamp("createdAt").notNull().defaultNow(),
 });
 
-export const productIngredients = pgTable("product_ingredients", {
-  id: uuid().primaryKey(),
-  productId: uuid("productId")
-    .notNull()
-    .references(() => products.id, { onDelete: "cascade" }),
-  ingredientName: text("ingredientName").notNull(),
-});
+// export const productIngredients = pgTable("product_ingredients", {
+//   id: uuid().primaryKey(),
+//   productId: uuid("productId")
+//     .notNull()
+//     .references(() => products.id, { onDelete: "cascade" }),
+//   ingredientName: text("ingredientName").notNull(),
+// });
 
-export const productBenefits = pgTable("product_benefits", {
-  id: uuid().primaryKey(),
-  productId: uuid("productId")
-    .notNull()
-    .references(() => products.id, { onDelete: "cascade" }),
-  benefit: text().notNull(),
-});
+// export const productBenefits = pgTable("product_benefits", {
+//   id: uuid().primaryKey(),
+//   productId: uuid("productId")
+//     .notNull()
+//     .references(() => products.id, { onDelete: "cascade" }),
+//   benefit: text().notNull(),
+// });
 
 export const cartItems = pgTable(
   "cart_items",

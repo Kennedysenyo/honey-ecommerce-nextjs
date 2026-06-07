@@ -6,9 +6,10 @@ import {
   CreateProductFormFieldsErrors,
   CreateProductFormResponseType,
 } from "./products.types";
+import { createProduct } from "./products.services";
 
 export const createProductFormValidator = async (
-  prevState: CreateProductFormResponseType,
+  _prevState: CreateProductFormResponseType,
   formData: FormData,
 ): Promise<CreateProductFormResponseType> => {
   const rawInput = Object.fromEntries(formData);
@@ -24,5 +25,11 @@ export const createProductFormValidator = async (
     }
     return { success: false, errors, errorMessage: null };
   }
+
+  const errorMessage = await createProduct(result.data);
+  if (errorMessage) {
+    return { success: false, errors: {}, errorMessage };
+  }
+
   return { success: true, errors: {}, errorMessage: null };
 };

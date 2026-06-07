@@ -12,6 +12,7 @@ import {
   ChevronRight,
   Hexagon,
   X,
+  List,
 } from "lucide-react";
 
 import {
@@ -28,6 +29,7 @@ import { useState } from "react";
 const navItems = [
   { path: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { path: "/admin/products", label: "Products", icon: Package },
+  { path: "/admin/categories", label: "Categories", icon: List },
   { path: "/admin/orders", label: "Orders", icon: ShoppingCart },
   { path: "/admin/customers", label: "Customers", icon: Users },
   { path: "/admin/payments", label: "Payments", icon: CreditCard },
