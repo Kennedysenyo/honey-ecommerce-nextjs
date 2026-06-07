@@ -29,7 +29,7 @@ export const productStatusEnum = pgEnum("product_status", [
 ]);
 
 export const productCategory = pgTable("product_category", {
-  id: uuid("id").primaryKey(),
+  id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull().unique(),
   slug: text("slug").notNull().unique(),
 });
