@@ -13,7 +13,15 @@ export const createProductFormValidator = async (
   formData: FormData,
 ): Promise<CreateProductFormResponseType> => {
   const rawInput = Object.fromEntries(formData);
-  const result = createProductSchema.safeParse(rawInput);
+
+  const result = createProductSchema.safeParse({
+    ...rawInput,
+    tags: JSON.parse(rawInput.tags as string),
+    images: JSON.parse(rawInput.images as string),
+    ingredients: JSON.parse(rawInput.ingredients as string),
+    benefits: JSON.parse(rawInput.benefits as string),
+    keywords: JSON.parse(rawInput.keywords as string),
+  });
 
   if (!result.success) {
     let errors: CreateProductFormFieldsErrors = {};
@@ -23,13 +31,29 @@ export const createProductFormValidator = async (
     for (const [key, value] of Object.entries(flattenedErrors)) {
       errors = { ...errors, [key]: value };
     }
-    return { success: false, errors, errorMessage: null };
+
+    return {
+      success: false,
+      errors,
+      errorMessage: null,
+      uniqueMarker: new Date(),
+    };
   }
 
   const errorMessage = await createProduct(result.data);
   if (errorMessage) {
-    return { success: false, errors: {}, errorMessage };
+    return {
+      success: false,
+      errors: {},
+      errorMessage,
+      uniqueMarker: new Date(),
+    };
   }
 
-  return { success: true, errors: {}, errorMessage: null };
+  return {
+    success: true,
+    errors: {},
+    errorMessage: null,
+    uniqueMarker: new Date(),
+  };
 };

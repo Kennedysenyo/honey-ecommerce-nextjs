@@ -24,6 +24,8 @@ export const createProduct = async (
           description: data.description,
           honeyType: data.honeyType,
           categoryId: data.categoryId,
+          ingredients: data.ingredients,
+          benefits: data.benefits,
           status: data.status,
           featured: data.featured,
           price: data.price.toString(),

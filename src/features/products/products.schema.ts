@@ -40,9 +40,9 @@ export const createProductSchema = dbCreateProductSchema
     featured: z.coerce.boolean(),
     price: z.coerce.number().positive(),
 
-    tags: z.string().array().default([]),
-    images: z.string().array().default([]),
-    ingredients: z.string().array().default([]),
+    tags: z.coerce.string().array().default([]),
+    images: z.coerce.string().array().default([]),
+    ingredients: z.coerce.string().array().default([]),
     benefits: z.string().array().default([]),
     sku: z
       .string()
@@ -55,5 +55,5 @@ export const createProductSchema = dbCreateProductSchema
     volume: z.coerce.number().min(1),
     metaTitle: z.string(),
     metaDescription: z.string(),
-    keywords: z.string().array().default([]),
+    keywords: z.coerce.string().array().default([]),
   });

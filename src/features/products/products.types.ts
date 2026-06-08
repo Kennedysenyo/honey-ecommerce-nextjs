@@ -9,4 +9,5 @@ export type CreateProductFormResponseType = {
   errors: CreateProductFormFieldsErrors;
   success: boolean;
   errorMessage: string | null;
+  uniqueMarker: Date | null;
 };

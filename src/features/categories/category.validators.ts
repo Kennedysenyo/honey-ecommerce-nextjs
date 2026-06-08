@@ -23,13 +23,25 @@ export const validateCreateCategoryForm = async (
       errors = { ...errors, [k]: v[0] };
     }
 
-    return { success: false, errors, errorMessage: null };
+    return {
+      success: false,
+      errors,
+      errorMessage: null,
+    };
   }
 
   const errorMessage = await createCategory(results.data);
   if (errorMessage) {
-    return { success: false, errors: {}, errorMessage };
+    return {
+      success: false,
+      errors: {},
+      errorMessage,
+    };
   }
 
-  return { success: true, errors: {}, errorMessage: null };
+  return {
+    success: true,
+    errors: {},
+    errorMessage: null,
+  };
 };
